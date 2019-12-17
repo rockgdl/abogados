@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="805.0" prefWidth="856.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.opiceno.abogados.controller.UsuariosController">
+   <children>
+      <TextField fx:id="txtNickname" layoutX="181.0" layoutY="157.0" />
+      <TextField fx:id="txtNombre" layoutX="181.0" layoutY="113.0" />
+      <PasswordField fx:id="txtPassword" layoutX="181.0" layoutY="206.0" />
+      <PasswordField fx:id="txtConfirmar" layoutX="181.0" layoutY="256.0" />
+      <Label layoutX="80.0" layoutY="118.0" text="Nombre" />
+      <Label layoutX="73.0" layoutY="162.0" text="NickName" />
+      <Label layoutX="70.0" layoutY="211.0" text="Contraseña" />
+      <Label layoutX="62.0" layoutY="261.0" text="Confirmar Clave" />
+      <Button layoutX="499.0" layoutY="191.0" mnemonicParsing="false" onAction="#addUser" text="Agregar" />
+      <TableView fx:id="tablaUsuario" layoutX="83.0" layoutY="362.0" prefHeight="286.0" prefWidth="690.0">
+        <columns>
+          <TableColumn fx:id="columnNombre" prefWidth="204.0" text="Nombre" />
+          <TableColumn fx:id="columnNickname" prefWidth="228.0" text="NickName" />
+            <TableColumn fx:id="columnPassword" prefWidth="257.0" text="Password" />
+        </columns>
+      </TableView>
+      <Button layoutX="83.0" layoutY="681.0" mnemonicParsing="false" onAction="#deleteUser" text="Eliminar" />
+   </children>
+</AnchorPane>
