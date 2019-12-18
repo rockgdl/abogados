@@ -5,6 +5,7 @@
  */
 package com.fpiceno.abogados.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,8 +22,16 @@ public class Usuario {
    @Id 
    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+   
+   @Column (name="nombre")
     private String nombre;
 
+   @Column (name="nickName")
+   private String nickName;
+   
+   @Column (name="password")
+   private String password;
+   
     public Integer getId() {
         return id;
     }
@@ -39,11 +48,38 @@ public class Usuario {
         this.nombre = nombre;
     }
 
+    /**
+     * @return the nickName
+     */
+    public String getNickName() {
+        return nickName;
+    }
+
+    /**
+     * @param nickName the nickName to set
+     */
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+
     @Override
     public String toString() {
         return "Usuario{" + "id=" + id + ", nombre=" + nombre + '}';
-    }
-    
-    
+    }    
     
 }

@@ -20,7 +20,8 @@ public class HibernateUtil{
     {
         try
         {
-            Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+            Configuration configuration = new Configuration();
+            configuration.configure("hibernate.cfg.xml");
            // configuration.configure("com/fpiceno/abogados/config/hibernate.cfg.xml");
            // StandardServiceRegistryBuilder ssrb = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
              //ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
