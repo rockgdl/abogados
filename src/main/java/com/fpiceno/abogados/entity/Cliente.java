@@ -19,19 +19,19 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Column (name = "nombre")
+    @Column (name = "nombre", columnDefinition = "varchar(30)")
     private String nombre;
     
-    @Column (name = "domicilio")
+    @Column (name = "domicilio", columnDefinition = "varchar(40)")
     private String domicilio;
     
-    @Column (name = "telefono")
+    @Column (name = "telefono", columnDefinition = "varchar(11)")
     private String telefono;
     
-    @Column (name = "rfc")
+    @Column (name = "rfc", columnDefinition = "varchar(12)")
     private String rfc;
     
-    @Column (name = "correo")
+    @Column (name = "correo", columnDefinition = "varchar(20)")
     private String correo;
 
     /**

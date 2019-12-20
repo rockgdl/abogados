@@ -6,8 +6,8 @@
 package com.fpiceno.abogados.dao.mysql;
 
 import com.fpiceno.abogados.config.HibernateUtil;
-import com.fpiceno.abogados.dao.ClienteDao;
-import com.fpiceno.abogados.entity.Cliente;
+import com.fpiceno.abogados.dao.CasoDao;
+import com.fpiceno.abogados.entity.Caso;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -17,58 +17,57 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author gnr_a
  */
-public class ClienteDaoMysql implements ClienteDao{
-
+public class CasoDaoMysql implements CasoDao{
     @Override
-    public void insert(Cliente cliente) {
+    public void insert(Caso caso) {
         Session session = getSession();
         session.beginTransaction();
 
-        session.save(cliente);
+        session.save(caso);
         session.getTransaction().commit();
 
         getSession().close();
     }
 
     @Override
-    public void delete(Cliente cliente) {
+    public void delete(Caso caso) {
         Session session = getSession();
         session.beginTransaction();
 
-        session.delete(cliente);
+        session.delete(caso);
         session.getTransaction().commit();
 
         getSession().close();
     }
 
     @Override
-    public void update(Cliente cliente) {
+    public void update(Caso caso) {
         Session session = getSession();
         session.beginTransaction();
 
-        session.update(cliente);
+        session.update(caso);
         session.getTransaction().commit();
 
         getSession().close();
     }
 
     @Override
-    public List<Cliente> read() {
-        Criteria cr = getSession().createCriteria(Cliente.class);
+    public List<Caso> read() {
+        Criteria cr = getSession().createCriteria(Caso.class);
         return cr.list();
     }
 
     @Override
-    public Cliente readClient(int code) {
-        Criteria cr = getSession().createCriteria(Cliente.class);
+    public Caso readClient(int code) {
+        Criteria cr = getSession().createCriteria(Caso.class);
         cr.add(Restrictions.eq("id", code));
 
-        return (Cliente) cr.uniqueResult();
+        return (Caso) cr.uniqueResult();
     }
     
     @Override
-    public List<Cliente> readLike(String cadena) {
-        Criteria cr = getSession().createCriteria(Cliente.class);
+    public List<Caso> readLike(String cadena) {
+        Criteria cr = getSession().createCriteria(Caso.class);
         cr.add(Restrictions.like("nombre", cadena+"%"));
         return cr.list();
     }

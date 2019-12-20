@@ -19,13 +19,13 @@ public class UsuarioTest {
     public UsuarioTest() {
     }
     
-    @Test
-    public void addUsuario()
-    {
-         Usuario usuario=new Usuario();
-        usuario.setNombre("fabian");
-        UsuarioDao dao=new UsuarioDaoMysql();
-        dao.agregarUsuario(usuario);
-    }
+//    @Test
+//    public void addUsuario()
+//    {
+//         Usuario usuario=new Usuario();
+//        usuario.setNombre("fabian");
+//        UsuarioDao dao=new UsuarioDaoMysql();
+//        dao.agregarUsuario(usuario);
+//    }
     
 }

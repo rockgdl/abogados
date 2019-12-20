@@ -18,6 +18,7 @@ public interface ClienteDao {
     public void update(Cliente cliente);
     public List<Cliente> read();
     public Cliente readClient(int code);
+    public List<Cliente> readLike(String cadena);
 
     
 }

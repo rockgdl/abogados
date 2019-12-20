@@ -35,5 +35,7 @@
     <property name="hibernate.connection.release_mode">after_transaction</property>
     <mapping class="com.fpiceno.abogados.entity.Usuario" ></mapping>
     <mapping class="com.fpiceno.abogados.entity.Cliente" ></mapping>
+    <mapping class="com.fpiceno.abogados.entity.Caso" ></mapping>
+    <mapping class="com.fpiceno.abogados.entity.Pago" ></mapping>
   </session-factory>
 </hibernate-configuration>

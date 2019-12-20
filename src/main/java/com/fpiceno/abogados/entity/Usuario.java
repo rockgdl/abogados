@@ -23,13 +23,13 @@ public class Usuario {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
    
-   @Column (name="nombre")
+   @Column (name="nombre", columnDefinition = "varchar(20)")
     private String nombre;
 
-   @Column (name="nickName")
+   @Column (name="nickName", columnDefinition = "varchar(20)")
    private String nickName;
    
-   @Column (name="password")
+   @Column (name="password", columnDefinition = "varchar(20)")
    private String password;
    
     public Integer getId() {

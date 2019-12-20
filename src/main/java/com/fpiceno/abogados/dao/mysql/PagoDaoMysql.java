@@ -6,8 +6,8 @@
 package com.fpiceno.abogados.dao.mysql;
 
 import com.fpiceno.abogados.config.HibernateUtil;
-import com.fpiceno.abogados.dao.ClienteDao;
-import com.fpiceno.abogados.entity.Cliente;
+import com.fpiceno.abogados.dao.PagoDao;
+import com.fpiceno.abogados.entity.Pago;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -17,58 +17,57 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author gnr_a
  */
-public class ClienteDaoMysql implements ClienteDao{
-
+public class PagoDaoMysql implements PagoDao{
     @Override
-    public void insert(Cliente cliente) {
+    public void insert(Pago pago) {
         Session session = getSession();
         session.beginTransaction();
 
-        session.save(cliente);
+        session.save(pago);
         session.getTransaction().commit();
 
         getSession().close();
     }
 
     @Override
-    public void delete(Cliente cliente) {
+    public void delete(Pago pago) {
         Session session = getSession();
         session.beginTransaction();
 
-        session.delete(cliente);
+        session.delete(pago);
         session.getTransaction().commit();
 
         getSession().close();
     }
 
     @Override
-    public void update(Cliente cliente) {
+    public void update(Pago pago) {
         Session session = getSession();
         session.beginTransaction();
 
-        session.update(cliente);
+        session.update(pago);
         session.getTransaction().commit();
 
         getSession().close();
     }
 
     @Override
-    public List<Cliente> read() {
-        Criteria cr = getSession().createCriteria(Cliente.class);
+    public List<Pago> read() {
+        Criteria cr = getSession().createCriteria(Pago.class);
         return cr.list();
     }
 
     @Override
-    public Cliente readClient(int code) {
-        Criteria cr = getSession().createCriteria(Cliente.class);
+    public Pago readClient(int code) {
+        Criteria cr = getSession().createCriteria(Pago.class);
         cr.add(Restrictions.eq("id", code));
 
-        return (Cliente) cr.uniqueResult();
+        return (Pago) cr.uniqueResult();
     }
     
     @Override
-    public List<Cliente> readLike(String cadena) {
-        Criteria cr = getSession().createCriteria(Cliente.class);
+    public List<Pago> readLike(String cadena) {
+        Criteria cr = getSession().createCriteria(Pago.class);
         cr.add(Restrictions.like("nombre", cadena+"%"));
         return cr.list();
     }
@@ -77,5 +76,4 @@ public class ClienteDaoMysql implements ClienteDao{
 
         return HibernateUtil.getSession();
     }
-    
 }
