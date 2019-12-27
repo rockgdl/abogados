@@ -2,10 +2,13 @@ package com.fpiceno.abogados.controller;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.PropertyConfigurator;
 
 
 public class MainApp extends Application {
@@ -20,6 +23,14 @@ public class MainApp extends Application {
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
         stage.show();
+        
+        /* initialize log4j */
+    BasicConfigurator.configure();
+    PropertyConfigurator.configure("src/main/resources/log4j.properties");
+    
+     stage.setOnCloseRequest(e -> Platform.exit());
+
+
     }
 
     /**
