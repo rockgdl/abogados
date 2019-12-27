@@ -6,8 +6,8 @@
 package com.fpiceno.abogados.dao.mysql;
 
 import com.fpiceno.abogados.config.HibernateUtil;
-import com.fpiceno.abogados.dao.CasoDao;
-import com.fpiceno.abogados.entity.Caso;
+import com.fpiceno.abogados.dao.FacturaDao;
+import com.fpiceno.abogados.entity.Factura;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -17,57 +17,57 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author gnr_a
  */
-public class CasoDaoMysql implements CasoDao{
+public class FacturaDaoMysql implements FacturaDao {
     @Override
-    public void insert(Caso caso) {
+    public void insert(Factura factura) {
         Session session = getSession();
         session.beginTransaction();
 
-        session.save(caso);
+        session.save(factura);
         session.getTransaction().commit();
 
         getSession().close();
     }
 
     @Override
-    public void delete(Caso caso) {
+    public void delete(Factura factura) {
         Session session = getSession();
         session.beginTransaction();
 
-        session.delete(caso);
+        session.delete(factura);
         session.getTransaction().commit();
 
         getSession().close();
     }
 
     @Override
-    public void update(Caso caso) {
+    public void update(Factura factura) {
         Session session = getSession();
         session.beginTransaction();
 
-        session.update(caso);
+        session.update(factura);
         session.getTransaction().commit();
 
         getSession().close();
     }
 
     @Override
-    public List<Caso> read() {
-        Criteria cr = getSession().createCriteria(Caso.class);
+    public List<Factura> read() {
+        Criteria cr = getSession().createCriteria(Factura.class);
         return cr.list();
     }
 
     @Override
-    public Caso readCaso(int code) {
-        Criteria cr = getSession().createCriteria(Caso.class);
+    public Factura readFactura(int code) {
+        Criteria cr = getSession().createCriteria(Factura.class);
         cr.add(Restrictions.eq("id", code));
 
-        return (Caso) cr.uniqueResult();
+        return (Factura) cr.uniqueResult();
     }
     
     @Override
-    public List<Caso> readLike(String cadena) {
-        Criteria cr = getSession().createCriteria(Caso.class);
+    public List<Factura> readLike(String cadena) {
+        Criteria cr = getSession().createCriteria(Factura.class);
         cr.add(Restrictions.like("nombre", cadena+"%"));
         return cr.list();
     }
@@ -76,5 +76,4 @@ public class CasoDaoMysql implements CasoDao{
 
         return HibernateUtil.getSession();
     }
-    
 }

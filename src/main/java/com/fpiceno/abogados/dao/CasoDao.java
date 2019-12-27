@@ -17,7 +17,7 @@ public interface CasoDao {
     public void delete(Caso caso);
     public void update(Caso caso);
     public List<Caso> read();
-    public Caso readClient(int code);
+    public Caso readCaso(int code);
     public List<Caso> readLike(String cadena);
 
 }

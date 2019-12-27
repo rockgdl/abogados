@@ -58,7 +58,7 @@ public class PagoDaoMysql implements PagoDao{
     }
 
     @Override
-    public Pago readClient(int code) {
+    public Pago readPayment(int code) {
         Criteria cr = getSession().createCriteria(Pago.class);
         cr.add(Restrictions.eq("id", code));
 

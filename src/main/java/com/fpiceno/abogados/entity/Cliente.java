@@ -19,7 +19,7 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Column (name = "nombre", columnDefinition = "varchar(30)")
+    @Column (name = "nombre", columnDefinition = "varchar(30)", nullable = false)
     private String nombre;
     
     @Column (name = "domicilio", columnDefinition = "varchar(40)")
@@ -28,7 +28,7 @@ public class Cliente {
     @Column (name = "telefono", columnDefinition = "varchar(11)")
     private String telefono;
     
-    @Column (name = "rfc", columnDefinition = "varchar(12)")
+    @Column (name = "rfc", columnDefinition = "varchar(12)", unique = true, nullable = false)
     private String rfc;
     
     @Column (name = "correo", columnDefinition = "varchar(20)")

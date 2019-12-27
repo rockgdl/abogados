@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class FXMLController implements Initializable {
+public class LoginController implements Initializable {
     
     private UsuarioDao dao = new UsuarioDaoMysql();
     
@@ -25,7 +25,7 @@ public class FXMLController implements Initializable {
     private void handleButtonAction(ActionEvent event) {
               
         for(Usuario user: dao.read()){
-            System.out.println(user.getNombre());
+            System.out.println(user.getNickName());
         }
     }
     
@@ -33,4 +33,22 @@ public class FXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    @FXML
+    private void Entrar(ActionEvent event){
+                
+        UsuarioDao dao = new UsuarioDaoMysql();
+        
+        Usuario usuario = dao.checkUser(txtNickName.getText(), txtPassword.getText());
+        
+        System.out.println(usuario.getRol());
+        
+        switch(usuario.getRol()){
+            case ADMINISTRADOR: break;
+            case INGRESOS: break;
+            case EGRESOS: break;
+            case CONSULTA: break;     
+        }
+
+    }
 }

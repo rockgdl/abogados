@@ -76,6 +76,16 @@ public class UsuarioDaoMysql implements UsuarioDao {
         return (Usuario) cr.uniqueResult();
     }
 
+    
+
+    @Override
+    public Usuario checkUser(String nickName, String password) {
+        Criteria cr = getSession().createCriteria(Usuario.class);
+        cr.add(Restrictions.eq("nickName",nickName)).add(Restrictions.eq("password",password));
+
+        return (Usuario) cr.uniqueResult();
+    }
+    
     public Session getSession() {
 
         return HibernateUtil.getSession();

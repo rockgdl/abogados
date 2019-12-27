@@ -59,7 +59,7 @@ public class ClienteDaoMysql implements ClienteDao{
     }
 
     @Override
-    public Cliente readClient(int code) {
+    public Cliente readCliente(int code) {
         Criteria cr = getSession().createCriteria(Cliente.class);
         cr.add(Restrictions.eq("id", code));
 

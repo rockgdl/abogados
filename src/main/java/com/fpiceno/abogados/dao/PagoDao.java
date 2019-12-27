@@ -17,6 +17,6 @@ public interface PagoDao {
     public void delete(Pago pago);
     public void update(Pago pago);
     public List<Pago> read();
-    public Pago readClient(int code);
+    public Pago readPayment(int code);
     public List<Pago> readLike(String cadena);
 }

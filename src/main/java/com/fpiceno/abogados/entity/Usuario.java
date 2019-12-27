@@ -5,8 +5,12 @@
  */
 package com.fpiceno.abogados.entity;
 
+import Tools.Roles;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,14 +27,20 @@ public class Usuario {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
    
-   @Column (name="nombre", columnDefinition = "varchar(20)")
-    private String nombre;
-
-   @Column (name="nickName", columnDefinition = "varchar(20)")
+   @Column (name = "nickName", columnDefinition = "varchar(20)", nullable = false, unique = true)
    private String nickName;
    
-   @Column (name="password", columnDefinition = "varchar(20)")
+   @Column (name = "password", columnDefinition = "varchar(20)", nullable = false)
    private String password;
+   
+   @Column (name = "Activo")
+   private boolean activo;
+   
+   @Enumerated (EnumType.STRING)
+    private Roles rol;
+   
+   @Column (name="fechaCreacion")
+   private Date fechaCreacion;
    
     public Integer getId() {
         return id;
@@ -38,14 +48,6 @@ public class Usuario {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     /**
@@ -79,7 +81,49 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + '}';
+        return "Usuario{" + "id=" + id + ", nombre=" + getRol() + '}';
     }    
+
+    /**
+     * @return the activo
+     */
+    public boolean isActivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    /**
+     * @return the rol
+     */
+    public Roles getRol() {
+        return rol;
+    }
+
+    /**
+     * @param rol the rol to set
+     */
+    public void setRol(Roles rol) {
+        this.rol = rol;
+    }
+
+    /**
+     * @return the fechaCreacion
+     */
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    /**
+     * @param fechaCreacion the fechaCreacion to set
+     */
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
     
 }

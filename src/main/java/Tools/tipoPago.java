@@ -10,5 +10,5 @@ package Tools;
  * @author gnr_a
  */
 public enum tipoPago {
-    Dolar, Pesos;
+    EFECTIVO, CHEQUE, TRANSFERENCIA, DEPOSITOBANCARIO;
 }

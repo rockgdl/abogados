@@ -21,5 +21,6 @@ public interface UsuarioDao {
     public void update(Usuario usuario);
     public List<Usuario> read();
     public Usuario readUser(int code);
+    public Usuario checkUser(String nickName, String password);
     
 }

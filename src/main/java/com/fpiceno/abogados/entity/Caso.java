@@ -6,7 +6,9 @@
 package com.fpiceno.abogados.entity;
 
 import Tools.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -26,7 +28,7 @@ public class Caso {
     @Column(name="concepto", columnDefinition = "text")
     private String concepto;
     
-    @Column(name="status", columnDefinition = "varchar(11)")
+   @Enumerated(EnumType.STRING)
     private statusCaso status;
     
     @Column(name="fechaInicio")
@@ -37,6 +39,13 @@ public class Caso {
     
     @Column(name="tipoPago")
     private tipoPago tipo;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_caso")
+    private List<Pago> ListaPagos = new ArrayList<Pago>();
+    
+    @Enumerated(EnumType.STRING)
+    private RazonSocial razonSocial;
 
     /**
      * @return the id
@@ -134,6 +143,20 @@ public class Caso {
      */
     public void setTipo(tipoPago tipo) {
         this.tipo = tipo;
+    }
+
+    /**
+     * @return the ListaPagos
+     */
+    public List<Pago> getListaPagos() {
+        return ListaPagos;
+    }
+
+    /**
+     * @param ListaPagos the ListaPagos to set
+     */
+    public void setListaPagos(List<Pago> ListaPagos) {
+        this.ListaPagos = ListaPagos;
     }
    
 }

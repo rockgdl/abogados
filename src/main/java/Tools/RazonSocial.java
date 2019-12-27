@@ -9,6 +9,9 @@ package Tools;
  *
  * @author gnr_a
  */
-public enum statusCaso {
-    PAGADO, ABONADO, PENDIENTE, CERRADO, FINALIZADO;
+public enum RazonSocial {
+    
+        FML, FMLSE, MLCONSULTORES, MDPABOGADOS,FMLMARTINEZ,;
+
+    
 }

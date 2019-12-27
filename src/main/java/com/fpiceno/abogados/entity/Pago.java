@@ -31,6 +31,10 @@ public class Pago {
     
     @Column (name = "cantidad")
     private int cantidad;
+    
+//    @ManyToOne
+//    @JoinColumn(name = "caso_id")
+//    private Caso caso;
 
     /**
      * @return the id
@@ -101,5 +105,25 @@ public class Pago {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+
+//    /**
+//     * @return the caso
+//     */
+//    public Caso getCaso() {
+//        return caso;
+//    }
+//
+//    /**
+//     * @param caso the caso to set
+//     */
+//    public void setCaso(Caso caso) {
+//        this.caso = caso;
+//    }
+
+    @Override
+    public String toString() {
+        return "Pago{" + "id=" + id + ", idFacutura=" + idFacutura + ", concepto=" + concepto + ", fechaPago=" + fechaPago + ", cantidad=" + cantidad + '}';
+    }
+    
     
 }

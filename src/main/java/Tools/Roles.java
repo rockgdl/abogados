@@ -9,6 +9,6 @@ package Tools;
  *
  * @author gnr_a
  */
-public enum statusCaso {
-    PAGADO, ABONADO, PENDIENTE, CERRADO, FINALIZADO;
+public enum Roles {
+    ADMINISTRADOR, INGRESOS, EGRESOS, CONSULTA;
 }
