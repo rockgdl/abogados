@@ -6,7 +6,11 @@
 package com.fpiceno.abogados.dao;
 
 import com.fpiceno.abogados.entity.Usuario;
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.ConnectException;
 import java.util.List;
+import org.hibernate.exception.JDBCConnectionException;
 
 /**
  *
@@ -21,6 +25,6 @@ public interface UsuarioDao {
     public void update(Usuario usuario);
     public List<Usuario> read();
     public Usuario readUser(int code);
-    public Usuario checkUser(String nickName, String password);
+    public Usuario checkUser(String nickName, String password) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
     
 }

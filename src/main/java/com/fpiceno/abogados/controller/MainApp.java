@@ -3,10 +3,12 @@ package com.fpiceno.abogados.controller;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -20,18 +22,36 @@ public class MainApp extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
         
-        stage.setTitle("JavaFX and Maven");
+        stage.setTitle("Martines y de Labra Abogados");
         stage.setScene(scene);
         stage.show();
         
+        
+   
+        
+        
+           
         /* initialize log4j */
     BasicConfigurator.configure();
     PropertyConfigurator.configure("src/main/resources/log4j.properties");
     
-     stage.setOnCloseRequest(e -> Platform.exit());
+//     stage.setOnCloseRequest(e -> Platform.exit()  );
+    
+          stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+    @Override
+    public void handle(WindowEvent event) {
+        Platform.exit();
+        System.exit(0);
+    }
+});
+
+     
+
 
 
     }
+    
+    
 
     /**
      * The main() method is ignored in correctly deployed JavaFX application.

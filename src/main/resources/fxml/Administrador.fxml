@@ -7,11 +7,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.fpiceno.abogados.controller.AdministradorController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fpiceno.abogados.controller.AdministradorController">
     <stylesheets>
         <URL value="@/styles/administrador.css" />
     </stylesheets>
    <children>
-      <Button fx:id="addClientes" layoutX="103.0" layoutY="99.0" mnemonicParsing="false" onAction="#agregarClientes" text="Button" />
+      <Button fx:id="addClientes" layoutX="103.0" layoutY="99.0" mnemonicParsing="false" onAction="#agregarClientes" text="agregar clientes" />
+      <Button fx:id="addUser" layoutX="346.0" layoutY="99.0" mnemonicParsing="false" onAction="#agregarUsuarios" text="Agregar Usuarios" />
+      <Button layoutX="103.0" layoutY="200.0" mnemonicParsing="false" onAction="#addCasos" text="Agregar Casos" />
    </children>
 </AnchorPane>
