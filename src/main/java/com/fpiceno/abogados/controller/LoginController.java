@@ -13,6 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.ConnectException;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.event.ActionEvent;
@@ -25,6 +26,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -65,7 +67,27 @@ public class LoginController implements Initializable {
 //        }
 
 
-    }    
+    }  
+    @FXML
+    public void recoverPassword()
+    {
+        Alert  alert = new Alert(Alert.AlertType.INFORMATION);
+           alert.setHeaderText("correo registrado" );
+           alert.setTitle("Recuperar Contraseña");
+           alert.setContentText("Ingresa tu correo para enviar la contraseña ");
+           //alert.showAndWait();
+            TextInputDialog dialog = new TextInputDialog("");
+            dialog.setTitle("Recuperar Contraseña");
+            dialog.setHeaderText("¿Deseas recuperar la contraseña?");
+            dialog.setContentText("Ingresa tu correo para enviar la contraseña");
+
+            // Traditional way to get the response value.
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent()){
+                log.info("tu correo es : " + result.get());
+                //envio de correo metodo 
+            }
+    }
     
     @FXML
     private void Entrar(ActionEvent event) throws IOException, CommunicationsException{
@@ -85,6 +107,7 @@ public class LoginController implements Initializable {
            alert.setTitle("Notificación");
            alert.setContentText("Error con la comunicacion a la base de datos favor de revisar el servicio de Mysql" +e.getMessage());
            alert.showAndWait();
+           
         }
     catch (JDBCConnectionException e1)
     {
