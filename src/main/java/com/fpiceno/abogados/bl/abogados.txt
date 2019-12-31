@@ -8,4 +8,4 @@ Factura entity
 id, concepto, Caso, fechaEmision ,numFactura, rep (solo se que es int), nombreCliente (sale del caso getCliente String),cantidad,
 iva, total,moneda, fechaPago,Status, Region(int), Serie(creo que es enum pero ponglo String)
 
-Los filtros de Factura son por razonSocial (enum de  abogados)
+Los filtros de Factura son por razonSocial (enum de  abogados) y por mes
