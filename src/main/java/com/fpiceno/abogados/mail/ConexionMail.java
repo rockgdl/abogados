@@ -1,5 +1,9 @@
 package com.fpiceno.abogados.mail;
 
+import java.util.Properties;
+
+
+
 public class ConexionMail {
     
     //Properties
@@ -7,11 +11,13 @@ public class ConexionMail {
     private static final String PUERTO_MAIL = "25";
     private static final String PROTOCOL_MAIL = "smtp";
     private static final String SMTP_STARTTLS_MAIL = "false";
-    private static final String SMTP_AUTH_MAIL = "false";
+    private static final String SMTP_AUTH_MAIL = "true";
+    
+  
     
     //Authenticator
-    private static final String PASS_MAIL = "fpiceno";
-    private static final String USER_MAIL = "fa7730pr";
+    private static final String PASS_MAIL = "rock2663";
+    private static final String USER_MAIL = "fpiceno87@gmail.com";
 	
     
     

@@ -15,9 +15,19 @@ public class EmailConfiguration {
     public static final String SMTP_HOST = "mail.smtp.host";
     public static final String SMTP_AUTH = "mail.smtp.auth";
     public static final String SMTP_TLS_ENABLE = "mail.smtp.starttls.enable";
-    public static final String SMTP_AUTH_USER = "smtp.auth.user";
-    public static final String SMTP_AUTH_PWD = "smtp.auth.pwd";
-    public static final String DEBUG = "debug";
+//    public static final String SMTP_AUTH_USER = "smtp.auth.user";
+//    public static final String SMTP_AUTH_PWD = "smtp.auth.pwd";
+        public static final String SMTP_AUTH_USER = "fpiceno87@gmail.com";
+        public static final String SMTP_AUTH_PWD = "rock2663";
+    public static final String DEBUG = "true";
+
+     EmailConfiguration() {
+     
+    }
+
+    EmailConfiguration(Properties prop) {
+        properties=prop;
+    }
 
     public Properties getProperties() {
         return this.properties;

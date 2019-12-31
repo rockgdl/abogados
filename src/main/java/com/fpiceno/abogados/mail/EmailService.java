@@ -7,7 +7,9 @@ package com.fpiceno.abogados.mail;
  * UN byte[]
  * 05/03/14
  */
+import com.fpiceno.abogados.controller.LoginController;
 import java.util.List;
+import java.util.Properties;
 
  
 
@@ -42,12 +44,15 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import javax.mail.util.ByteArrayDataSource;
+import org.apache.log4j.Logger;
 
  
 
 public class EmailService
 
 {
+        private final Logger log= Logger.getLogger(EmailService.class.getSimpleName());
+
 
  private EmailConfiguration configuration = null;
 
@@ -65,15 +70,21 @@ public class EmailService
 
  }
 
+   public EmailService(Properties prop) {
+       // this.configuration=prop;
+       log.debug(prop);
+    }
+
   
 
  private Authenticator buildSmtpAuthenticator()
 
  {
+     System.out.println("lo que tengo en las configuraciones "+configuration);
+  String emailId = EmailConfiguration.SMTP_AUTH_USER;
 
-  String emailId = configuration.getProperty(EmailConfiguration.SMTP_AUTH_USER);
-
-  String password = configuration.getProperty(EmailConfiguration.SMTP_AUTH_PWD);
+  String password = EmailConfiguration.SMTP_AUTH_PWD;
+     System.out.println("tengo esto de las propiedades "+emailId + " password "+password );
 
   return new SMTPAuthenticator(emailId, password);
 
@@ -87,6 +98,7 @@ public class EmailService
 
 //  Session session = Session.getDefaultInstance(this.configuration.getProperties(), auth);
 //  Session session =Session.getDefaultInstance(this.configuration.getProperties(),auth );
+     System.out.println("al mandar el mail tengo esto "+this.configuration.getProperties());
   Session session =Session.getInstance(this.configuration.getProperties(),auth );
   
 
@@ -101,7 +113,6 @@ public class EmailService
      {
 
       Message msg = this.buildEmailMessage(session, email);
-
    Transport.send(msg);
 
   }

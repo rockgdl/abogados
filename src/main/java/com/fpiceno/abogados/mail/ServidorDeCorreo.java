@@ -6,6 +6,8 @@
 
 package com.fpiceno.abogados.mail;
 
+import java.util.Properties;
+
 /**
  *
  * @author melizalde
@@ -24,6 +26,17 @@ public class ServidorDeCorreo {
       email = new Email();
       mensaje = new MensajeCorreo();
    }
+
+    ServidorDeCorreo(Properties prop) {
+     
+             configuration = new EmailConfiguration(prop);
+      //cargarConfiguracionMail();
+      emailService = new EmailService(configuration);
+      email = new Email();
+      mensaje = new MensajeCorreo();
+     emailService=new EmailService(configuration);
+     
+    }
 
     public MensajeCorreo getMensaje() {
         return mensaje;
