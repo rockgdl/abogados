@@ -28,10 +28,10 @@ public class Cliente {
     @Column (name = "telefono", columnDefinition = "varchar(11)")
     private String telefono;
     
-    @Column (name = "rfc", columnDefinition = "varchar(12)", unique = true, nullable = false)
+    @Column (name = "rfc", columnDefinition = "varchar(13)", unique = true, nullable = false)
     private String rfc;
     
-    @Column (name = "correo", columnDefinition = "varchar(20)")
+    @Column (name = "correo", columnDefinition = "varchar(30)")
     private String correo;
 
     /**
