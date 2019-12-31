@@ -1,0 +1,6 @@
+agregar metodo envia correo, en login controller en el listener de recuperar contraseña
+
+agregar  campo correo al entity usuario , y modificar las vistas, y poner validaciones para el usuario,
+
+el RFC en clientes no puede ir duplicado, y cuando guardas un cliente limpiar campos
+
