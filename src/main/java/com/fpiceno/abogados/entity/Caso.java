@@ -29,7 +29,7 @@ public class Caso {
     private String concepto;
     
    @Enumerated(EnumType.STRING)
-    private statusCaso status;
+    private Status status;
     
     @Column(name="fechaInicio")
     private Date fechaInicio;
@@ -39,6 +39,9 @@ public class Caso {
     
     @Column(name="tipoPago")
     private tipoPago tipo;
+    
+    @ManyToOne (optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Cliente cliente;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_caso")
@@ -92,14 +95,14 @@ public class Caso {
     /**
      * @return the status
      */
-    public statusCaso getStatus() {
+    public Status getStatus() {
         return status;
     }
 
     /**
      * @param status the status to set
      */
-    public void setStatus(statusCaso status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -157,6 +160,34 @@ public class Caso {
      */
     public void setListaPagos(List<Pago> ListaPagos) {
         this.ListaPagos = ListaPagos;
+    }
+
+    /**
+     * @return the cliente
+     */
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    /**
+     * @param cliente the cliente to set
+     */
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    /**
+     * @return the razonSocial
+     */
+    public RazonSocial getRazonSocial() {
+        return razonSocial;
+    }
+
+    /**
+     * @param razonSocial the razonSocial to set
+     */
+    public void setRazonSocial(RazonSocial razonSocial) {
+        this.razonSocial = razonSocial;
     }
    
 }

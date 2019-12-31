@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import Tools.RazonSocial;
 import Tools.statusCaso;
 import Tools.tipoPago;
 import com.fpiceno.abogados.dao.CasoDao;
+import com.fpiceno.abogados.dao.ClienteDao;
 import com.fpiceno.abogados.dao.mysql.CasoDaoMysql;
+import com.fpiceno.abogados.dao.mysql.ClienteDaoMysql;
 import com.fpiceno.abogados.entity.Caso;
 import com.fpiceno.abogados.entity.Pago;
+import com.fpiceno.abogados.entity.Status;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -22,14 +26,15 @@ import static org.junit.Assert.*;
  */
 public class CasoTest {
     
-//    private Date date = new Date();
-//    public CasoTest() {
-//    }
-//
+    private Date date = new Date();
+    public CasoTest() {
+    }
+
 //    
 //    @Test
 //    public void add(){
 //        CasoDao dao = new CasoDaoMysql();
+//        ClienteDao daoC = new ClienteDaoMysql();
 //        
 //        Pago pago1 = new Pago();
 //        pago1.setConcepto("Pago 1");
@@ -58,10 +63,12 @@ public class CasoTest {
 //        caso.setFechaFin(date);
 //        caso.setFechaInicio(date);
 //        caso.setFechaPago(date);
-//        caso.setStatus(statusCaso.ABONADO);
+//        caso.setStatus(Status.APROBADO);
 //        caso.setTipo(tipoPago.CHEQUE);
 //        caso.getListaPagos().add(pago1);
 //        caso.getListaPagos().add(pago2);
+//        caso.setCliente(daoC.readCliente(1));
+//        caso.setRazonSocial(RazonSocial.FMLSE);
 //        dao.insert(caso);
 //        
 //        Caso casoI = new Caso();
@@ -69,8 +76,10 @@ public class CasoTest {
 //        casoI.setFechaFin(date);
 //        casoI.setFechaInicio(date);
 //        casoI.setFechaPago(date);
-//        casoI.setStatus(statusCaso.ABONADO);
+//        casoI.setStatus(Status.GENERADO);
 //        casoI.setTipo(tipoPago.CHEQUE);
+//        casoI.setCliente(daoC.readCliente(2));
+//        casoI.setRazonSocial(RazonSocial.MDPABOGADOS);
 //        dao.insert(casoI);
 //        
 //        Caso casoII = new Caso();
@@ -78,9 +87,11 @@ public class CasoTest {
 //        casoII.setFechaFin(date);
 //        casoII.setFechaInicio(date);
 //        casoII.setFechaPago(date);
-//        casoII.setStatus(statusCaso.ABONADO);
+//        casoII.setStatus(Status.PENDIENTE);
 //        casoII.setTipo(tipoPago.CHEQUE);
 //        casoII.getListaPagos().add(pago3);
+//        casoII.setRazonSocial(RazonSocial.MLCONSULTORES);
+//        casoII.setCliente(daoC.readCliente(1));
 //        dao.insert(casoII);
 //    }
 //    
