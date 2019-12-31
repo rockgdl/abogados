@@ -18,5 +18,10 @@ public enum Status {
     public Integer getValue() {
         return value;
     }
+    
+    @Override
+    public String toString(){
+        return this.key;
+    }
 
 }
