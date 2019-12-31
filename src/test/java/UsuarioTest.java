@@ -21,7 +21,7 @@ public class UsuarioTest {
     
     public UsuarioTest() {
     }
-    
+//    
 //    @Test
 //    public void addUsuario()
 //    {

@@ -13,8 +13,11 @@ import com.fpiceno.abogados.entity.Cliente;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,6 +34,7 @@ import javafx.scene.input.KeyEvent;
  */
 public class ClienteController implements Initializable {
 
+    @FXML Label lblNombre, lblCorreo, lblRFC, lblTelefono, lblDomicilio;
     @FXML Button btnGuardar;
     @FXML TextField txtNombre, txtTelefono, txtDomicilio, txtRFC, txtCorreo, txtBusqueda;
     @FXML TableView<Cliente> tablaClientes;
@@ -49,7 +53,7 @@ public class ClienteController implements Initializable {
     }
     
     @FXML private void addCliente(ActionEvent event){
-        if(validacionCorreo()){
+        if(verificar()){
             Cliente cliente = new Cliente();
 
             cliente.setId(idCliente);
@@ -75,6 +79,11 @@ public class ClienteController implements Initializable {
                         
             tablaClientes.getItems().clear();
             oblist.addAll(dao.readLike(txtBusqueda.getText()));   
+            
+            if(oblist.size() == 0){
+                oblist.clear();
+                oblist.addAll(dao.readRFC(txtBusqueda.getText()));
+            }
             tablaClientes.setItems(oblist);
         }
     }
@@ -102,22 +111,69 @@ public class ClienteController implements Initializable {
     }
     
     @FXML private void saveCliente(){
-        Cliente cliente = new Cliente();
-        
-        cliente.setId(idCliente);
-        cliente.setCorreo(txtCorreo.getText());
-        cliente.setDomicilio(txtDomicilio.getText());
-        cliente.setNombre(txtNombre.getText());
-        cliente.setRfc(txtRFC.getText());
-        cliente.setTelefono(txtTelefono.getText());
-        
-        ClienteDao dao = new ClienteDaoMysql();
-        dao.update(cliente);
-        
-        btnGuardar.setDisable(true);
-        this.idCliente = 0;
-        obtenerClientes();
+        if (verificar()){
+            Cliente cliente = new Cliente();
+
+            cliente.setId(idCliente);
+            cliente.setCorreo(txtCorreo.getText());
+            cliente.setDomicilio(txtDomicilio.getText());
+            cliente.setNombre(txtNombre.getText());
+            cliente.setRfc(txtRFC.getText());
+            cliente.setTelefono(txtTelefono.getText());
+
+            ClienteDao dao = new ClienteDaoMysql();
+            dao.update(cliente);
+
+            btnGuardar.setDisable(true);
+            this.idCliente = 0;
+            obtenerClientes();
+        }
     }
+    
+    /* VErificar que ningun campo sea nulo y sea correcto*/
+    private boolean verificar(){
+        boolean permitido = true;
+        
+        if(txtNombre.getText().equals("")){
+            lblNombre.setVisible(true);
+            permitido = false;
+        }else{
+            lblNombre.setVisible(false);    
+        }
+        
+        if(txtCorreo.getText().equals("") || !validacionCorreo()){
+            lblCorreo.setVisible(true);
+            permitido = false;
+        }else{
+            lblCorreo.setVisible(false);    
+        }
+        
+        if(txtDomicilio.getText().equals("")){
+            lblDomicilio.setVisible(true);
+            permitido = false;
+        }else{
+            lblDomicilio.setVisible(false);    
+        }
+        
+        if(txtRFC.getText().equals("")){
+            lblRFC.setVisible(true);
+            permitido = false;
+        }else{
+            lblRFC.setVisible(false);    
+        }
+        
+        try{
+            Integer.parseInt(txtTelefono.getText());
+            lblTelefono.setVisible(false);
+        }catch(NumberFormatException ex){
+            permitido = false;
+            lblTelefono.setVisible(true);
+        }
+        
+        
+        return permitido;
+    }
+    
     
     private void obtenerClientes(){
         tablaClientes.getItems().clear();
@@ -150,10 +206,35 @@ public class ClienteController implements Initializable {
             alert.setContentText("El formato de correo es invalido");
             alert.showAndWait();
             return false;
+        }   
+    }
+    
+    @FXML private void LimitarCaracteres(KeyEvent event){
+        if(txtNombre.getText().length() > 30){
+            txtNombre.setText(txtNombre.getText().substring(0, 30));
+            txtNombre.positionCaret(30);
+        }
+        
+        if(txtRFC.getText().length() > 13){
+            txtRFC.setText(txtRFC.getText().substring(0, 13));
+            txtRFC.positionCaret(13);
+        }
+        
+        if(txtCorreo.getText().length() > 30){
+            txtCorreo.setText(txtCorreo.getText().substring(0, 30));
+            txtCorreo.positionCaret(30);
+        }
+        
+        if(txtDomicilio.getText().length() > 40){
+            txtNombre.setText(txtNombre.getText().substring(0, 40));
+            txtNombre.positionCaret(40);
+        }
+        
+        if(txtTelefono.getText().length() > 10){
+            txtTelefono.setText(txtTelefono.getText().substring(0, 10));
+            txtTelefono.positionCaret(10);
         }
         
     }
-    
-    
     
 }

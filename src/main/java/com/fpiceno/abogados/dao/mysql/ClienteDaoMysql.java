@@ -69,13 +69,20 @@ public class ClienteDaoMysql implements ClienteDao{
     @Override
     public List<Cliente> readLike(String cadena) {
         Criteria cr = getSession().createCriteria(Cliente.class);
-        cr.add(Restrictions.like("nombre", cadena+"%"));
+        cr.add(Restrictions.like("nombre", "%"+cadena+"%"));
         return cr.list();
     }
     
     public Session getSession() {
 
         return HibernateUtil.getSession();
+    }
+
+    @Override
+    public List<Cliente> readRFC(String cadena) {
+        Criteria cr = getSession().createCriteria(Cliente.class);
+        cr.add(Restrictions.like("rfc", "%"+cadena+"%"));
+        return cr.list();
     }
     
 }

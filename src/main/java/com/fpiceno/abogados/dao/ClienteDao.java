@@ -19,6 +19,7 @@ public interface ClienteDao {
     public List<Cliente> read();
     public Cliente readCliente(int code);
     public List<Cliente> readLike(String cadena);
+    public List<Cliente> readRFC(String cadena);
 
     
 }
