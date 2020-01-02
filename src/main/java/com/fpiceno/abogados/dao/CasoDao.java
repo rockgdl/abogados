@@ -18,6 +18,7 @@ public interface CasoDao {
     public void update(Caso caso);
     public List<Caso> read();
     public Caso readCaso(int code);
-    public List<Caso> readLike(String cadena);
+    public List<Caso> readRazonSocial(String cadena);
+    public List<Caso> readStatus(String cadena);
 
 }

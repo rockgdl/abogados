@@ -40,6 +40,9 @@ public class Caso {
     @Column(name="tipoPago")
     private tipoPago tipo;
     
+    @Column(name = "serie", columnDefinition = "varchar(20)")
+    private String serie;
+    
     @ManyToOne (optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cliente cliente;
     
@@ -188,6 +191,20 @@ public class Caso {
      */
     public void setRazonSocial(RazonSocial razonSocial) {
         this.razonSocial = razonSocial;
+    }
+
+    /**
+     * @return the serie
+     */
+    public String getSerie() {
+        return serie;
+    }
+
+    /**
+     * @param serie the serie to set
+     */
+    public void setSerie(String serie) {
+        this.serie = serie;
     }
    
 }

@@ -66,9 +66,16 @@ public class CasoDaoMysql implements CasoDao{
     }
     
     @Override
-    public List<Caso> readLike(String cadena) {
+    public List<Caso> readRazonSocial(String cadena) {
         Criteria cr = getSession().createCriteria(Caso.class);
-        cr.add(Restrictions.like("nombre", cadena+"%"));
+        cr.add(Restrictions.like("razonSocial", "%"+cadena+"%"));
+        return cr.list();
+    }
+    
+    @Override
+    public List<Caso> readStatus(String cadena) {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        cr.add(Restrictions.like("status", "%"+cadena+"%"));
         return cr.list();
     }
     

@@ -5,19 +5,36 @@ package com.fpiceno.abogados.controller;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import Tools.RazonSocial;
 import Tools.tipoPago;
 import com.fpiceno.abogados.dao.CasoDao;
+import com.fpiceno.abogados.dao.ClienteDao;
 import com.fpiceno.abogados.dao.mysql.CasoDaoMysql;
+import com.fpiceno.abogados.dao.mysql.ClienteDaoMysql;
 import com.fpiceno.abogados.entity.Caso;
+import com.fpiceno.abogados.entity.Cliente;
+import com.fpiceno.abogados.entity.Status;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.Animation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -25,6 +42,11 @@ import javafx.scene.input.MouseEvent;
  * @author gnr_a
  */
 public class CasoController implements Initializable {
+    
+    @FXML RadioButton btnRazonSocial, btnCliente, btnId;
+    @FXML ComboBox boxRazonSocialBusqueda, boxStatusBusqueda;
+    @FXML ComboBox boxTipoPago, boxRazonSocial;
+    @FXML ComboBox<Cliente> boxClienteBusqueda, boxCliente;
     
     @FXML TableView<Caso> tablaCaso;
     @FXML TableColumn <Caso, String> ColumnIngresos, ColumnRazonSocial, ColumnStatus, ColumnCliente, ColumnTipoPago;
@@ -36,9 +58,27 @@ public class CasoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         obtenerCasos();
+        
+        
+        ClienteDao daoc = new ClienteDaoMysql();
+        boxCliente.setItems(FXCollections.observableArrayList(daoc.read()));
+        boxClienteBusqueda.setItems(FXCollections.observableArrayList(daoc.read()));
+        boxRazonSocialBusqueda.setItems(FXCollections.observableArrayList(RazonSocial.values()));
+        boxRazonSocial.setItems(FXCollections.observableArrayList(RazonSocial.values()));
+        boxStatusBusqueda.setItems(FXCollections.observableArrayList(Status.values()));
+        boxTipoPago.setItems(FXCollections.observableArrayList(tipoPago.values()));
+        
+        
+
+//Agrupar Radiobuttons
+        ToggleGroup grupo = new ToggleGroup();
+        btnCliente.setToggleGroup(grupo);
+        btnId.setToggleGroup(grupo);
+        btnRazonSocial.setToggleGroup(grupo);   
     }
     
     private void obtenerCasos(){
+        tablaCaso.getItems().clear();
         CasoDao dao = new CasoDaoMysql();
         
         oblistCaso.addAll(dao.read());
@@ -53,7 +93,70 @@ public class CasoController implements Initializable {
     }
     
     @FXML private void AbrirPagos(MouseEvent event){
+                
+//        tablaCaso.setRowFactory( tv -> { 
+//            TableRow<Caso> row = new TableRow<>();
+//            row.setOnMouseClicked(ev ->{
+//                if (event.getClickCount() == 2 && (!row.isEmpty())){
+//                    Caso caso = row.getItem();
+//                    System.out.println(caso.getId());
+//                }else{
+//                    System.out.println("No se que hace xD");
+//                }
+//            });
+//            return row;
+//        });
+        
+        Caso caso = tablaCaso.getSelectionModel().getSelectedItem();
+        if (event.getClickCount() == 2 && caso != null){
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Pago.fxml"));
+            Parent root;
+            try {
+                root = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));  
+                stage.show();
+                
+            } catch (IOException ex) {
+                Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+           
+            System.out.println("No entro");
+        }
+    }
+    
+    @FXML private void buscar(ActionEvent event){
+        Cliente cliente = boxClienteBusqueda.getValue();
+        System.out.println(boxClienteBusqueda.getValue());
+    }
+    
+    @FXML private void SeleccionarBusqueda(ActionEvent event){
         
     }
+    
+    @FXML private void Eliminar(ActionEvent event){
+        CasoDao dao = new CasoDaoMysql();
+        
+        dao.delete(tablaCaso.getSelectionModel().getSelectedItem());
+        
+        obtenerCasos();
+    }
+    
+    @FXML private void nuevoCliente(ActionEvent event){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Cliente.fxml"));
+        Parent root;
+        try {
+            root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));  
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
     
 }
