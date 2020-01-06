@@ -7,6 +7,7 @@ package com.fpiceno.abogados.dao.mysql;
 
 import com.fpiceno.abogados.config.HibernateUtil;
 import com.fpiceno.abogados.dao.PagoDao;
+import com.fpiceno.abogados.entity.Caso;
 import com.fpiceno.abogados.entity.Pago;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -69,6 +70,14 @@ public class PagoDaoMysql implements PagoDao{
     public List<Pago> readLike(String cadena) {
         Criteria cr = getSession().createCriteria(Pago.class);
         cr.add(Restrictions.like("nombre", cadena+"%"));
+        return cr.list();
+    }
+    
+    @Override
+    public List<Pago> readCase(Caso caso){
+        Criteria cr = getSession().createCriteria(Pago.class);
+        cr.add(Restrictions.eq("caso", caso));
+
         return cr.list();
     }
     

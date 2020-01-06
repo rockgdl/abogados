@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="870.0" prefWidth="943.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fpiceno.abogados.controller.UsuariosController">
    <children>
-      <TextField fx:id="txtNickname" layoutX="181.0" layoutY="157.0" />
+      <TextField fx:id="txtNickname" layoutX="181.0" layoutY="157.0" onKeyReleased="#limitarCaracteres" />
       <TextField fx:id="txtSearch" layoutX="536.0" layoutY="395.0" prefHeight="31.0" prefWidth="260.0" />
       <PasswordField fx:id="txtPassword" layoutX="181.0" layoutY="206.0" />
       <PasswordField fx:id="txtConfirmar" layoutX="181.0" layoutY="256.0" />

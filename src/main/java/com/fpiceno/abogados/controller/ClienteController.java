@@ -66,6 +66,7 @@ public class ClienteController implements Initializable {
             ClienteDao dao = new ClienteDaoMysql();
             dao.insert(cliente);
             obtenerClientes();
+            limpiar();
         }else{
             System.out.println("ERROR");
         }
@@ -127,6 +128,7 @@ public class ClienteController implements Initializable {
             btnGuardar.setDisable(true);
             this.idCliente = 0;
             obtenerClientes();
+            limpiar();
         }
     }
     
@@ -237,4 +239,11 @@ public class ClienteController implements Initializable {
         
     }
     
+    private void limpiar(){
+        txtCorreo.clear();
+        txtDomicilio.clear();
+        txtNombre.clear();
+        txtRFC.clear();
+        txtTelefono.clear();
+    }
 }

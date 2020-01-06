@@ -10,6 +10,7 @@ import com.fpiceno.abogados.dao.CasoDao;
 import com.fpiceno.abogados.entity.Caso;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -79,9 +80,29 @@ public class CasoDaoMysql implements CasoDao{
         return cr.list();
     }
     
+    @Override
+    public List<Caso> readFilter(Caso caso){
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.eq("status", caso.getStatus()));
+
+        return cr.list();
+        
+//        Query query = getSession().createQuery("SELECT c.* FROM Caso c INNER JOIN cliente cl ON c.cliente_id = cl.id AND c.razonSocial =:rs AND c.status =: sta");
+//        
+//        query.setParameter("sta", caso.getStatus());
+//        query.setParameter("rs", caso.getRazonSocial());
+//        
+//        query.executeUpdate();
+//        
+//        return query.list();
+    }
+    
     public Session getSession() {
 
         return HibernateUtil.getSession();
     }
+    
     
 }

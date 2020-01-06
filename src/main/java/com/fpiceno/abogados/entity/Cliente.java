@@ -33,6 +33,7 @@ public class Cliente {
     
     @Column (name = "correo", columnDefinition = "varchar(30)")
     private String correo;
+    
 
     /**
      * @return the id
@@ -120,6 +121,6 @@ public class Cliente {
     
     @Override
     public String toString(){
-        return this.nombre;
+        return this.id + "-" + this.nombre;
     }
 }

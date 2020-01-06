@@ -52,6 +52,9 @@ public class Caso {
     
     @Enumerated(EnumType.STRING)
     private RazonSocial razonSocial;
+    
+    @Transient
+    private String nombreCliente;
 
     /**
      * @return the id
@@ -205,6 +208,13 @@ public class Caso {
      */
     public void setSerie(String serie) {
         this.serie = serie;
+    }
+
+    /**
+     * @return the nombreCliente
+     */
+    public String getNombreCliente() {
+        return cliente.getNombre();
     }
    
 }

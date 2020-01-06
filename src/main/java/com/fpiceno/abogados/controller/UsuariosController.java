@@ -87,23 +87,11 @@ public class UsuariosController implements Initializable {
         usuario.setPassword(txtPassword.getText());
         usuario.setFechaCreacion(date);
         usuario.setRol((Roles) boxRol.getSelectionModel().getSelectedItem());
-        System.out.println(usuario.getRol());
         
-        if(btnActivoSi.isSelected()){
-            usuario.setActivo(true);
-        }else if (btnActivoNo.isSelected()){
-            usuario.setActivo(false);
-        }
-        
-        if(usuario.getPassword().equals(txtConfirmar.getText())){
+        if(verificarCampos()){
             dao.insert(usuario);
-            System.out.println("Claves iguales");
-            obtenerUsuarios();
-        }else{
-            //Alert.AlertType.INFORMATION;
-            
+            obtenerUsuarios();   
         }
-        
     }
     
     @FXML private void deleteUser(ActionEvent event){
@@ -126,6 +114,50 @@ public class UsuariosController implements Initializable {
     
     private void obtenerBusqueda(){
         
+    }
+    
+    @FXML private void limitarCaracteres(KeyEvent event){
+        if(txtNickname.getText().length() > 20){
+            txtNickname.setText(txtNickname.getText().substring(0, 20));
+            txtNickname.positionCaret(20);
+        }
+    }
+    
+    private boolean verificarCampos(){
+        boolean permitido = true;
+        
+        if(txtNickname.getText().equals("")){
+            permitido = false;
+            Alert alerta  = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("¡Error!");
+            alerta.setHeaderText("El usuario no puede quedar vacio");
+            alerta.show();
+        }
+        
+        if (txtPassword.getText().equals("")){
+            permitido = false;
+            Alert alerta  = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("¡Error!");
+            alerta.setHeaderText("Ingrese una contraseña");
+            alerta.show();
+            
+        }else if (!txtConfirmar.getText().equals(txtPassword.getText())){
+            permitido = false;
+            Alert alerta  = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("¡Error!");
+            alerta.setHeaderText("La contraseña no es la misma");
+            alerta.show();
+        }
+        
+        if (boxRol.getSelectionModel().isEmpty()){
+            permitido = false;
+            Alert alerta  = new Alert(Alert.AlertType.INFORMATION);
+                alerta.setTitle("¡Error!");
+                alerta.setHeaderText("Seleccione un rol");
+                alerta.show();
+        }
+            
+       return permitido;
     }
     
 }

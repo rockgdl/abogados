@@ -5,6 +5,7 @@
  */
 package com.fpiceno.abogados.dao;
 
+import com.fpiceno.abogados.entity.Caso;
 import com.fpiceno.abogados.entity.Pago;
 import java.util.List;
 
@@ -19,4 +20,5 @@ public interface PagoDao {
     public List<Pago> read();
     public Pago readPayment(int code);
     public List<Pago> readLike(String cadena);
+    public List<Pago> readCase(Caso caso);
 }

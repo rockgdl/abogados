@@ -11,8 +11,10 @@ import com.fpiceno.abogados.dao.CasoDao;
 import com.fpiceno.abogados.dao.ClienteDao;
 import com.fpiceno.abogados.dao.mysql.CasoDaoMysql;
 import com.fpiceno.abogados.dao.mysql.ClienteDaoMysql;
+import com.fpiceno.abogados.entity.AutoCompleteBox;
 import com.fpiceno.abogados.entity.Caso;
 import com.fpiceno.abogados.entity.Cliente;
+import com.fpiceno.abogados.entity.Pago;
 import com.fpiceno.abogados.entity.Status;
 import java.io.IOException;
 import java.net.URL;
@@ -43,10 +45,12 @@ import javafx.stage.Stage;
  */
 public class CasoController implements Initializable {
     
-    @FXML RadioButton btnRazonSocial, btnCliente, btnId;
+    
     @FXML ComboBox boxRazonSocialBusqueda, boxStatusBusqueda;
     @FXML ComboBox boxTipoPago, boxRazonSocial;
-    @FXML ComboBox<Cliente> boxClienteBusqueda, boxCliente;
+    @FXML ComboBox boxClienteBusqueda, boxCliente;
+    
+    @FXML TextArea txtConcepto;
     
     @FXML TableView<Caso> tablaCaso;
     @FXML TableColumn <Caso, String> ColumnIngresos, ColumnRazonSocial, ColumnStatus, ColumnCliente, ColumnTipoPago;
@@ -68,13 +72,9 @@ public class CasoController implements Initializable {
         boxStatusBusqueda.setItems(FXCollections.observableArrayList(Status.values()));
         boxTipoPago.setItems(FXCollections.observableArrayList(tipoPago.values()));
         
-        
-
-//Agrupar Radiobuttons
-        ToggleGroup grupo = new ToggleGroup();
-        btnCliente.setToggleGroup(grupo);
-        btnId.setToggleGroup(grupo);
-        btnRazonSocial.setToggleGroup(grupo);   
+        new AutoCompleteBox(boxClienteBusqueda);
+        new AutoCompleteBox(boxCliente);
+    
     }
     
     private void obtenerCasos(){
@@ -86,7 +86,7 @@ public class CasoController implements Initializable {
         ColumnId.setCellValueFactory(new PropertyValueFactory("id"));
         ColumnRazonSocial.setCellValueFactory(new PropertyValueFactory("razonSocial"));
         ColumnStatus.setCellValueFactory(new PropertyValueFactory("status"));
-        ColumnCliente.setCellValueFactory(new PropertyValueFactory("cliente"));
+        ColumnCliente.setCellValueFactory(new PropertyValueFactory("nombreCliente"));
         ColumnTipoPago.setCellValueFactory(new PropertyValueFactory("tipo"));
         
         tablaCaso.setItems(oblistCaso);
@@ -108,13 +108,23 @@ public class CasoController implements Initializable {
 //        });
         
         Caso caso = tablaCaso.getSelectionModel().getSelectedItem();
+        
         if (event.getClickCount() == 2 && caso != null){
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Pago.fxml"));
-            Parent root;
+            
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Parent root = null;
+            Stage stage = new Stage();
+            
             try {
-                root = (Parent) fxmlLoader.load();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));  
+                
+                root = (Parent) fxmlLoader.load(getClass().getResource("/fxml/Pago.fxml").openStream());
+                
+                stage.setScene(new Scene(root));
+                
+                PagoController controlador = (PagoController) fxmlLoader.getController();
+                controlador.setPagos(caso.getListaPagos());
+                controlador.obtenerPagos();
+                
                 stage.show();
                 
             } catch (IOException ex) {
@@ -127,8 +137,24 @@ public class CasoController implements Initializable {
     }
     
     @FXML private void buscar(ActionEvent event){
-        Cliente cliente = boxClienteBusqueda.getValue();
-        System.out.println(boxClienteBusqueda.getValue());
+        //Cliente cliente = boxClienteBusqueda.getValue();
+       String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
+       int idCliente = Integer.parseInt(cadenaCliente[0]);
+        System.out.println(idCliente);
+        
+        Caso caso = new Caso();
+        
+        ClienteDao daoClient = new ClienteDaoMysql();
+        caso.setCliente(daoClient.readCliente(idCliente));
+        caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
+        caso.setStatus((Status) boxStatusBusqueda.getValue());
+        
+        CasoDao dao = new CasoDaoMysql();
+        
+        tablaCaso.getItems().clear();
+        oblistCaso.addAll(dao.readFilter(caso));
+        
+        tablaCaso.setItems(oblistCaso);
     }
     
     @FXML private void SeleccionarBusqueda(ActionEvent event){
@@ -158,5 +184,30 @@ public class CasoController implements Initializable {
         
     }
 
+    @FXML private void limpiarConsulta(ActionEvent event){
+        obtenerCasos();
+    }
     
+    @FXML private void agregarCaso(ActionEvent event){
+        Date date = new Date();
+        Caso caso = new Caso();
+        
+        //Obtener el id del cliente
+        String[] cadenaCliente = boxCliente.getEditor().getText().split("\\-");
+        int idCliente = Integer.parseInt(cadenaCliente[0]);
+        
+        //Pasar parametros
+        ClienteDao daoC = new ClienteDaoMysql();
+        
+        caso.setCliente(daoC.readCliente(idCliente));
+        caso.setFechaInicio(date);
+        caso.setRazonSocial((RazonSocial)boxRazonSocial.getValue());
+        caso.setTipo((tipoPago) boxTipoPago.getValue());
+        caso.setStatus(Status.APROBADO);
+        caso.setConcepto(txtConcepto.getText());
+        
+        CasoDao dao = new CasoDaoMysql();
+        
+        dao.insert(caso);
+    }
 }
