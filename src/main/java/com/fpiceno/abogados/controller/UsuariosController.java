@@ -13,6 +13,7 @@ import com.fpiceno.abogados.dao.mysql.UsuarioDaoMysql;
 import java.net.URL;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 
@@ -96,14 +98,21 @@ public class UsuariosController implements Initializable {
     
     @FXML private void deleteUser(ActionEvent event){
         Usuario usuario = tablaUsuario.getSelectionModel().getSelectedItem();
-        UsuarioDao dao = new UsuarioDaoMysql();
         
-        //usuario.setNombre(txtNombre.getText());
-        usuario.setNickName(txtNickname.getText());
-        usuario.setPassword(txtPassword.getText());
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("CONFIRMACION");
+        alert.setHeaderText("Se va a eliminar al usuario " + usuario.getNickName());
+        alert.setContentText("¿Seguro que desea eliminarlo?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            UsuarioDao dao = new UsuarioDaoMysql();
+            dao.delete(usuario);
+            obtenerUsuarios();
+        } else {
+            
+        }
         
-        dao.delete(usuario);
-        obtenerUsuarios();
     }
     
     @FXML private void seacrh(KeyEvent evet){

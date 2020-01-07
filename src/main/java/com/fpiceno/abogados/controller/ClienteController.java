@@ -12,6 +12,7 @@ import com.fpiceno.abogados.entity.Cliente;
 
 import java.net.URL;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
@@ -23,9 +24,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -42,6 +46,8 @@ public class ClienteController implements Initializable {
     ObservableList <Cliente> oblist= FXCollections.observableArrayList();
     
     int idCliente = 0;
+    
+    private CasoController casoController;
     
     /**
      * Initializes the controller class.
@@ -67,6 +73,11 @@ public class ClienteController implements Initializable {
             dao.insert(cliente);
             obtenerClientes();
             limpiar();
+            
+            if(getCasoController() != null){
+                getCasoController().boxCliente.getItems().add(cliente);
+                getCasoController().boxClienteBusqueda.getItems().add(cliente);
+            }
         }else{
             System.out.println("ERROR");
         }
@@ -91,9 +102,21 @@ public class ClienteController implements Initializable {
     
     @FXML private void deleteCliente(ActionEvent event){
         Cliente cliente = tablaClientes.getSelectionModel().getSelectedItem();
-        ClienteDao dao = new ClienteDaoMysql();
-        dao.delete(cliente);
-        obtenerClientes();
+        
+        
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("CONFIRMACION");
+        alert.setHeaderText("Se va a eliminar al cliente " + cliente.getNombre());
+        alert.setContentText("¿Seguro que desea eliminarlo?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            ClienteDao dao = new ClienteDaoMysql();
+            dao.delete(cliente);
+            obtenerClientes();
+        } else {
+            
+        }
     }
     
     @FXML private void updateCliente(ActionEvent evet){
@@ -129,6 +152,17 @@ public class ClienteController implements Initializable {
             this.idCliente = 0;
             obtenerClientes();
             limpiar();
+        }
+    }
+    
+    //Cuando se manda el controlador de caso a este mismo le regresamos el valor del cliente que queremos abir para que se 
+    //imprima en la pantalla de caso segun el cliente seleccionado
+    @FXML private void retornarCliente(MouseEvent event){
+        Cliente cliente = tablaClientes.getSelectionModel().getSelectedItem();
+        
+        if (event.getClickCount() == 2 && cliente != null){
+            getCasoController().obtenerCliente(cliente);
+           ((Node)(event.getSource())).getScene().getWindow().hide(); 
         }
     }
     
@@ -246,4 +280,19 @@ public class ClienteController implements Initializable {
         txtRFC.clear();
         txtTelefono.clear();
     }
+
+    /**
+     * @return the casoController
+     */
+    public CasoController getCasoController() {
+        return casoController;
+    }
+
+    /**
+     * @param casoController the casoController to set
+     */
+    public void setCasoController(CasoController casoController) {
+        this.casoController = casoController;
+    }
+
 }

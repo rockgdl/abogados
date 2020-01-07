@@ -174,6 +174,8 @@ public class CasoController implements Initializable {
         Parent root;
         try {
             root = (Parent) fxmlLoader.load();
+            ClienteController clienteController = (ClienteController) fxmlLoader.getController();
+            clienteController.setCasoController(this);
             Stage stage = new Stage();
             stage.setScene(new Scene(root));  
             stage.show();
@@ -209,5 +211,10 @@ public class CasoController implements Initializable {
         CasoDao dao = new CasoDaoMysql();
         
         dao.insert(caso);
+        obtenerCasos();
+    }
+    
+    public void obtenerCliente(Cliente cliente){
+        boxCliente.setValue(cliente);
     }
 }
