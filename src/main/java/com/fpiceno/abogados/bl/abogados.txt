@@ -1,11 +1,26 @@
 agregar metodo envia correo, en login controller en el listener de recuperar contraseña
 
+/**********Usuarios********
 agregar  campo correo al entity usuario , y modificar las vistas, y poner validaciones para el usuario,
+el usuario hay que hacer una busqueda por correo para poder recuperar la contraseña 
+poner por default el checkbox en activo 
 
-el RFC en clientes no puede ir duplicado, y cuando guardas un cliente limpiar campos
+*************Clientes************
+ cuando se edita un cliente deshabilitar el boton de agregar y falta las vistas que mande los mensajes de las excepciones, cualquier excepcion debe saltar a la pantalla
+y guardar en los logs 
+si no se tiene seleccionado un item en la tabla de clientes no debe poderse eliminar ni editar, deshabilitar los botones si no hay ningun cliente seleccionado 
+
+
+*********** casos********
+la tabla de busqueda esta bien principalmente, poner a un lado el de añadir caso un boton y que para el llenado de casos sea en una ventana emergente
+ falta agregar el numero de pagos y la fecha tentativa, se abre la pantalla que acordamos 
+
+el RFC en clientes no puede ir duplicado (FALTA la vista la validacion)
 
 Factura entity
 id, concepto, Caso, fechaEmision ,numFactura, rep (solo se que es int), nombreCliente (sale del caso getCliente String),cantidad,
 iva, total,moneda, fechaPago,Status, Region(int), Serie(creo que es enum pero ponglo String)
 
 Los filtros de Factura son por razonSocial (enum de  abogados) y por mes
+
+los nickname de usuarios no puede repetirse tampoco falta alerta de confirmacion
