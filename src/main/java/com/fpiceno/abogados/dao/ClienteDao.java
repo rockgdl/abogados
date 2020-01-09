@@ -6,6 +6,7 @@
 package com.fpiceno.abogados.dao;
 
 import com.fpiceno.abogados.entity.Cliente;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  * @author gnr_a
  */
 public interface ClienteDao {
-    public void insert(Cliente cliente);
+    public void insert(Cliente cliente)throws SQLIntegrityConstraintViolationException;
     public void delete(Cliente cliente);
     public void update(Cliente cliente);
     public List<Cliente> read();

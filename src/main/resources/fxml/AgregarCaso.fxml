@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="511.0" prefWidth="862.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fpiceno.abogados.controller.AgregarCasoController">
+   <children>
+      <Pane layoutY="3.0" prefHeight="502.0" prefWidth="862.0">
+         <children>
+            <ComboBox fx:id="boxCliente" layoutX="21.0" layoutY="64.0" prefHeight="31.0" prefWidth="298.0" />
+            <Button fx:id="nuevoCliente" layoutX="340.0" layoutY="61.0" mnemonicParsing="false" onAction="#nuevoCliente" text="Nuevo" />
+            <Button layoutX="494.0" layoutY="161.0" mnemonicParsing="false" onAction="#agregarCaso" text="Agregar" />
+            <TextArea fx:id="txtConcepto" layoutX="21.0" layoutY="152.0" prefHeight="183.0" prefWidth="411.0" />
+            <ComboBox fx:id="boxTipoPago" layoutX="646.0" layoutY="62.0" prefHeight="31.0" prefWidth="190.0" />
+            <ComboBox fx:id="boxRazonSocial" layoutX="436.0" layoutY="62.0" prefHeight="31.0" prefWidth="197.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

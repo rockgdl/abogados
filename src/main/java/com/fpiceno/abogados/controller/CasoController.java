@@ -47,10 +47,7 @@ public class CasoController implements Initializable {
     
     
     @FXML ComboBox boxRazonSocialBusqueda, boxStatusBusqueda;
-    @FXML ComboBox boxTipoPago, boxRazonSocial;
-    @FXML ComboBox boxClienteBusqueda, boxCliente;
-    
-    @FXML TextArea txtConcepto;
+    @FXML ComboBox boxClienteBusqueda;
     
     @FXML TableView<Caso> tablaCaso;
     @FXML TableColumn <Caso, String> ColumnIngresos, ColumnRazonSocial, ColumnStatus, ColumnCliente, ColumnTipoPago;
@@ -65,19 +62,17 @@ public class CasoController implements Initializable {
         
         
         ClienteDao daoc = new ClienteDaoMysql();
-        boxCliente.setItems(FXCollections.observableArrayList(daoc.read()));
+        
         boxClienteBusqueda.setItems(FXCollections.observableArrayList(daoc.read()));
         boxRazonSocialBusqueda.setItems(FXCollections.observableArrayList(RazonSocial.values()));
-        boxRazonSocial.setItems(FXCollections.observableArrayList(RazonSocial.values()));
         boxStatusBusqueda.setItems(FXCollections.observableArrayList(Status.values()));
-        boxTipoPago.setItems(FXCollections.observableArrayList(tipoPago.values()));
         
         new AutoCompleteBox(boxClienteBusqueda);
-        new AutoCompleteBox(boxCliente);
+        
     
     }
     
-    private void obtenerCasos(){
+    public void obtenerCasos(){
         tablaCaso.getItems().clear();
         CasoDao dao = new CasoDaoMysql();
         
@@ -169,13 +164,17 @@ public class CasoController implements Initializable {
         obtenerCasos();
     }
     
-    @FXML private void nuevoCliente(ActionEvent event){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Cliente.fxml"));
+    @FXML private void limpiarConsulta(ActionEvent event){
+        obtenerCasos();
+    }
+    
+    @FXML private void nuevoCaso(ActionEvent event){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AgregarCaso.fxml"));
         Parent root;
         try {
             root = (Parent) fxmlLoader.load();
-            ClienteController clienteController = (ClienteController) fxmlLoader.getController();
-            clienteController.setCasoController(this);
+            AgregarCasoController agregarCasoController = (AgregarCasoController) fxmlLoader.getController();
+            agregarCasoController.setCasoController(this);
             Stage stage = new Stage();
             stage.setScene(new Scene(root));  
             stage.show();
@@ -183,38 +182,7 @@ public class CasoController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }
-
-    @FXML private void limpiarConsulta(ActionEvent event){
-        obtenerCasos();
     }
     
-    @FXML private void agregarCaso(ActionEvent event){
-        Date date = new Date();
-        Caso caso = new Caso();
-        
-        //Obtener el id del cliente
-        String[] cadenaCliente = boxCliente.getEditor().getText().split("\\-");
-        int idCliente = Integer.parseInt(cadenaCliente[0]);
-        
-        //Pasar parametros
-        ClienteDao daoC = new ClienteDaoMysql();
-        
-        caso.setCliente(daoC.readCliente(idCliente));
-        caso.setFechaInicio(date);
-        caso.setRazonSocial((RazonSocial)boxRazonSocial.getValue());
-        caso.setTipo((tipoPago) boxTipoPago.getValue());
-        caso.setStatus(Status.APROBADO);
-        caso.setConcepto(txtConcepto.getText());
-        
-        CasoDao dao = new CasoDaoMysql();
-        
-        dao.insert(caso);
-        obtenerCasos();
-    }
     
-    public void obtenerCliente(Cliente cliente){
-        boxCliente.setValue(cliente);
-    }
 }

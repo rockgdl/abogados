@@ -11,10 +11,13 @@ import com.fpiceno.abogados.entity.Cliente;
 
 
 import java.net.URL;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.beans.value.ChangeListener;
@@ -47,7 +50,7 @@ public class ClienteController implements Initializable {
     
     int idCliente = 0;
     
-    private CasoController casoController;
+    private AgregarCasoController agregarCasoController;
     
     /**
      * Initializes the controller class.
@@ -60,23 +63,27 @@ public class ClienteController implements Initializable {
     
     @FXML private void addCliente(ActionEvent event){
         if(verificar()){
-            Cliente cliente = new Cliente();
-
-            cliente.setId(idCliente);
-            cliente.setCorreo(txtCorreo.getText());
-            cliente.setDomicilio(txtDomicilio.getText());
-            cliente.setNombre(txtNombre.getText());
-            cliente.setRfc(txtRFC.getText());
-            cliente.setTelefono(txtTelefono.getText());
-
-            ClienteDao dao = new ClienteDaoMysql();
-            dao.insert(cliente);
-            obtenerClientes();
-            limpiar();
-            
-            if(getCasoController() != null){
-                getCasoController().boxCliente.getItems().add(cliente);
-                getCasoController().boxClienteBusqueda.getItems().add(cliente);
+            try {
+                Cliente cliente = new Cliente();
+                
+                cliente.setId(idCliente);
+                cliente.setCorreo(txtCorreo.getText());
+                cliente.setDomicilio(txtDomicilio.getText());
+                cliente.setNombre(txtNombre.getText());
+                cliente.setRfc(txtRFC.getText());
+                cliente.setTelefono(txtTelefono.getText());
+                
+                ClienteDao dao = new ClienteDaoMysql();
+                dao.insert(cliente);
+                obtenerClientes();
+                limpiar();
+                
+                if(getAgregarCasoController() != null){
+                    getAgregarCasoController().boxCliente.getItems().add(cliente);
+                    //getAgregarCasoController().boxClienteBusqueda.getItems().add(cliente);
+                }
+            } catch (SQLIntegrityConstraintViolationException ex) {
+                Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
             System.out.println("ERROR");
@@ -161,7 +168,7 @@ public class ClienteController implements Initializable {
         Cliente cliente = tablaClientes.getSelectionModel().getSelectedItem();
         
         if (event.getClickCount() == 2 && cliente != null){
-            getCasoController().obtenerCliente(cliente);
+            getAgregarCasoController().obtenerCliente(cliente);
            ((Node)(event.getSource())).getScene().getWindow().hide(); 
         }
     }
@@ -284,15 +291,15 @@ public class ClienteController implements Initializable {
     /**
      * @return the casoController
      */
-    public CasoController getCasoController() {
-        return casoController;
+    public AgregarCasoController getAgregarCasoController() {
+        return agregarCasoController;
     }
 
     /**
      * @param casoController the casoController to set
      */
-    public void setCasoController(CasoController casoController) {
-        this.casoController = casoController;
+    public void setAgregarCasoController(AgregarCasoController agregarCasoController) {
+        this.agregarCasoController = agregarCasoController;
     }
 
 }

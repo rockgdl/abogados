@@ -9,6 +9,7 @@
             </goals>
             <properties>
                 <runfx.args>-cp %classpath ${mainClass}</runfx.args>
+                <skipTests>true</skipTests>
             </properties>
         </action>
         <action>
@@ -70,6 +71,22 @@
                 <goal>clean</goal>
             </goals>
             <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </action>
+        <action>
+            <actionName>run.single.main</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
+            </goals>
+            <properties>
+                <exec.args>-classpath %classpath ${packageClassName}</exec.args>
+                <exec.executable>java</exec.executable>
+                <exec.classpathScope>${classPathScope}</exec.classpathScope>
                 <skipTests>true</skipTests>
             </properties>
         </action>        

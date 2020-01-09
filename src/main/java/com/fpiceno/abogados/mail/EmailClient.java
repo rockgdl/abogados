@@ -42,7 +42,7 @@ public class EmailClient
 	 
 	 mensaje.setText("hola mundo");
 	 Email email=new Email();
-	 email.setFrom("fpiceno@gmail.com");
+	 email.setFrom("fpiceno87@gmail.com");
 	 email.setTo("metalgdl15@gmail.com");
 	 email.setMimeType("text/html; charset=utf-8");
 	 email.setText(mensaje.getText());
