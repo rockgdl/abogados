@@ -6,21 +6,25 @@
 package com.fpiceno.abogados.dao;
 
 import com.fpiceno.abogados.entity.Cliente;
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.ConnectException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+import org.hibernate.exception.JDBCConnectionException;
 
 /**
  *
  * @author gnr_a
  */
 public interface ClienteDao {
-    public void insert(Cliente cliente)throws SQLIntegrityConstraintViolationException;
-    public void delete(Cliente cliente);
-    public void update(Cliente cliente);
-    public List<Cliente> read();
-    public Cliente readCliente(int code);
-    public List<Cliente> readLike(String cadena);
-    public List<Cliente> readRFC(String cadena);
+    public void insert(Cliente cliente)throws SQLIntegrityConstraintViolationException, ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public void delete(Cliente cliente) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public void update(Cliente cliente) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Cliente> read() throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public Cliente readCliente(int code) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Cliente> readLike(String cadena) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Cliente> readRFC(String cadena) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
 
     
 }

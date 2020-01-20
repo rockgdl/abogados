@@ -8,6 +8,7 @@ package com.fpiceno.abogados.dao.mysql;
 import com.fpiceno.abogados.config.HibernateUtil;
 import com.fpiceno.abogados.dao.CasoDao;
 import com.fpiceno.abogados.entity.Caso;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -85,7 +86,7 @@ public class CasoDaoMysql implements CasoDao{
         Criteria cr = getSession().createCriteria(Caso.class);
         
         //System.out.println(caso.getCliente().getNombre());
-        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.eq("status", caso.getStatus()));
+        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaPago(), new Date()));
 
         return cr.list();
         

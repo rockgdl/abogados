@@ -9,12 +9,19 @@ import Tools.Roles;
 import com.fpiceno.abogados.entity.Usuario;
 import com.fpiceno.abogados.dao.UsuarioDao;
 import com.fpiceno.abogados.dao.mysql.UsuarioDaoMysql;
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.ConnectException;
 
 import java.net.URL;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,6 +31,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import org.hibernate.exception.JDBCConnectionException;
 
 /**
  * FXML Controller class
@@ -32,13 +40,13 @@ import javafx.scene.input.KeyEvent;
  */
 public class UsuariosController implements Initializable {
 
-    @FXML private TextField txtSearch, txtNickname;
-    @FXML private PasswordField txtPassword, txtConfirmar;
+    @FXML private TextField txtSearch, txtNickname, txtCorreo;
+    @FXML private PasswordField txtPassword, txtConfirmar ;
     @FXML private RadioButton btnActivoSi, btnActivoNo;
     @FXML private ComboBox boxRol;
     
     @FXML private TableView<Usuario> tablaUsuario;
-    @FXML private TableColumn <Usuario, String> columnNombre, columnNickname, columnPassword;
+    @FXML private TableColumn <Usuario, String> columnCorreo, columnNickname, columnPassword;
     ObservableList <Usuario> oblist= FXCollections.observableArrayList();
     
     
@@ -62,20 +70,52 @@ public class UsuariosController implements Initializable {
     }
     
     private void obtenerUsuarios(){
-        tablaUsuario.getItems().clear();
-        UsuarioDao dao = new UsuarioDaoMysql();
-        
-        Iterator<Usuario> i = dao.read().iterator();
-        
-        while(i.hasNext()){
-            oblist.add(i.next());
-        }
-        
-        columnNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
-        columnNickname.setCellValueFactory(new PropertyValueFactory("nickName"));
-        columnPassword.setCellValueFactory(new PropertyValueFactory("password"));
-        
-        tablaUsuario.setItems(oblist);
+        try {
+            tablaUsuario.getItems().clear();
+            UsuarioDao dao = new UsuarioDaoMysql();
+            
+            Iterator<Usuario> i = dao.read().iterator();
+            
+            while(i.hasNext()){
+                oblist.add(i.next());
+            }
+            
+            columnCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
+            columnNickname.setCellValueFactory(new PropertyValueFactory("nickName"));
+            columnPassword.setCellValueFactory(new PropertyValueFactory("password"));
+            
+            tablaUsuario.setItems(oblist);
+        } catch (ConnectException ex) {
+                
+                Alert alerta = new Alert(AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo conectar a mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (JDBCConnectionException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(AlertType.ERROR);
+                
+                alerta.setHeaderText("Se encontro un error al quere insertar la información");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (CommunicationsException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExceptionInInitializerError ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
     
     @FXML private void addUser(ActionEvent event){
@@ -89,10 +129,43 @@ public class UsuariosController implements Initializable {
         usuario.setPassword(txtPassword.getText());
         usuario.setFechaCreacion(date);
         usuario.setRol((Roles) boxRol.getSelectionModel().getSelectedItem());
+        usuario.setCorreo(txtCorreo.getText());
         
         if(verificarCampos()){
-            dao.insert(usuario);
-            obtenerUsuarios();   
+            try {
+                dao.insert(usuario);   
+                obtenerUsuarios();
+            } catch (ConnectException ex) {
+                
+                Alert alerta = new Alert(AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo conectar a mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (JDBCConnectionException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(AlertType.ERROR);
+                
+                alerta.setHeaderText("Se encontro un error al quere insertar la información");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (CommunicationsException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExceptionInInitializerError ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
@@ -106,9 +179,41 @@ public class UsuariosController implements Initializable {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
-            UsuarioDao dao = new UsuarioDaoMysql();
-            dao.delete(usuario);
-            obtenerUsuarios();
+            try {
+                UsuarioDao dao = new UsuarioDaoMysql();
+                dao.delete(usuario);
+                obtenerUsuarios();
+            } catch (ConnectException ex) {
+                
+                Alert alerta = new Alert(AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo conectar a mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (JDBCConnectionException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(AlertType.ERROR);
+                
+                alerta.setHeaderText("Se encontro un error al quere insertar la información");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (CommunicationsException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExceptionInInitializerError ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             
         }
@@ -165,8 +270,30 @@ public class UsuariosController implements Initializable {
                 alerta.setHeaderText("Seleccione un rol");
                 alerta.show();
         }
+        
+        if(!validacionCorreo() && txtCorreo.getText().equals("")){
+            Alert alerta  = new Alert(Alert.AlertType.ERROR);
+                alerta.setTitle("¡Error!");
+                alerta.setHeaderText("Verifique si el campo no esta vacio");
+                alerta.show();
+        }
             
        return permitido;
     }
     
+    
+    public boolean validacionCorreo(){
+        Pattern p = Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9._]+([.][a-zA-Z]+)+");
+        Matcher m = p.matcher(txtCorreo.getText());
+        
+        if(m.find() && m.group().equals(txtCorreo.getText())){
+            return true;
+        }else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("¡Error!");
+            alert.setContentText("El formato de correo es invalido");
+            alert.showAndWait();
+            return false;
+        }   
+    }
 }

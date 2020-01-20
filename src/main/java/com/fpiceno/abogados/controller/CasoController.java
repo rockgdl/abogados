@@ -16,8 +16,12 @@ import com.fpiceno.abogados.entity.Caso;
 import com.fpiceno.abogados.entity.Cliente;
 import com.fpiceno.abogados.entity.Pago;
 import com.fpiceno.abogados.entity.Status;
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.ConnectException;
 import java.net.URL;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -37,6 +41,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.hibernate.exception.JDBCConnectionException;
 
 /**
  * FXML Controller class
@@ -46,13 +51,15 @@ import javafx.stage.Stage;
 public class CasoController implements Initializable {
     
     
-    @FXML ComboBox boxRazonSocialBusqueda, boxStatusBusqueda;
-    @FXML ComboBox boxClienteBusqueda;
+    @FXML ComboBox boxRazonSocialBusqueda, boxStatusBusqueda, boxClienteBusqueda;
+    @FXML DatePicker boxDate;
+    
     
     @FXML TableView<Caso> tablaCaso;
-    @FXML TableColumn <Caso, String> ColumnIngresos, ColumnRazonSocial, ColumnStatus, ColumnCliente, ColumnTipoPago;
+    @FXML TableColumn <Caso, String> ColumnIngresos, ColumnRazonSocial, ColumnStatus, ColumnCliente, ColumnTipoPago, ColumnFecha;
     @FXML TableColumn <Caso, Integer> ColumnId;
     ObservableList <Caso> oblistCaso= FXCollections.observableArrayList();
+    
     /**
      * Initializes the controller class.
      */
@@ -63,7 +70,39 @@ public class CasoController implements Initializable {
         
         ClienteDao daoc = new ClienteDaoMysql();
         
-        boxClienteBusqueda.setItems(FXCollections.observableArrayList(daoc.read()));
+        try {
+            boxClienteBusqueda.setItems(FXCollections.observableArrayList(daoc.read()));
+        } catch (ConnectException ex) {
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo conectar a mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (JDBCConnectionException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("Se encontro un error al quere insertar la información");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (CommunicationsException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExceptionInInitializerError ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         boxRazonSocialBusqueda.setItems(FXCollections.observableArrayList(RazonSocial.values()));
         boxStatusBusqueda.setItems(FXCollections.observableArrayList(Status.values()));
         
@@ -73,18 +112,52 @@ public class CasoController implements Initializable {
     }
     
     public void obtenerCasos(){
-        tablaCaso.getItems().clear();
-        CasoDao dao = new CasoDaoMysql();
-        
-        oblistCaso.addAll(dao.read());
-        
-        ColumnId.setCellValueFactory(new PropertyValueFactory("id"));
-        ColumnRazonSocial.setCellValueFactory(new PropertyValueFactory("razonSocial"));
-        ColumnStatus.setCellValueFactory(new PropertyValueFactory("status"));
-        ColumnCliente.setCellValueFactory(new PropertyValueFactory("nombreCliente"));
-        ColumnTipoPago.setCellValueFactory(new PropertyValueFactory("tipo"));
-        
-        tablaCaso.setItems(oblistCaso);
+        try {
+            tablaCaso.getItems().clear();
+            CasoDao dao = new CasoDaoMysql();
+            
+            oblistCaso.addAll(dao.read());
+            
+            ColumnId.setCellValueFactory(new PropertyValueFactory("id"));
+            ColumnRazonSocial.setCellValueFactory(new PropertyValueFactory("razonSocial"));
+            ColumnStatus.setCellValueFactory(new PropertyValueFactory("status"));
+            ColumnCliente.setCellValueFactory(new PropertyValueFactory("nombreCliente"));
+            ColumnTipoPago.setCellValueFactory(new PropertyValueFactory("tipo"));
+            ColumnFecha.setCellValueFactory(new PropertyValueFactory("fechaPago"));
+            
+            
+            tablaCaso.setItems(oblistCaso);
+        } catch (ConnectException ex) {
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo conectar a mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (JDBCConnectionException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("Se encontro un error al quere insertar la información");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (CommunicationsException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExceptionInInitializerError ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
     
     @FXML private void AbrirPagos(MouseEvent event){
@@ -132,24 +205,61 @@ public class CasoController implements Initializable {
     }
     
     @FXML private void buscar(ActionEvent event){
-        //Cliente cliente = boxClienteBusqueda.getValue();
-       String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
-       int idCliente = Integer.parseInt(cadenaCliente[0]);
-        System.out.println(idCliente);
-        
-        Caso caso = new Caso();
-        
-        ClienteDao daoClient = new ClienteDaoMysql();
-        caso.setCliente(daoClient.readCliente(idCliente));
-        caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
-        caso.setStatus((Status) boxStatusBusqueda.getValue());
-        
-        CasoDao dao = new CasoDaoMysql();
-        
-        tablaCaso.getItems().clear();
-        oblistCaso.addAll(dao.readFilter(caso));
-        
-        tablaCaso.setItems(oblistCaso);
+        try {
+            //Cliente cliente = boxClienteBusqueda.getValue();
+            String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
+            int idCliente = Integer.parseInt(cadenaCliente[0]);
+            System.out.println(idCliente);
+            
+            Caso caso = new Caso();
+            
+            ClienteDao daoClient = new ClienteDaoMysql();
+            caso.setCliente(daoClient.readCliente(idCliente));
+            caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
+            caso.setStatus((Status) boxStatusBusqueda.getValue());
+            caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+            CasoDao dao = new CasoDaoMysql();
+            
+            
+            if(boxClienteBusqueda != null && boxDate.getValue() != null && boxRazonSocialBusqueda.getValue() != null && boxStatusBusqueda.getValue() != null){
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.readFilter(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }
+//
+//        
+        } catch (ConnectException ex) {
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo conectar a mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (JDBCConnectionException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("Se encontro un error al quere insertar la información");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (CommunicationsException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExceptionInInitializerError ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
     
     @FXML private void SeleccionarBusqueda(ActionEvent event){
@@ -157,11 +267,43 @@ public class CasoController implements Initializable {
     }
     
     @FXML private void Eliminar(ActionEvent event){
-        CasoDao dao = new CasoDaoMysql();
-        
-        dao.delete(tablaCaso.getSelectionModel().getSelectedItem());
-        
-        obtenerCasos();
+        try {
+            CasoDao dao = new CasoDaoMysql();
+            
+            dao.delete(tablaCaso.getSelectionModel().getSelectedItem());
+            
+            obtenerCasos();
+        } catch (ConnectException ex) {
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo conectar a mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (JDBCConnectionException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("Se encontro un error al quere insertar la información");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (CommunicationsException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExceptionInInitializerError ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
     
     @FXML private void limpiarConsulta(ActionEvent event){

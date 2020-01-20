@@ -22,19 +22,20 @@
                               <TableColumn fx:id="ColumnRazonSocial" prefWidth="149.0" text="Razon Social" />
                               <TableColumn fx:id="ColumnTipoPago" prefWidth="130.0" text="Tipo de pago" />
                               <TableColumn fx:id="ColumnStatus" prefWidth="202.0" text="Status" />
-                              <TableColumn prefWidth="145.0" text="Fecha" />
+                              <TableColumn fx:id="ColumnFecha" prefWidth="145.0" text="Fecha" />
                           </columns>
                         </TableView>
                         <ComboBox fx:id="boxRazonSocialBusqueda" layoutX="540.0" layoutY="47.0" prefHeight="31.0" prefWidth="188.0" />
-                        <Button layoutX="737.0" layoutY="47.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
                         <ComboBox fx:id="boxStatusBusqueda" layoutX="324.0" layoutY="47.0" prefHeight="31.0" prefWidth="190.0" />
                         <ComboBox fx:id="boxClienteBusqueda" editable="true" layoutX="56.0" layoutY="47.0" prefHeight="31.0" prefWidth="249.0" />
-                        <Button layoutX="1108.0" layoutY="99.0" mnemonicParsing="false" onAction="#Eliminar" text="Eliminar" />
-                        <Button layoutX="834.0" layoutY="47.0" mnemonicParsing="false" onAction="#limpiarConsulta" text="Limpiar consulta" />
+                        <DatePicker fx:id="boxDate" layoutX="753.0" layoutY="47.0" />
+                        <Button layoutX="1120.0" layoutY="183.0" mnemonicParsing="false" onAction="#Eliminar" text="Eliminar" />
+                        <Button layoutX="1092.0" layoutY="47.0" mnemonicParsing="false" onAction="#limpiarConsulta" text="Limpiar consulta" />
                         <Label layoutX="163.0" layoutY="26.0" text="Cliente" />
                         <Label layoutX="402.0" layoutY="26.0" text="Status" />
                         <Label layoutX="592.0" layoutY="26.0" text="Razon Social" />
-                        <Button layoutX="1095.0" layoutY="151.0" mnemonicParsing="false" onAction="#nuevoCaso" text="Nuevo Caso" />
+                        <Button layoutX="994.0" layoutY="47.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
+                        <Button layoutX="1107.0" layoutY="139.0" mnemonicParsing="false" onAction="#nuevoCaso" text="Nuevo Caso" />
                      </children></AnchorPane>
             </content>
           </Tab>

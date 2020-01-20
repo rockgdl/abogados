@@ -8,8 +8,12 @@ import Tools.Roles;
 import com.fpiceno.abogados.dao.UsuarioDao;
 import com.fpiceno.abogados.dao.mysql.UsuarioDaoMysql;
 import com.fpiceno.abogados.entity.Usuario;
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.ConnectException;
 import java.util.Date;
 import javax.management.relation.Role;
+import org.hibernate.exception.JDBCConnectionException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -23,7 +27,7 @@ public class UsuarioTest {
     }
     
     @Test
-    public void addUsuario()
+    public void addUsuario() throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException
     {
         Date date = new Date();
         Usuario usuario=new Usuario();
@@ -46,7 +50,8 @@ public class UsuarioTest {
     }
     
     @Test
-    public void update(){
+    public void update() throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException 
+    {
         Date date = new Date();
         
         Usuario usuario2=new Usuario();

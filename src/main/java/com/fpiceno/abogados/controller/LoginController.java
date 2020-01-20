@@ -48,8 +48,26 @@ public class LoginController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) {
               
-        for(Usuario user: dao.read()){
-            System.out.println(user.getNickName());
+        try {
+            for(Usuario user: dao.read()){
+                System.out.println(user.getNickName());
+            }
+        } catch (ConnectException ex) {
+           java.util.logging.Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            Alert  alert = new Alert(Alert.AlertType.ERROR);
+           alert.setHeaderText("Error Autentificando al Usuario "+txtNickName.getText() );
+           alert.setTitle("Notificación");
+           alert.setContentText("Error con la comunicacion a la base de datos favor de revisar el servicio de Mysql" +ex.getMessage());
+           alert.showAndWait();
+           
+        } catch (JDBCConnectionException ex) {
+            java.util.logging.Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CommunicationsException ex) {
+            java.util.logging.Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            java.util.logging.Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExceptionInInitializerError ex) {
+            java.util.logging.Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

@@ -8,6 +8,9 @@ package com.fpiceno.abogados.controller;
 import com.fpiceno.abogados.dao.ClienteDao;
 import com.fpiceno.abogados.dao.mysql.ClienteDaoMysql;
 import com.fpiceno.abogados.entity.Cliente;
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.ConnectException;
 
 
 import java.net.URL;
@@ -33,6 +36,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import org.hibernate.exception.JDBCConnectionException;
 
 /**
  * FXML Controller class
@@ -84,7 +88,38 @@ public class ClienteController implements Initializable {
                 }
             } catch (SQLIntegrityConstraintViolationException ex) {
                 Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ConnectException ex) {
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo conectar a mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (JDBCConnectionException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("Se encontro un error al quere insertar la información");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (CommunicationsException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExceptionInInitializerError ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         }else{
             System.out.println("ERROR");
         }
@@ -94,16 +129,48 @@ public class ClienteController implements Initializable {
         if(txtBusqueda.getText().equals("")){
             obtenerClientes();
         }else{
-            ClienteDao dao = new ClienteDaoMysql();
-                        
-            tablaClientes.getItems().clear();
-            oblist.addAll(dao.readLike(txtBusqueda.getText()));   
-            
-            if(oblist.size() == 0){
-                oblist.clear();
-                oblist.addAll(dao.readRFC(txtBusqueda.getText()));
+            try {
+                ClienteDao dao = new ClienteDaoMysql();
+                
+                tablaClientes.getItems().clear();
+                oblist.addAll(dao.readLike(txtBusqueda.getText()));
+                
+                if(oblist.size() == 0){
+                    oblist.clear();
+                    oblist.addAll(dao.readRFC(txtBusqueda.getText()));
+                }
+                tablaClientes.setItems(oblist);
+            } catch (ConnectException ex) {
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo conectar a mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (JDBCConnectionException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("Se encontro un error al quere insertar la información");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (CommunicationsException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExceptionInInitializerError ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            tablaClientes.setItems(oblist);
         }
     }
     
@@ -118,9 +185,42 @@ public class ClienteController implements Initializable {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
-            ClienteDao dao = new ClienteDaoMysql();
-            dao.delete(cliente);
-            obtenerClientes();
+            try {
+                ClienteDao dao = new ClienteDaoMysql();
+                dao.delete(cliente);
+                obtenerClientes();
+            } catch (ConnectException ex) {
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo conectar a mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (JDBCConnectionException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("Se encontro un error al quere insertar la información");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (CommunicationsException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExceptionInInitializerError ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         } else {
             
         }
@@ -143,22 +243,54 @@ public class ClienteController implements Initializable {
     
     @FXML private void saveCliente(){
         if (verificar()){
-            Cliente cliente = new Cliente();
-
-            cliente.setId(idCliente);
-            cliente.setCorreo(txtCorreo.getText());
-            cliente.setDomicilio(txtDomicilio.getText());
-            cliente.setNombre(txtNombre.getText());
-            cliente.setRfc(txtRFC.getText());
-            cliente.setTelefono(txtTelefono.getText());
-
-            ClienteDao dao = new ClienteDaoMysql();
-            dao.update(cliente);
-
-            btnGuardar.setDisable(true);
-            this.idCliente = 0;
-            obtenerClientes();
-            limpiar();
+            try {
+                Cliente cliente = new Cliente();
+                
+                cliente.setId(idCliente);
+                cliente.setCorreo(txtCorreo.getText());
+                cliente.setDomicilio(txtDomicilio.getText());
+                cliente.setNombre(txtNombre.getText());
+                cliente.setRfc(txtRFC.getText());
+                cliente.setTelefono(txtTelefono.getText());
+                
+                ClienteDao dao = new ClienteDaoMysql();
+                dao.update(cliente);
+                
+                btnGuardar.setDisable(true);
+                this.idCliente = 0;
+                obtenerClientes();
+                limpiar();
+            } catch (ConnectException ex) {
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo conectar a mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (JDBCConnectionException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("Se encontro un error al quere insertar la información");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (CommunicationsException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExceptionInInitializerError ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
@@ -219,22 +351,54 @@ public class ClienteController implements Initializable {
     
     
     private void obtenerClientes(){
-        tablaClientes.getItems().clear();
-        ClienteDao dao = new ClienteDaoMysql();
-        
-        Iterator<Cliente> i = dao.read().iterator();
-        
-        while(i.hasNext()){
-            oblist.add(i.next());
-        }
-        
-        columnNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
-        columnRFC.setCellValueFactory(new PropertyValueFactory("rfc"));
-        columnDomicilio.setCellValueFactory(new PropertyValueFactory("domicilio"));
-        columnTelefono.setCellValueFactory(new PropertyValueFactory("telefono"));
-        columnCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
-        
-        tablaClientes.setItems(oblist);
+        try {
+            tablaClientes.getItems().clear();
+            ClienteDao dao = new ClienteDaoMysql();
+            
+            Iterator<Cliente> i = dao.read().iterator();
+            
+            while(i.hasNext()){
+                oblist.add(i.next());
+            }
+            
+            columnNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+            columnRFC.setCellValueFactory(new PropertyValueFactory("rfc"));
+            columnDomicilio.setCellValueFactory(new PropertyValueFactory("domicilio"));
+            columnTelefono.setCellValueFactory(new PropertyValueFactory("telefono"));
+            columnCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
+            
+            tablaClientes.setItems(oblist);
+        } catch (ConnectException ex) {
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo conectar a mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (JDBCConnectionException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("Se encontro un error al quere insertar la información");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (CommunicationsException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
+                
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExceptionInInitializerError ex) {
+                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
     
     public boolean validacionCorreo(){

@@ -20,11 +20,11 @@ public interface UsuarioDao {
     
     public Integer agregarUsuario(Usuario usuario);
     
-    public void insert(Usuario usuario);
-    public void delete(Usuario usuario);
-    public void update(Usuario usuario);
-    public List<Usuario> read();
-    public Usuario readUser(int code);
+    public void insert(Usuario usuario) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public void delete(Usuario usuario) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public void update(Usuario usuario) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Usuario> read() throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public Usuario readUser(int code) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
     public Usuario checkUser(String nickName, String password) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
     
 }

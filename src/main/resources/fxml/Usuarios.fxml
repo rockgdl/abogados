@@ -9,19 +9,19 @@
 <AnchorPane id="AnchorPane" prefHeight="870.0" prefWidth="943.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fpiceno.abogados.controller.UsuariosController">
    <children>
       <TextField fx:id="txtNickname" layoutX="181.0" layoutY="157.0" onKeyReleased="#limitarCaracteres" />
-      <TextField fx:id="txtSearch" layoutX="536.0" layoutY="395.0" prefHeight="31.0" prefWidth="260.0" />
       <PasswordField fx:id="txtPassword" layoutX="181.0" layoutY="206.0" />
       <PasswordField fx:id="txtConfirmar" layoutX="181.0" layoutY="256.0" />
+      <TextField fx:id="txtSearch" layoutX="536.0" layoutY="395.0" prefHeight="31.0" prefWidth="260.0" />
       <Label layoutX="359.0" layoutY="400.0" text="Buscar por nickname:" />
       <Label layoutX="73.0" layoutY="162.0" text="NickName" />
       <Label layoutX="70.0" layoutY="211.0" text="Contraseña" />
       <Label layoutX="62.0" layoutY="261.0" text="Confirmar Clave" />
-      <Button layoutX="83.0" layoutY="321.0" mnemonicParsing="false" onAction="#addUser" text="Agregar" />
+      <Button layoutX="71.0" layoutY="357.0" mnemonicParsing="false" onAction="#addUser" text="Agregar" />
       <TableView fx:id="tablaUsuario" layoutX="108.0" layoutY="435.0" prefHeight="286.0" prefWidth="690.0">
         <columns>
-          <TableColumn fx:id="columnNombre" prefWidth="204.0" text="Nombre" />
           <TableColumn fx:id="columnNickname" prefWidth="228.0" text="NickName" />
             <TableColumn fx:id="columnPassword" prefWidth="257.0" text="Password" />
+          <TableColumn fx:id="columnCorreo" prefWidth="204.0" text="Correo" />
         </columns>
       </TableView>
       <Button layoutX="108.0" layoutY="754.0" mnemonicParsing="false" onAction="#deleteUser" text="Eliminar" />
@@ -30,5 +30,7 @@
       <RadioButton fx:id="btnActivoNo" layoutX="624.0" layoutY="251.0" mnemonicParsing="false" text="No" />
       <Label layoutX="537.0" layoutY="222.0" text="¿Se encuentra activo?" />
       <Label layoutX="602.0" layoutY="108.0" text="Rol" />
+      <TextField fx:id="txtCorreo" layoutX="181.0" layoutY="307.0" />
+      <Label layoutX="85.0" layoutY="312.0" text="Correo" />
    </children>
 </AnchorPane>

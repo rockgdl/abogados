@@ -42,6 +42,9 @@ public class Usuario {
    @Column (name="fechaCreacion")
    private Date fechaCreacion;
    
+   @Column (name = "correo", columnDefinition = "varchar (40)")
+   private String correo;
+   
     public Integer getId() {
         return id;
     }
@@ -124,6 +127,20 @@ public class Usuario {
      */
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    /**
+     * @return the correo
+     */
+    public String getCorreo() {
+        return correo;
+    }
+
+    /**
+     * @param correo the correo to set
+     */
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
     
 }
