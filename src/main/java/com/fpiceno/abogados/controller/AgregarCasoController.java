@@ -91,7 +91,7 @@ public class AgregarCasoController implements Initializable{
             }
     }
     
-        @FXML private void agregarCaso(ActionEvent event){
+    @FXML private void agregarCaso(ActionEvent event){
         Date date = new Date();
         Caso caso = new Caso();
         
@@ -109,6 +109,7 @@ public class AgregarCasoController implements Initializable{
             caso.setTipo((tipoPago) boxTipoPago.getValue());
             caso.setStatus(Status.APROBADO);
             caso.setConcepto(txtConcepto.getText());
+            caso.setFechaInicio(date);
 
             CasoDao dao = new CasoDaoMysql();
 
@@ -116,36 +117,44 @@ public class AgregarCasoController implements Initializable{
             getCasoController().obtenerCasos();
             
         } catch (ConnectException ex) {
-                
-                Alert alerta = new Alert(Alert.AlertType.ERROR);
-                
-                alerta.setHeaderText("No se pudo conectar a mysql");
-                alerta.setContentText(ex.getMessage());
-                alerta.show();
-                
-            } catch (JDBCConnectionException ex) {
-                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
-                
-                Alert alerta = new Alert(Alert.AlertType.ERROR);
-                
-                alerta.setHeaderText("Se encontro un error al quere insertar la información");
-                alerta.setContentText(ex.getMessage());
-                alerta.show();
-                
-            } catch (CommunicationsException ex) {
-                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
-                
-                Alert alerta = new Alert(Alert.AlertType.ERROR);
-                
-                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
-                alerta.setContentText(ex.getMessage());
-                alerta.show();
-                
-            } catch (InvocationTargetException ex) {
-                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ExceptionInInitializerError ex) {
-                Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+
+            alerta.setHeaderText("No se pudo conectar a mysql");
+            alerta.setContentText(ex.getMessage());
+            alerta.show();
+
+        } catch (JDBCConnectionException ex) {
+            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+
+            alerta.setHeaderText("Se encontro un error al quere insertar la información");
+            alerta.setContentText(ex.getMessage());
+            alerta.show();
+
+        } catch (CommunicationsException ex) {
+            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+
+            alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+            alerta.setContentText(ex.getMessage());
+            alerta.show();
+
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExceptionInInitializerError ex) {
+            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+        }catch (NumberFormatException ex){
+            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+
+            alerta.setHeaderText("Debe de agregar un cliente");
+            alerta.setContentText(ex.getMessage());
+            alerta.show();
+        }
         
         
     }

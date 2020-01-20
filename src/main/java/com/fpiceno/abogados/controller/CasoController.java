@@ -123,7 +123,7 @@ public class CasoController implements Initializable {
             ColumnStatus.setCellValueFactory(new PropertyValueFactory("status"));
             ColumnCliente.setCellValueFactory(new PropertyValueFactory("nombreCliente"));
             ColumnTipoPago.setCellValueFactory(new PropertyValueFactory("tipo"));
-            ColumnFecha.setCellValueFactory(new PropertyValueFactory("fechaPago"));
+            ColumnFecha.setCellValueFactory(new PropertyValueFactory("fechaInicio"));
             
             
             tablaCaso.setItems(oblistCaso);
@@ -207,26 +207,232 @@ public class CasoController implements Initializable {
     @FXML private void buscar(ActionEvent event){
         try {
             //Cliente cliente = boxClienteBusqueda.getValue();
-            String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
-            int idCliente = Integer.parseInt(cadenaCliente[0]);
-            System.out.println(idCliente);
-            
-            Caso caso = new Caso();
-            
-            ClienteDao daoClient = new ClienteDaoMysql();
-            caso.setCliente(daoClient.readCliente(idCliente));
-            caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
-            caso.setStatus((Status) boxStatusBusqueda.getValue());
-            caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+           
             CasoDao dao = new CasoDaoMysql();
             
             
-            if(boxClienteBusqueda != null && boxDate.getValue() != null && boxRazonSocialBusqueda.getValue() != null && boxStatusBusqueda.getValue() != null){
+            if(boxClienteBusqueda.getValue() != null && boxDate.getValue() != null && boxRazonSocialBusqueda.getValue() != null && boxStatusBusqueda.getValue() != null){
+                //buscar por todo
+                
+                Caso caso = new Caso();
+                caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
+                caso.setStatus((Status) boxStatusBusqueda.getValue());
+                caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                
+                String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
+                int idCliente = Integer.parseInt(cadenaCliente[0]);
+                System.out.println(idCliente);
+
+                ClienteDao daoClient = new ClienteDaoMysql();
+                caso.setCliente(daoClient.readCliente(idCliente));
+                
                 tablaCaso.getItems().clear();
                 oblistCaso.addAll(dao.readFilter(caso));
                 
                 tablaCaso.setItems(oblistCaso);
+            }else if(boxClienteBusqueda.getValue() != null && boxDate.getValue() != null && boxRazonSocialBusqueda.getValue() != null){
+                //Buscar por cliente, fecha y razon social
+                
+                Caso caso = new Caso();
+                caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
+                caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                
+                String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
+                int idCliente = Integer.parseInt(cadenaCliente[0]);
+                System.out.println(idCliente);
+
+                ClienteDao daoClient = new ClienteDaoMysql();
+                caso.setCliente(daoClient.readCliente(idCliente));
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForClienteAndFechaAndRazon(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }else if(boxClienteBusqueda.getValue() != null && boxDate.getValue() != null && boxStatusBusqueda.getValue() != null){
+                //buscar por cliente, fecha y status
+                
+                Caso caso = new Caso();
+                caso.setStatus((Status) boxStatusBusqueda.getValue());
+                caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                
+                String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
+                int idCliente = Integer.parseInt(cadenaCliente[0]);
+                System.out.println(idCliente);
+
+                ClienteDao daoClient = new ClienteDaoMysql();
+                caso.setCliente(daoClient.readCliente(idCliente));
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForClienteAndFechaAndStatus(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }else if (boxClienteBusqueda.getValue() != null && boxRazonSocialBusqueda.getValue() != null && boxStatusBusqueda.getValue() != null){
+                //busqueda por cliente, razon social y status
+                
+                Caso caso = new Caso();
+                caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
+                caso.setStatus((Status) boxStatusBusqueda.getValue());
+                
+                String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
+                int idCliente = Integer.parseInt(cadenaCliente[0]);
+                System.out.println(idCliente);
+
+                ClienteDao daoClient = new ClienteDaoMysql();
+                caso.setCliente(daoClient.readCliente(idCliente));
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForClienteAndRazonAndStatus(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }else if (boxClienteBusqueda.getValue() != null && boxDate.getValue() != null){
+                //buscar por cliente y fecha
+                
+                Caso caso = new Caso();
+                caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                
+                String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
+                int idCliente = Integer.parseInt(cadenaCliente[0]);
+                System.out.println(idCliente);
+
+                ClienteDao daoClient = new ClienteDaoMysql();
+                caso.setCliente(daoClient.readCliente(idCliente));
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForClienteAndFecha(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }else if(boxClienteBusqueda.getValue() != null && boxRazonSocialBusqueda.getValue() != null){
+                //buscar por cliente y razon social
+                
+                Caso caso = new Caso();
+                caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
+                
+                String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
+                int idCliente = Integer.parseInt(cadenaCliente[0]);
+                System.out.println(idCliente);
+
+                ClienteDao daoClient = new ClienteDaoMysql();
+                caso.setCliente(daoClient.readCliente(idCliente));
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForClienteAndRazon(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }else if(boxClienteBusqueda.getValue() != null && boxStatusBusqueda.getValue() != null){
+                //buscar por cliente y status
+                
+                Caso caso = new Caso();
+                caso.setStatus((Status) boxStatusBusqueda.getValue());
+                
+                String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
+                int idCliente = Integer.parseInt(cadenaCliente[0]);
+                System.out.println(idCliente);
+
+                ClienteDao daoClient = new ClienteDaoMysql();
+                caso.setCliente(daoClient.readCliente(idCliente));
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForClienteAndStatus(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }else if(boxClienteBusqueda.getValue() != null){
+                //buscar por cliente
+                
+                Caso caso = new Caso();
+                
+                String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
+                int idCliente = Integer.parseInt(cadenaCliente[0]);
+                System.out.println(idCliente);
+
+                ClienteDao daoClient = new ClienteDaoMysql();
+                caso.setCliente(daoClient.readCliente(idCliente));
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForCliente(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }else if (boxDate.getValue() != null && boxRazonSocialBusqueda.getValue() != null && boxStatusBusqueda.getValue() != null){
+                // buscar por fecha, razon social y status
+                
+                Caso caso = new Caso();
+                caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
+                caso.setStatus((Status) boxStatusBusqueda.getValue());
+                caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForFechaAndRazonAndStatus(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }else if (boxDate.getValue() != null && boxRazonSocialBusqueda.getValue() != null){
+                //buscar por fecha y razon social
+                
+                Caso caso = new Caso();
+                caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
+                caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForFechaAndRazon(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }else if (boxDate.getValue() != null && boxStatusBusqueda.getValue() != null){
+                //buscar por fecha y status
+                
+                Caso caso = new Caso();
+                caso.setStatus((Status) boxStatusBusqueda.getValue());
+                caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForFechaAndStatus(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }else if(boxDate.getValue() != null){
+                //buscar por fecha
+                Caso caso = new Caso();
+                caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForFecha(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+                
+            }else if (boxRazonSocialBusqueda.getValue() != null && boxStatusBusqueda.getValue() != null){
+                //buscar por razon social y status
+                
+                Caso caso = new Caso();
+                caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
+                caso.setStatus((Status) boxStatusBusqueda.getValue());
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForRazonAndStatus(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }else if (boxRazonSocialBusqueda.getValue() != null){
+                //buscar por razon social
+                Caso caso = new Caso();
+                caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForRazon(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }else if (boxStatusBusqueda.getValue() != null){
+                //buscar por status
+                
+                Caso caso = new Caso();
+                caso.setStatus((Status) boxStatusBusqueda.getValue());
+                
+                tablaCaso.getItems().clear();
+                oblistCaso.addAll(dao.searchForStatus(caso));
+                
+                tablaCaso.setItems(oblistCaso);
+            }else{
+                Alert alerta = new Alert(Alert.AlertType.WARNING);
+                
+                alerta.setHeaderText("No ha filtrado nada en la búsqueda");
+                //alerta.setContentText(ex.getMessage());
+                alerta.show();
             }
+                
 //
 //        
         } catch (ConnectException ex) {
@@ -259,6 +465,12 @@ public class CasoController implements Initializable {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ExceptionInInitializerError ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            }catch (NumberFormatException ex){
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+
+                alerta.setHeaderText("Debe de agregar un cliente");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
             }
     }
     
@@ -308,6 +520,10 @@ public class CasoController implements Initializable {
     
     @FXML private void limpiarConsulta(ActionEvent event){
         obtenerCasos();
+        boxClienteBusqueda.setValue(null);
+        boxRazonSocialBusqueda.setValue(null);
+        boxStatusBusqueda.setValue(null);
+        boxDate.setValue(null);
     }
     
     @FXML private void nuevoCaso(ActionEvent event){

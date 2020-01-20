@@ -25,5 +25,23 @@ public interface CasoDao {
     public List<Caso> readRazonSocial(String cadena) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
     public List<Caso> readStatus(String cadena) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
     public List<Caso> readFilter(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    
+    //public List<Caso> searchForClienteAndFechaAndRazonAndStatus(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Caso> searchForClienteAndFechaAndRazon(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Caso> searchForClienteAndFechaAndStatus(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Caso> searchForClienteAndRazonAndStatus(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Caso> searchForClienteAndFecha(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Caso> searchForClienteAndRazon(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Caso> searchForClienteAndStatus(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Caso> searchForCliente(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    
+    public List<Caso> searchForFechaAndRazonAndStatus(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Caso> searchForFechaAndRazon(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Caso> searchForFechaAndStatus(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Caso> searchForFecha(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    
+    public List<Caso> searchForRazonAndStatus(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Caso> searchForRazon(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
+    public List<Caso> searchForStatus(Caso caso) throws ConnectException,JDBCConnectionException,CommunicationsException,InvocationTargetException,ExceptionInInitializerError;
 
 }

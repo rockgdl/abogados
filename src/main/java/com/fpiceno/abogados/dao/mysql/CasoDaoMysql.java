@@ -8,12 +8,16 @@ package com.fpiceno.abogados.dao.mysql;
 import com.fpiceno.abogados.config.HibernateUtil;
 import com.fpiceno.abogados.dao.CasoDao;
 import com.fpiceno.abogados.entity.Caso;
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.ConnectException;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.JDBCConnectionException;
 
 /**
  *
@@ -86,7 +90,7 @@ public class CasoDaoMysql implements CasoDao{
         Criteria cr = getSession().createCriteria(Caso.class);
         
         //System.out.println(caso.getCliente().getNombre());
-        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaPago(), new Date()));
+        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
 
         return cr.list();
         
@@ -103,6 +107,146 @@ public class CasoDaoMysql implements CasoDao{
     public Session getSession() {
 
         return HibernateUtil.getSession();
+    }
+
+    @Override
+    public List<Caso> searchForClienteAndFechaAndRazon(Caso caso) {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+
+        return cr.list();
+    }
+
+    @Override
+    public List<Caso> searchForClienteAndFechaAndStatus(Caso caso) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+
+        return cr.list();
+    }
+
+    @Override
+    public List<Caso> searchForClienteAndRazonAndStatus(Caso caso) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.eq("status", caso.getStatus()));
+
+        return cr.list();
+    }
+
+    @Override
+    public List<Caso> searchForClienteAndFecha(Caso caso) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+
+        return cr.list();
+    }
+
+    @Override
+    public List<Caso> searchForClienteAndRazon(Caso caso) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("razonSocial", caso.getRazonSocial()));
+
+        return cr.list();
+    }
+
+    @Override
+    public List<Caso> searchForClienteAndStatus(Caso caso) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("status", caso.getStatus()));
+
+        return cr.list();
+    }
+
+    @Override
+    public List<Caso> searchForCliente(Caso caso) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("cliente", caso.getCliente()));
+
+        return cr.list();
+    }
+
+    @Override
+    public List<Caso> searchForFechaAndRazonAndStatus(Caso caso) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+
+        return cr.list();
+    }
+
+    @Override
+    public List<Caso> searchForFechaAndRazon(Caso caso) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+
+        return cr.list();
+    }
+
+    @Override
+    public List<Caso> searchForFechaAndStatus(Caso caso) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+
+        return cr.list();
+    }
+
+    @Override
+    public List<Caso> searchForFecha(Caso caso) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+
+        return cr.list();
+    }
+
+    @Override
+    public List<Caso> searchForRazonAndStatus(Caso caso) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.eq("status", caso.getStatus()));
+
+        return cr.list();
+    }
+
+    @Override
+    public List<Caso> searchForRazon(Caso caso) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("razonSocial", caso.getRazonSocial()));
+
+        return cr.list();
+    }
+
+    @Override
+    public List<Caso> searchForStatus(Caso caso) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+        Criteria cr = getSession().createCriteria(Caso.class);
+        
+        //System.out.println(caso.getCliente().getNombre());
+        cr.add(Restrictions.eq("status", caso.getStatus()));
+
+        return cr.list();
     }
     
     
