@@ -40,10 +40,11 @@ public class EmailClient
 	 
 
 	 
-	 mensaje.setText("hola mundo");
+	 mensaje.setText("Hola <br>"
+                 + "Tienes un nuevo numero de caso para darle seguimiento");
 	 Email email=new Email();
 	 email.setFrom("fpiceno87@gmail.com");
-	 email.setTo("metalgdl15@gmail.com");
+	 email.setTo("fpiceno@urrea.com.mx");
 	 email.setMimeType("text/html; charset=utf-8");
 	 email.setText(mensaje.getText());
 	 email.setSubject(mensaje.getSubject());
