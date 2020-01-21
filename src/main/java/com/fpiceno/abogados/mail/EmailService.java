@@ -80,12 +80,10 @@ public class EmailService
  private Authenticator buildSmtpAuthenticator()
 
  {
-     System.out.println("lo que tengo en las configuraciones "+configuration);
+     log.debug("lo que tengo en las configuraciones "+configuration);
   String emailId = EmailConfiguration.SMTP_AUTH_USER;
 
   String password = EmailConfiguration.SMTP_AUTH_PWD;
-     System.out.println("tengo esto de las propiedades "+emailId + " password "+password );
-
   return new SMTPAuthenticator(emailId, password);
 
  }
@@ -98,7 +96,7 @@ public class EmailService
 
 //  Session session = Session.getDefaultInstance(this.configuration.getProperties(), auth);
 //  Session session =Session.getDefaultInstance(this.configuration.getProperties(),auth );
-     System.out.println("al mandar el mail tengo esto "+this.configuration.getProperties());
+   
   Session session =Session.getInstance(this.configuration.getProperties(),auth );
   
 

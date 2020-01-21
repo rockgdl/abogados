@@ -27,7 +27,7 @@ public class ServidorDeCorreo {
       mensaje = new MensajeCorreo();
    }
 
-    ServidorDeCorreo(Properties prop) {
+   public ServidorDeCorreo(Properties prop) {
      
              configuration = new EmailConfiguration(prop);
       //cargarConfiguracionMail();

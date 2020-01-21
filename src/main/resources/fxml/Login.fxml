@@ -10,7 +10,7 @@
 <AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="512.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fpiceno.abogados.controller.LoginController">
    <children>
       <TextField fx:id="txtNickName" layoutX="121.0" layoutY="83.0" />
-      <PasswordField fx:id="txtPassword" layoutX="121.0" layoutY="174.0" />
+      <PasswordField fx:id="txtPassword" layoutX="121.0" layoutY="174.0" onKeyPressed="#buttonPressed" />
       <Label layoutX="174.0" layoutY="38.0" text="Usuario:" />
       <Label layoutX="164.0" layoutY="134.0" text="Contraseña:" />
       <Button layoutX="172.0" layoutY="225.0" mnemonicParsing="false" onAction="#Entrar" text="Entrar" />

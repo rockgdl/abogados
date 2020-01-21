@@ -4,6 +4,8 @@ import Tools.Roles;
 import com.fpiceno.abogados.entity.Usuario;
 import com.fpiceno.abogados.dao.mysql.UsuarioDaoMysql;
 import com.fpiceno.abogados.dao.UsuarioDao;
+import com.fpiceno.abogados.servicios.LoginServicesInterface;
+import com.fpiceno.abogados.servicios.impl.LoginServices;
 import com.mysql.cj.exceptions.CJCommunicationsException;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import java.io.FileInputStream;
@@ -29,6 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
@@ -86,10 +89,30 @@ public class LoginController implements Initializable {
 
 
     }  
+    
+    @FXML
+    public void buttonPressed(KeyEvent e)
+    {
+        if(e.getCode().toString().equals("ENTER"))
+            {
+                log.info("tecla presionada de enter");
+            try {
+                Entrar();
+                //do something
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CommunicationsException ex) {
+                java.util.logging.Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+    }
+    
+    
     @FXML
     public void recoverPassword()
     {
-        Alert  alert = new Alert(Alert.AlertType.INFORMATION);
+            LoginServicesInterface services=new LoginServices();
+           Alert  alert = new Alert(Alert.AlertType.INFORMATION);
            alert.setHeaderText("correo registrado" );
            alert.setTitle("Recuperar Contraseña");
            alert.setContentText("Ingresa tu correo para enviar la contraseña ");
@@ -99,16 +122,33 @@ public class LoginController implements Initializable {
             dialog.setHeaderText("¿Deseas recuperar la contraseña?");
             dialog.setContentText("Ingresa tu correo para enviar la contraseña");
 
-            // Traditional way to get the response value.
+                
             Optional<String> result = dialog.showAndWait();
             if (result.isPresent()){
                 log.info("tu correo es : " + result.get());
-                //envio de correo metodo 
+                    Usuario usuario= null;
+                   UsuarioDao dao = new UsuarioDaoMysql();
+               try {
+                   usuario=dao.readUserByEmail(result.get());
+                   log.info("mandare correo a este usuario"+usuario);
+                   services.sendEmail(usuario);
+                   //envio de correo metodo 
+               } catch (ConnectException ex) {
+                   java.util.logging.Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+               } catch (JDBCConnectionException ex) {
+                   java.util.logging.Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+               } catch (CommunicationsException ex) {
+                   java.util.logging.Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+               } catch (InvocationTargetException ex) {
+                   java.util.logging.Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+               } catch (ExceptionInInitializerError ex) {
+                   java.util.logging.Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+               }
             }
     }
     
     @FXML
-    private void Entrar(ActionEvent event) throws IOException, CommunicationsException{
+    private void Entrar() throws IOException, CommunicationsException{
         AnchorPane pane;
         UsuarioDao dao = new UsuarioDaoMysql();
         AnchorPane content = null;
@@ -119,7 +159,7 @@ public class LoginController implements Initializable {
         //usuario.setRol(Roles.ADMINISTRADOR);
         }catch(ConnectException e)
         {
-             log.info("error al conectar ");
+             log.error("error al conectar ");
              Alert  alert = new Alert(Alert.AlertType.ERROR);
            alert.setHeaderText("Error Autentificando al Usuario "+txtNickName.getText() );
            alert.setTitle("Notificación");
@@ -129,7 +169,7 @@ public class LoginController implements Initializable {
         }
     catch (JDBCConnectionException e1)
     {
-         log.info("error jdbc");
+         log.error("error jdbc");
            Alert  alert = new Alert(Alert.AlertType.ERROR);
            alert.setHeaderText("Error Autentificando al Usuario "+txtNickName.getText() );
            alert.setTitle("Notificación");
@@ -138,7 +178,7 @@ public class LoginController implements Initializable {
     }
         catch (InvocationTargetException e2)
         {
-             log.info("error invocation");
+             log.error("error invocation");
               Alert  alert = new Alert(Alert.AlertType.ERROR);
            alert.setHeaderText("Error Autentificando al Usuario "+txtNickName.getText() );
            alert.setTitle("Notificación");
@@ -147,7 +187,7 @@ public class LoginController implements Initializable {
         }
         catch (ExceptionInInitializerError e4)
         {
-                   log.info("error invocation342");
+                   log.error("error al inicializar la base de datos favor de revisar el servicio de mysql");
               Alert  alert = new Alert(Alert.AlertType.ERROR);
            alert.setHeaderText("Error Autentificando al Usuario "+txtNickName.getText() );
            alert.setTitle("Notificación");
@@ -184,10 +224,10 @@ public class LoginController implements Initializable {
              default:
             {
                   Alert  alert = new Alert(Alert.AlertType.ERROR);
-                               alert.setHeaderText("header");
-                               alert.setTitle("Notificación");
-                               alert.setContentText("Error desconocido , Favor de Contactar a USD");
-                               alert.showAndWait();
+                  alert.setHeaderText("header");
+                  alert.setTitle("Notificación");
+                  alert.setContentText("Error desconocido , Favor de Contactar a USD");
+                  alert.showAndWait();
             }
                 break;
         }

@@ -8,11 +8,15 @@ package com.fpiceno.abogados.dao.mysql;
 import com.fpiceno.abogados.config.HibernateUtil;
 import com.fpiceno.abogados.dao.UsuarioDao;
 import com.fpiceno.abogados.entity.Usuario;
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.ConnectException;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.JDBCConnectionException;
 
 /**
  *
@@ -89,5 +93,13 @@ public class UsuarioDaoMysql implements UsuarioDao {
     public Session getSession() {
 
         return HibernateUtil.getSession();
+    }
+
+    @Override
+    public Usuario readUserByEmail(String correo) throws ConnectException, JDBCConnectionException, CommunicationsException, InvocationTargetException, ExceptionInInitializerError {
+      
+        Criteria cr = getSession().createCriteria(Usuario.class);
+        cr.add(Restrictions.eq("correo",correo));
+        return (Usuario)cr.uniqueResult();
     }
 }
