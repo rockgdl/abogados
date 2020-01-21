@@ -46,7 +46,7 @@ public class UsuarioTest {
         
         UsuarioDao dao=new UsuarioDaoMysql();
         dao.insert(usuario);
-//        dao.insert(usuario2);
+        dao.insert(usuario2);
     }
     
     @Test

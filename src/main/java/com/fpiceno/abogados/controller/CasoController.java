@@ -236,7 +236,7 @@ public class CasoController implements Initializable {
                 Caso caso = new Caso();
                 caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
                 caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-                
+                System.out.println(boxDate.getValue());
                 String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
                 int idCliente = Integer.parseInt(cadenaCliente[0]);
                 System.out.println(idCliente);
