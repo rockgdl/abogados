@@ -6,11 +6,11 @@ el usuario hay que hacer una busqueda por correo para poder recuperar la contras
 poner por default el checkbox en activo 
 
 *************Clientes************
- cuando se edita un cliente deshabilitar el boton de agregar y falta las vistas que mande los mensajes de las excepciones, cualquier excepcion debe saltar a la pantalla
+//// cuando se edita un cliente deshabilitar el boton de agregar y falta las vistas que mande los mensajes de las excepciones, cualquier excepcion debe saltar a la pantalla
 y guardar en los logs 
-si no se tiene seleccionado un item en la tabla de clientes no debe poderse eliminar ni editar, deshabilitar los botones si no hay ningun cliente seleccionado 
-al darle doble click a una fila de un cliente debe cargar la informacion para editar 
-una vez con el update hecho en la base de datos debe mostrar la ventana de confirmacion del cliente
+////si no se tiene seleccionado un item en la tabla de clientes no debe poderse eliminar ni editar, deshabilitar los botones si no hay ningun cliente seleccionado 
+////al darle doble click a una fila de un cliente debe cargar la informacion para editar 
+////una vez con el update hecho en la base de datos debe mostrar la ventana de confirmacion del cliente
 
 
 *********** casos********

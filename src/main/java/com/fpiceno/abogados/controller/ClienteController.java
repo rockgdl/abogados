@@ -46,7 +46,7 @@ import org.hibernate.exception.JDBCConnectionException;
 public class ClienteController implements Initializable {
 
     @FXML Label lblNombre, lblCorreo, lblRFC, lblTelefono, lblDomicilio;
-    @FXML Button btnGuardar;
+    @FXML Button btnGuardar, btnAgregar, btnEliminar;
     @FXML TextField txtNombre, txtTelefono, txtDomicilio, txtRFC, txtCorreo, txtBusqueda;
     @FXML TableView<Cliente> tablaClientes;
     @FXML TableColumn<Cliente, String> columnNombre, columnTelefono, columnDomicilio, columnRFC, columnCorreo;
@@ -63,6 +63,8 @@ public class ClienteController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         obtenerClientes();
         btnGuardar.setDisable(true);
+        btnEliminar.setDisable(true);
+        
     }
     
     @FXML private void addCliente(ActionEvent event){
@@ -129,6 +131,7 @@ public class ClienteController implements Initializable {
         if(txtBusqueda.getText().equals("")){
             obtenerClientes();
         }else{
+            btnEliminar.setDisable(true);
             try {
                 ClienteDao dao = new ClienteDaoMysql();
                 
@@ -226,20 +229,20 @@ public class ClienteController implements Initializable {
         }
     }
     
-    @FXML private void updateCliente(ActionEvent evet){
-        Cliente cliente = tablaClientes.getSelectionModel().getSelectedItem();
-        ClienteDao dao = new ClienteDaoMysql();
-        
-        txtCorreo.setText(cliente.getCorreo());
-        txtDomicilio.setText(cliente.getDomicilio());
-        txtNombre.setText(cliente.getNombre());
-        txtRFC.setText(cliente.getRfc());
-        txtTelefono.setText(cliente.getTelefono());
-        idCliente = cliente.getId();
-        
-        obtenerClientes();
-        btnGuardar.setDisable(false);
-    }
+//    @FXML private void updateCliente(ActionEvent evet){
+//        Cliente cliente = tablaClientes.getSelectionModel().getSelectedItem();
+//        ClienteDao dao = new ClienteDaoMysql();
+//        
+//        txtCorreo.setText(cliente.getCorreo());
+//        txtDomicilio.setText(cliente.getDomicilio());
+//        txtNombre.setText(cliente.getNombre());
+//        txtRFC.setText(cliente.getRfc());
+//        txtTelefono.setText(cliente.getTelefono());
+//        idCliente = cliente.getId();
+//        
+//        obtenerClientes();
+//        btnGuardar.setDisable(false);
+//    }
     
     @FXML private void saveCliente(){
         if (verificar()){
@@ -253,13 +256,21 @@ public class ClienteController implements Initializable {
                 cliente.setRfc(txtRFC.getText());
                 cliente.setTelefono(txtTelefono.getText());
                 
-                ClienteDao dao = new ClienteDaoMysql();
-                dao.update(cliente);
+                 Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("CONFIRMACION");
+                alert.setHeaderText("Se va a modificar al cliente " + cliente.getNombre());
+                alert.setContentText("¿Seguro que desea modificarlo?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    ClienteDao dao = new ClienteDaoMysql();
+                    dao.update(cliente);
+                    limpiar();
+                    btnGuardar.setDisable(true);
+                    this.idCliente = 0;
+                    obtenerClientes();
+                }
                 
-                btnGuardar.setDisable(true);
-                this.idCliente = 0;
-                obtenerClientes();
-                limpiar();
             } catch (ConnectException ex) {
                 
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -299,9 +310,29 @@ public class ClienteController implements Initializable {
     @FXML private void retornarCliente(MouseEvent event){
         Cliente cliente = tablaClientes.getSelectionModel().getSelectedItem();
         
+        if(cliente != null && getAgregarCasoController() == null){
+            btnEliminar.setDisable(false);
+        }
+        
         if (event.getClickCount() == 2 && cliente != null){
-            getAgregarCasoController().obtenerCliente(cliente);
-           ((Node)(event.getSource())).getScene().getWindow().hide(); 
+           if(getAgregarCasoController() != null){
+                getAgregarCasoController().obtenerCliente(cliente);
+               ((Node)(event.getSource())).getScene().getWindow().hide(); 
+           }else{
+               
+               ClienteDao dao = new ClienteDaoMysql();
+                txtCorreo.setText(cliente.getCorreo());
+                txtDomicilio.setText(cliente.getDomicilio());
+                txtNombre.setText(cliente.getNombre());
+                txtRFC.setText(cliente.getRfc());
+                txtTelefono.setText(cliente.getTelefono());
+                idCliente = cliente.getId();
+
+                //obtenerClientes();
+                btnGuardar.setDisable(false);
+                btnAgregar.setDisable(true);
+           }
+           
         }
     }
     
@@ -351,6 +382,7 @@ public class ClienteController implements Initializable {
     
     
     private void obtenerClientes(){
+        btnEliminar.setDisable(true);
         try {
             tablaClientes.getItems().clear();
             ClienteDao dao = new ClienteDaoMysql();
@@ -442,6 +474,13 @@ public class ClienteController implements Initializable {
             txtTelefono.positionCaret(10);
         }
         
+    }
+    
+    @FXML private void limpiarCampos(ActionEvent event){
+        limpiar();
+        this.idCliente = 0;
+        btnAgregar.setDisable(false);
+        btnGuardar.setDisable(true);
     }
     
     private void limpiar(){

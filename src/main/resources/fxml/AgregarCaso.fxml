@@ -16,6 +16,10 @@
             <TextArea fx:id="txtConcepto" layoutX="21.0" layoutY="152.0" prefHeight="268.0" prefWidth="411.0" />
             <ComboBox fx:id="boxTipoPago" layoutX="646.0" layoutY="62.0" prefHeight="31.0" prefWidth="190.0" />
             <ComboBox fx:id="boxRazonSocial" layoutX="436.0" layoutY="62.0" prefHeight="31.0" prefWidth="197.0" />
+            <Label layoutX="153.0" layoutY="41.0" text="Cliente" />
+            <Label layoutX="494.0" layoutY="41.0" text="Razon social" />
+            <Label layoutX="697.0" layoutY="41.0" text="Tipo de pago" />
+            <Label layoutX="209.0" layoutY="131.0" text="Concepto" />
          </children>
       </Pane>
    </children>
