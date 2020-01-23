@@ -34,6 +34,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.hibernate.exception.JDBCConnectionException;
 
@@ -46,6 +47,7 @@ public class AgregarCasoController implements Initializable{
     @FXML ComboBox boxCliente;
     @FXML ComboBox boxTipoPago, boxRazonSocial;
     @FXML TextArea txtConcepto;
+    @FXML TextField txtCantidadPago;
     
     private CasoController casoController;
     
@@ -110,6 +112,7 @@ public class AgregarCasoController implements Initializable{
             caso.setStatus(Status.APROBADO);
             caso.setConcepto(txtConcepto.getText());
             caso.setFechaInicio(date);
+            caso.setCantidadPagos(Integer.parseInt(txtCantidadPago.getText()));
 
             CasoDao dao = new CasoDaoMysql();
 
@@ -147,11 +150,12 @@ public class AgregarCasoController implements Initializable{
         } catch (ExceptionInInitializerError ex) {
             Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
         }catch (NumberFormatException ex){
+            
             Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
 
             Alert alerta = new Alert(Alert.AlertType.ERROR);
 
-            alerta.setHeaderText("Debe de agregar un cliente");
+            alerta.setHeaderText("No se caputuro un numero");
             alerta.setContentText(ex.getMessage());
             alerta.show();
         }

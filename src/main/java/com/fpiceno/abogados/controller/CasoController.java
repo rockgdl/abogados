@@ -190,7 +190,7 @@ public class CasoController implements Initializable {
                 stage.setScene(new Scene(root));
                 
                 PagoController controlador = (PagoController) fxmlLoader.getController();
-                controlador.setPagos(caso.getListaPagos());
+                controlador.setCaso(caso);
                 controlador.obtenerPagos();
                 
                 stage.show();

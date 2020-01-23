@@ -22,8 +22,8 @@ public class Caso {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     
-    @Column(name="fechaPago")
-    private Date fechaPago;
+//    @Column(name="fechaPago")
+//    private Date fechaPago;
     
     @Column(name="concepto", columnDefinition = "text")
     private String concepto;
@@ -46,11 +46,15 @@ public class Caso {
     @ManyToOne (optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cliente cliente;
     
+    @Column (name = "cantidadPagos", columnDefinition = "smallint(5)")
+    private int cantidadPagos;
+    
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_caso")
     private List<Pago> ListaPagos = new ArrayList<Pago>();
     
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private RazonSocial razonSocial;
     
     @Transient
@@ -70,19 +74,19 @@ public class Caso {
         this.id = id;
     }
 
-    /**
-     * @return the fechaPago
-     */
-    public Date getFechaPago() {
-        return fechaPago;
-    }
-
-    /**
-     * @param fechaPago the fechaPago to set
-     */
-    public void setFechaPago(Date fechaPago) {
-        this.fechaPago = fechaPago;
-    }
+//    /**
+//     * @return the fechaPago
+//     */
+//    public Date getFechaPago() {
+//        return fechaPago;
+//    }
+//
+//    /**
+//     * @param fechaPago the fechaPago to set
+//     */
+//    public void setFechaPago(Date fechaPago) {
+//        this.fechaPago = fechaPago;
+//    }
 
     /**
      * @return the concepto
@@ -215,6 +219,20 @@ public class Caso {
      */
     public String getNombreCliente() {
         return cliente.getNombre();
+    }
+
+    /**
+     * @return the cantidadPagos
+     */
+    public int getCantidadPagos() {
+        return cantidadPagos;
+    }
+
+    /**
+     * @param cantidadPagos the cantidadPagos to set
+     */
+    public void setCantidadPagos(int cantidadPagos) {
+        this.cantidadPagos = cantidadPagos;
     }
    
 }

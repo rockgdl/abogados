@@ -12,7 +12,7 @@
          <children>
             <ComboBox fx:id="boxCliente" layoutX="21.0" layoutY="64.0" prefHeight="31.0" prefWidth="298.0" />
             <Button fx:id="nuevoCliente" layoutX="340.0" layoutY="61.0" mnemonicParsing="false" onAction="#nuevoCliente" text="Nuevo" />
-            <Button layoutX="484.0" layoutY="304.0" mnemonicParsing="false" onAction="#agregarCaso" text="Agregar" />
+            <Button layoutX="484.0" layoutY="336.0" mnemonicParsing="false" onAction="#agregarCaso" text="Agregar" />
             <TextArea fx:id="txtConcepto" layoutX="21.0" layoutY="152.0" prefHeight="268.0" prefWidth="411.0" />
             <ComboBox fx:id="boxTipoPago" layoutX="646.0" layoutY="62.0" prefHeight="31.0" prefWidth="190.0" />
             <ComboBox fx:id="boxRazonSocial" layoutX="436.0" layoutY="62.0" prefHeight="31.0" prefWidth="197.0" />
@@ -20,6 +20,8 @@
             <Label layoutX="494.0" layoutY="41.0" text="Razon social" />
             <Label layoutX="697.0" layoutY="41.0" text="Tipo de pago" />
             <Label layoutX="209.0" layoutY="131.0" text="Concepto" />
+            <Label layoutX="451.0" layoutY="161.0" text="Cantidad de pagos" />
+            <TextField fx:id="txtCantidadPagos" layoutX="617.0" layoutY="156.0" prefHeight="31.0" prefWidth="107.0" />
          </children>
       </Pane>
    </children>
