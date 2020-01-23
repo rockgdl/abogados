@@ -47,7 +47,7 @@ public class Caso {
     private Cliente cliente;
     
     @Column (name = "cantidadPagos", columnDefinition = "smallint(5)")
-    private int cantidadPagos;
+    private Integer cantidadPagos;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_caso")
