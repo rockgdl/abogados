@@ -15,8 +15,8 @@ import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ConnectException;
 import java.net.URL;
+import java.sql.SQLInvalidAuthorizationSpecException;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +33,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
-import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.DoubleStringConverter;
 import org.hibernate.exception.JDBCConnectionException;
 
 /**
@@ -50,7 +50,8 @@ public class PagoController implements Initializable {
     @FXML Button btnAgregarRow;
     @FXML TableView <Pago> tablaPago;
     @FXML TableColumn <Pago, String> columnConcepto;
-    @FXML TableColumn <Pago, Integer> columnFolio, columnCantidad;
+    @FXML TableColumn <Pago, Integer> columnFolio;
+    @FXML TableColumn <Pago, Double> columnCantidad;
     @FXML TableColumn <Pago, Date> columnFecha;
     ObservableList <Pago> oblistPago= FXCollections.observableArrayList();
             
@@ -104,7 +105,7 @@ public class PagoController implements Initializable {
             for(Pago pago: getCaso().getListaPagos()){
                 System.out.println(pago);
             }
-            dao.update(caso);
+            dao.update(getCaso());
         } catch (ConnectException ex) {
             Logger.getLogger(PagoController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JDBCConnectionException ex) {
@@ -125,11 +126,12 @@ public class PagoController implements Initializable {
 //        for (Pago pago: getPagos()){
 //            System.out.println(pago.getId());
 //        }
-        oblistPago.addAll(caso.getListaPagos());
+        oblistPago.addAll(getCaso().getListaPagos());
         
         try{
             columnCantidad.setCellValueFactory(new PropertyValueFactory("cantidad"));
-            columnCantidad.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+            columnCantidad.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+            
             columnCantidad.setOnEditCommit(data ->{ 
                 Pago pago = data.getRowValue();
                 pago.setCantidad(data.getNewValue());
@@ -149,6 +151,8 @@ public class PagoController implements Initializable {
             tablaPago.setItems(oblistPago);
         }catch(NumberFormatException ne){
             System.out.println("se ingreso una cadena");
+        }catch(NullPointerException ex){
+            System.out.println("Hay un campo que no puede ser nulo");
         }
         
     }

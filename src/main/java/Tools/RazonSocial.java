@@ -11,7 +11,26 @@ package Tools;
  */
 public enum RazonSocial {
     
-        FML, FMLSE, MLCONSULTORES, MDPABOGADOS,FMLMARTINEZ,;
+        FML ("FML",1), FMLSE ("FMLSE",2), MLCONSULTORES("MS Consultores",3), MDPABOGADOS("MDP Abogados",4),FMLMARTINEZ("FML Martinez",5);
+    
+    private final String key;
+    private final Integer value;
 
+    RazonSocial(String key,Integer value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public String getKey() {
+        return key;
+    }
+    public Integer getValue() {
+        return value;
+    }
+    
+    @Override
+    public String toString(){
+        return this.key;
+    }
     
 }

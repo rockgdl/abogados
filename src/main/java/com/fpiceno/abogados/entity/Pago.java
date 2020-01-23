@@ -30,7 +30,7 @@ public class Pago {
     private Date fechaPago;
     
     @Column (name = "cantidad")
-    private int cantidad;
+    private double cantidad;
     
 //    @ManyToOne
 //    @JoinColumn(name = "caso_id")
@@ -95,14 +95,14 @@ public class Pago {
     /**
      * @return the cantidad
      */
-    public int getCantidad() {
+    public double getCantidad() {
         return cantidad;
     }
 
     /**
      * @param cantidad the cantidad to set
      */
-    public void setCantidad(int cantidad) {
+    public void setCantidad(double cantidad) {
         this.cantidad = cantidad;
     }
 

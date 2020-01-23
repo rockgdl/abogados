@@ -171,7 +171,7 @@ public class AgregarCasoController implements Initializable{
             ClienteController clienteController = (ClienteController) fxmlLoader.getController();
             clienteController.setAgregarCasoController(this);
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));  
+            stage.setScene(new Scene(root)); 
             stage.show();
 
         } catch (IOException ex) {
