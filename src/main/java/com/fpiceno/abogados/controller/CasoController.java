@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ConnectException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -52,7 +53,7 @@ public class CasoController implements Initializable {
     
     
     @FXML ComboBox boxRazonSocialBusqueda, boxStatusBusqueda, boxClienteBusqueda;
-    @FXML DatePicker boxDate;
+    @FXML DatePicker boxDate, boxDate2;
     
     
     @FXML TableView<Caso> tablaCaso;
@@ -123,7 +124,7 @@ public class CasoController implements Initializable {
             ColumnStatus.setCellValueFactory(new PropertyValueFactory("status"));
             ColumnCliente.setCellValueFactory(new PropertyValueFactory("nombreCliente"));
             ColumnTipoPago.setCellValueFactory(new PropertyValueFactory("tipo"));
-            ColumnFecha.setCellValueFactory(new PropertyValueFactory("fechaInicio"));
+            ColumnFecha.setCellValueFactory(new PropertyValueFactory("fechaInicioFormato"));
             
             
             tablaCaso.setItems(oblistCaso);
@@ -206,11 +207,21 @@ public class CasoController implements Initializable {
     
     @FXML private void buscar(ActionEvent event){
         try {
-            //Cliente cliente = boxClienteBusqueda.getValue();
+            //Cliente cliente = boxClienteBusqueda.getValue();adan
            
             CasoDao dao = new CasoDaoMysql();
             
+            //Este if es en caso de tener el campo de busqueda por fechaFinal lleno, de no ser asi lo pasa por alto no afecta en el filtrado si es nulo
+            Date fechaFin = null;
+            if(boxDate2.getValue() != null){
+                //Se le asigna la ultima hora con el ultimo milisegundo del dia para compararlo con la misma fecha
+             fechaFin = Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+                    fechaFin.setHours(23);
+                    fechaFin.setMinutes(59);
+                    fechaFin.setSeconds(59);
+            }
             
+            //Desde aqui se compara todos los diltrados
             if(boxClienteBusqueda.getValue() != null && boxDate.getValue() != null && boxRazonSocialBusqueda.getValue() != null && boxStatusBusqueda.getValue() != null){
                 //buscar por todo
                 
@@ -218,6 +229,12 @@ public class CasoController implements Initializable {
                 caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
                 caso.setStatus((Status) boxStatusBusqueda.getValue());
                 caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                
+                if(boxDate2.getValue() == null){
+                    caso.setFechaFin(new Date());
+                }else{
+                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                }
                 
                 String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
                 int idCliente = Integer.parseInt(cadenaCliente[0]);
@@ -236,7 +253,14 @@ public class CasoController implements Initializable {
                 Caso caso = new Caso();
                 caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
                 caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-                System.out.println(boxDate.getValue());
+                
+                if(boxDate2.getValue() == null){
+                    caso.setFechaFin(new Date());
+                }else{
+                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                }
+                
+                
                 String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
                 int idCliente = Integer.parseInt(cadenaCliente[0]);
                 System.out.println(idCliente);
@@ -254,6 +278,12 @@ public class CasoController implements Initializable {
                 Caso caso = new Caso();
                 caso.setStatus((Status) boxStatusBusqueda.getValue());
                 caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                
+                if(boxDate2.getValue() == null){
+                    caso.setFechaFin(new Date());
+                }else{
+                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                }
                 
                 String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
                 int idCliente = Integer.parseInt(cadenaCliente[0]);
@@ -289,6 +319,11 @@ public class CasoController implements Initializable {
                 
                 Caso caso = new Caso();
                 caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                if(boxDate2.getValue() == null){
+                    caso.setFechaFin(new Date());
+                }else{
+                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                }
                 
                 String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
                 int idCliente = Integer.parseInt(cadenaCliente[0]);
@@ -359,6 +394,12 @@ public class CasoController implements Initializable {
                 caso.setStatus((Status) boxStatusBusqueda.getValue());
                 caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
                 
+                if(boxDate2.getValue() == null){
+                    caso.setFechaFin(new Date());
+                }else{
+                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                }
+                
                 tablaCaso.getItems().clear();
                 oblistCaso.addAll(dao.searchForFechaAndRazonAndStatus(caso));
                 
@@ -369,6 +410,12 @@ public class CasoController implements Initializable {
                 Caso caso = new Caso();
                 caso.setRazonSocial((RazonSocial) boxRazonSocialBusqueda.getValue());
                 caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                
+                if(boxDate2.getValue() == null){
+                    caso.setFechaFin(new Date());
+                }else{
+                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                }
                 
                 tablaCaso.getItems().clear();
                 oblistCaso.addAll(dao.searchForFechaAndRazon(caso));
@@ -381,6 +428,12 @@ public class CasoController implements Initializable {
                 caso.setStatus((Status) boxStatusBusqueda.getValue());
                 caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
                 
+                if(boxDate2.getValue() == null){
+                    caso.setFechaFin(new Date());
+                }else{
+                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                }
+                
                 tablaCaso.getItems().clear();
                 oblistCaso.addAll(dao.searchForFechaAndStatus(caso));
                 
@@ -389,6 +442,12 @@ public class CasoController implements Initializable {
                 //buscar por fecha
                 Caso caso = new Caso();
                 caso.setFechaInicio(Date.from(boxDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                
+                if(boxDate2.getValue() == null){
+                    caso.setFechaFin(new Date());
+                }else{
+                    caso.setFechaFin(fechaFin);
+                }
                 
                 tablaCaso.getItems().clear();
                 oblistCaso.addAll(dao.searchForFecha(caso));
@@ -524,6 +583,7 @@ public class CasoController implements Initializable {
         boxRazonSocialBusqueda.setValue(null);
         boxStatusBusqueda.setValue(null);
         boxDate.setValue(null);
+        boxDate2.setValue(null);
     }
     
     @FXML private void nuevoCaso(ActionEvent event){
@@ -536,6 +596,32 @@ public class CasoController implements Initializable {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));  
             stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @FXML private void EditarCaso(ActionEvent event){
+        Caso caso = tablaCaso.getSelectionModel().getSelectedItem();
+        
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AgregarCaso.fxml"));
+        Parent root;
+        try {
+            if(caso != null){
+                root = (Parent) fxmlLoader.load();
+                AgregarCasoController agregarCasoController = (AgregarCasoController) fxmlLoader.getController();
+                agregarCasoController.setCaso(caso);
+                agregarCasoController.setCasoController(this);
+                agregarCasoController.abrirDatos();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));  
+                stage.show();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Debe seleccionar un caso para poder editar");
+                alert.show();
+            }
 
         } catch (IOException ex) {
             Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);

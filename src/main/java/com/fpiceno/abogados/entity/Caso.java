@@ -6,9 +6,13 @@
 package com.fpiceno.abogados.entity;
 
 import Tools.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.*;
 
 /**
@@ -59,6 +63,9 @@ public class Caso {
     
     @Transient
     private String nombreCliente;
+    
+    @Transient
+    private String fechaInicioFormato;
 
     /**
      * @return the id
@@ -121,6 +128,7 @@ public class Caso {
      */
     public Date getFechaInicio() {
         return fechaInicio;
+        
     }
 
     /**
@@ -233,6 +241,13 @@ public class Caso {
      */
     public void setCantidadPagos(int cantidadPagos) {
         this.cantidadPagos = cantidadPagos;
+    }
+
+    /**
+     * @return the fechaInicioFormato
+     */
+    public String getFechaInicioFormato() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(fechaInicio);
     }
    
 }

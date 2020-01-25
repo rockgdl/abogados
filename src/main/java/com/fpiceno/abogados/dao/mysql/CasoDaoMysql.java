@@ -90,7 +90,7 @@ public class CasoDaoMysql implements CasoDao{
         Criteria cr = getSession().createCriteria(Caso.class);
         
         //System.out.println(caso.getCliente().getNombre());
-        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), caso.getFechaFin()));
 
         return cr.list();
         
@@ -114,7 +114,7 @@ public class CasoDaoMysql implements CasoDao{
         Criteria cr = getSession().createCriteria(Caso.class);
         
         //System.out.println(caso.getCliente().getNombre());
-        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), caso.getFechaFin()));
 
         return cr.list();
     }
@@ -124,7 +124,7 @@ public class CasoDaoMysql implements CasoDao{
         Criteria cr = getSession().createCriteria(Caso.class);
         
         //System.out.println(caso.getCliente().getNombre());
-        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), caso.getFechaFin()));
 
         return cr.list();
     }
@@ -144,7 +144,7 @@ public class CasoDaoMysql implements CasoDao{
         Criteria cr = getSession().createCriteria(Caso.class);
         
         //System.out.println(caso.getCliente().getNombre());
-        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+        cr.add(Restrictions.eq("cliente", caso.getCliente())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), caso.getFechaFin()));
 
         return cr.list();
     }
@@ -184,7 +184,7 @@ public class CasoDaoMysql implements CasoDao{
         Criteria cr = getSession().createCriteria(Caso.class);
         
         //System.out.println(caso.getCliente().getNombre());
-        cr.add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+        cr.add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), caso.getFechaFin()));
 
         return cr.list();
     }
@@ -194,7 +194,7 @@ public class CasoDaoMysql implements CasoDao{
         Criteria cr = getSession().createCriteria(Caso.class);
         
         //System.out.println(caso.getCliente().getNombre());
-        cr.add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+        cr.add(Restrictions.eq("razonSocial", caso.getRazonSocial())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), caso.getFechaFin()));
 
         return cr.list();
     }
@@ -204,7 +204,7 @@ public class CasoDaoMysql implements CasoDao{
         Criteria cr = getSession().createCriteria(Caso.class);
         
         //System.out.println(caso.getCliente().getNombre());
-        cr.add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+        cr.add(Restrictions.eq("status", caso.getStatus())).add(Restrictions.between("fechaInicio", caso.getFechaInicio(), caso.getFechaFin()));
 
         return cr.list();
     }
@@ -214,7 +214,7 @@ public class CasoDaoMysql implements CasoDao{
         Criteria cr = getSession().createCriteria(Caso.class);
         
         //System.out.println(caso.getCliente().getNombre());
-        cr.add(Restrictions.between("fechaInicio", caso.getFechaInicio(), new Date()));
+        cr.add(Restrictions.between("fechaInicio", caso.getFechaInicio(), caso.getFechaFin()));
 
         return cr.list();
     }

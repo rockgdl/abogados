@@ -100,6 +100,8 @@ public class PagoController implements Initializable {
     @FXML private void guardar(ActionEvent event){
         try {
             getCaso().setListaPagos(tablaPago.getItems());
+          
+          
             
             CasoDao dao = new CasoDaoMysql();
             for(Pago pago: getCaso().getListaPagos()){
