@@ -15,5 +15,6 @@
       <Button fx:id="addClientes" layoutX="103.0" layoutY="99.0" mnemonicParsing="false" onAction="#agregarClientes" text="agregar clientes" />
       <Button fx:id="addUser" layoutX="258.0" layoutY="99.0" mnemonicParsing="false" onAction="#agregarUsuarios" text="Agregar Usuarios" />
       <Button layoutX="103.0" layoutY="200.0" mnemonicParsing="false" onAction="#addCasos" text="Agregar Casos" />
+      <Button layoutX="268.0" layoutY="200.0" mnemonicParsing="false" onAction="#consultarCasos" text="Consultar Casos" />
    </children>
 </AnchorPane>

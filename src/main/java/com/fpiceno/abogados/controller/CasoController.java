@@ -593,6 +593,7 @@ public class CasoController implements Initializable {
             root = (Parent) fxmlLoader.load();
             AgregarCasoController agregarCasoController = (AgregarCasoController) fxmlLoader.getController();
             agregarCasoController.setCasoController(this);
+            agregarCasoController.inicializarPagos();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));  
             stage.show();
@@ -613,6 +614,7 @@ public class CasoController implements Initializable {
                 AgregarCasoController agregarCasoController = (AgregarCasoController) fxmlLoader.getController();
                 agregarCasoController.setCaso(caso);
                 agregarCasoController.setCasoController(this);
+                agregarCasoController.inicializarPagos();
                 agregarCasoController.abrirDatos();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));  

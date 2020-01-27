@@ -23,7 +23,9 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ConnectException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -204,18 +206,11 @@ public class AgregarCasoController implements Initializable{
     }
     
     @FXML private void agregarRow(ActionEvent event){
-        if(tablaPago.getItems().size() < 5){
+        
             Pago pago = new Pago();
             pago.setFechaPago(new Date());
             
             tablaPago.getItems().add(pago);
-        }else{
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("ERROR");
-            alert.setHeaderText("La cantidad de pagos establecida es de " +getCaso().getCantidadPagos()+", No puede agregar mas pagos");
-            alert.show();
-        }
-    
     }
     
     @FXML private void eliminarRow(ActionEvent event){
@@ -279,7 +274,7 @@ public class AgregarCasoController implements Initializable{
     }
 
     public void abrirDatos(){
-        PagoDao dao = new PagoDaoMysql();
+        //PagoDao dao = new PagoDaoMysql();
         
 //        for (Pago pago: getPagos()){
 //            System.out.println(pago.getId());
@@ -287,25 +282,7 @@ public class AgregarCasoController implements Initializable{
         oblistPago.addAll(getCaso().getListaPagos());
         
         try{
-            columnCantidad.setCellValueFactory(new PropertyValueFactory("cantidad"));
-            columnCantidad.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
             
-            columnCantidad.setOnEditCommit(data ->{ 
-                Pago pago = data.getRowValue();
-                pago.setCantidad(data.getNewValue());
-            });
-
-            columnConcepto.setCellValueFactory(new PropertyValueFactory("concepto"));
-            columnConcepto.setCellFactory(TextFieldTableCell.forTableColumn());
-            columnConcepto.setOnEditCommit(data ->{ 
-                Pago pago = data.getRowValue();
-                pago.setConcepto(data.getNewValue());
-            });
-
-            columnFecha.setCellValueFactory(new PropertyValueFactory("fechaPago"));
-
-            columnFolio.setCellValueFactory(new PropertyValueFactory("id"));
-
             tablaPago.setItems(oblistPago);
             boxCliente.setValue(getCaso().getCliente());
             boxRazonSocial.setValue(getCaso().getRazonSocial());
@@ -317,6 +294,35 @@ public class AgregarCasoController implements Initializable{
         }catch(NullPointerException ex){
             System.out.println("Hay un campo que no puede ser nulo");
         }
+        
+    }
+    
+    public void inicializarPagos(){
+        
+        if(getCaso() == null){
+            btnGuardar.setDisable(true);
+        }else{
+            btnAgregar.setDisable(true);
+        }
+            
+        columnCantidad.setCellValueFactory(new PropertyValueFactory("cantidad"));
+        columnCantidad.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+
+        columnCantidad.setOnEditCommit(data ->{ 
+            Pago pago = data.getRowValue();
+            pago.setCantidad(data.getNewValue());
+        });
+
+        columnConcepto.setCellValueFactory(new PropertyValueFactory("concepto"));
+        columnConcepto.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnConcepto.setOnEditCommit(data ->{ 
+            Pago pago = data.getRowValue();
+            pago.setConcepto(data.getNewValue());
+        });
+
+        columnFecha.setCellValueFactory(new PropertyValueFactory("fechaPago"));
+
+        columnFolio.setCellValueFactory(new PropertyValueFactory("id"));
         
     }
 
@@ -346,13 +352,6 @@ public class AgregarCasoController implements Initializable{
      */
     public void setCasoController(CasoController casoController) {
         this.casoController = casoController;
-        
-        //PARA AVILITAR LOS BOTONES SEGUN SE VAYA A EDITAR O AGREGAR UNO NUEVO
-        if(getCaso() == null){
-            btnGuardar.setDisable(true);
-        }else{
-            btnAgregar.setDisable(true);
-        }
     }
     
     public void obtenerCliente(Cliente cliente){

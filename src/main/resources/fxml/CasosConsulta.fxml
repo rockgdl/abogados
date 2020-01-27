@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="836.0" prefWidth="1134.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fpiceno.abogados.controller.CasosConsultaController">
+   <children>
+      <TabPane layoutX="23.0" layoutY="45.0" prefHeight="788.0" prefWidth="1106.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="tabFML" onSelectionChanged="#seleccionarTab" text="FML">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="413.0" prefWidth="648.0">
+                     <children>
+                        <Label layoutX="664.0" layoutY="43.0" text="Fecha" />
+                        <Button fx:id="buscar" layoutX="808.0" layoutY="91.0" mnemonicParsing="false" onAction="#Detectar" text="Buscar" />
+                        <Label layoutX="175.0" layoutY="68.0" text="Cliente" />
+                        <Button fx:id="limpiar" layoutX="899.0" layoutY="91.0" mnemonicParsing="false" onAction="#Detectar" text="Limpiar consulta" />
+                        <DatePicker fx:id="boxDate2FML" layoutX="574.0" layoutY="107.0" />
+                        <DatePicker fx:id="boxDateFML" layoutX="574.0" layoutY="64.0" />
+                        <ComboBox fx:id="boxClienteFML" editable="true" layoutX="73.0" layoutY="90.0" prefHeight="31.0" prefWidth="249.0" />
+                        <ComboBox fx:id="boxStatusFML" layoutX="352.0" layoutY="91.0" prefHeight="31.0" prefWidth="190.0" />
+                        
+                        <Label layoutX="427.0" layoutY="69.0" text="Status" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="tabFMLSE" onSelectionChanged="#seleccionarTab" text="FMLSE">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab fx:id="tabML" onSelectionChanged="#seleccionarTab" text="ML Consultores">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab fx:id="tabMDP" onSelectionChanged="#seleccionarTab" text="MDP Abogados">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab fx:id="tabFMLMartinez" onSelectionChanged="#seleccionarTab" text="FML Matinez">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="736.0" prefWidth="1092.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <TableView fx:id="tablaCasoFML" layoutX="55.0" layoutY="240.0" onMouseClicked="#abrirPagos" prefHeight="510.0" prefWidth="997.0">
+        <columns>
+           <TableColumn fx:id="ColumnIdFML" prefWidth="81.0" text="No. Caso" />
+           <TableColumn fx:id="ColumnClienteFML" prefWidth="152.0" text="Cliente" />
+           <TableColumn fx:id="ColumnIngresosFML" prefWidth="136.0" text="Ingresos" />
+           <TableColumn fx:id="ColumnRazonSocialFML" prefWidth="149.0" text="Razon Social" />
+           <TableColumn fx:id="ColumnTipoPagoFML" prefWidth="130.0" text="Tipo de pago" />
+           <TableColumn fx:id="ColumnStatusFML" prefWidth="202.0" text="Status" />
+           <TableColumn fx:id="ColumnFechaFML" prefWidth="145.0" text="Fecha" />
+        </columns>
+     </TableView>
+   </children>
+</AnchorPane>
