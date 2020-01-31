@@ -233,7 +233,7 @@ public class CasoController implements Initializable {
                 if(boxDate2.getValue() == null){
                     caso.setFechaFin(new Date());
                 }else{
-                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                    caso.setFechaFin(fechaFin);
                 }
                 
                 String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
@@ -257,7 +257,7 @@ public class CasoController implements Initializable {
                 if(boxDate2.getValue() == null){
                     caso.setFechaFin(new Date());
                 }else{
-                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                    caso.setFechaFin(fechaFin);
                 }
                 
                 
@@ -282,7 +282,7 @@ public class CasoController implements Initializable {
                 if(boxDate2.getValue() == null){
                     caso.setFechaFin(new Date());
                 }else{
-                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                    caso.setFechaFin(fechaFin);
                 }
                 
                 String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
@@ -322,7 +322,7 @@ public class CasoController implements Initializable {
                 if(boxDate2.getValue() == null){
                     caso.setFechaFin(new Date());
                 }else{
-                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                    caso.setFechaFin(fechaFin);
                 }
                 
                 String[] cadenaCliente = boxClienteBusqueda.getEditor().getText().split("\\-");
@@ -397,7 +397,7 @@ public class CasoController implements Initializable {
                 if(boxDate2.getValue() == null){
                     caso.setFechaFin(new Date());
                 }else{
-                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                    caso.setFechaFin(fechaFin);
                 }
                 
                 tablaCaso.getItems().clear();
@@ -414,7 +414,7 @@ public class CasoController implements Initializable {
                 if(boxDate2.getValue() == null){
                     caso.setFechaFin(new Date());
                 }else{
-                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                    caso.setFechaFin(fechaFin);
                 }
                 
                 tablaCaso.getItems().clear();
@@ -431,7 +431,7 @@ public class CasoController implements Initializable {
                 if(boxDate2.getValue() == null){
                     caso.setFechaFin(new Date());
                 }else{
-                    caso.setFechaFin(Date.from(boxDate2.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                    caso.setFechaFin(fechaFin);
                 }
                 
                 tablaCaso.getItems().clear();

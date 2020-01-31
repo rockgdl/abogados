@@ -8,46 +8,30 @@
 
 <AnchorPane id="AnchorPane" prefHeight="733.0" prefWidth="1238.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fpiceno.abogados.controller.CasoController">
    <children>
-      <TabPane layoutX="-1.0" layoutY="9.0" prefHeight="752.0" prefWidth="1238.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Caso">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="676.0" prefWidth="1213.0">
-                     <children>
-                        <TableView fx:id="tablaCaso" layoutX="64.0" layoutY="151.0" onMouseClicked="#AbrirPagos" prefHeight="510.0" prefWidth="997.0">
-                          <columns>
-                            <TableColumn fx:id="ColumnId" prefWidth="81.0" text="No. Caso" />
-                            <TableColumn fx:id="ColumnCliente" prefWidth="152.0" text="Cliente" />
-                              <TableColumn fx:id="ColumnIngresos" prefWidth="136.0" text="Ingresos" />
-                              <TableColumn fx:id="ColumnRazonSocial" prefWidth="149.0" text="Razon Social" />
-                              <TableColumn fx:id="ColumnTipoPago" prefWidth="130.0" text="Tipo de pago" />
-                              <TableColumn fx:id="ColumnStatus" prefWidth="202.0" text="Status" />
-                              <TableColumn fx:id="ColumnFecha" prefWidth="145.0" text="Fecha" />
-                          </columns>
-                        </TableView>
-                        <ComboBox fx:id="boxRazonSocialBusqueda" layoutX="543.0" layoutY="99.0" prefHeight="31.0" prefWidth="188.0" />
-                        <ComboBox fx:id="boxStatusBusqueda" layoutX="327.0" layoutY="99.0" prefHeight="31.0" prefWidth="190.0" />
-                        <ComboBox fx:id="boxClienteBusqueda" editable="true" layoutX="59.0" layoutY="99.0" prefHeight="31.0" prefWidth="249.0" />
-                        <DatePicker fx:id="boxDate" layoutX="764.0" layoutY="73.0" />
-                        <DatePicker fx:id="boxDate2" layoutX="764.0" layoutY="115.0" />
-                        <Button layoutX="1123.0" layoutY="235.0" mnemonicParsing="false" onAction="#Eliminar" text="Eliminar" />
-                        <Button layoutX="1095.0" layoutY="99.0" mnemonicParsing="false" onAction="#limpiarConsulta" text="Limpiar consulta" />
-                        <Label layoutX="166.0" layoutY="78.0" text="Cliente" />
-                        <Label layoutX="405.0" layoutY="78.0" text="Status" />
-                        <Label layoutX="595.0" layoutY="78.0" text="Razon Social" />
-                        <Button layoutX="997.0" layoutY="99.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
-                        <Button layoutX="1110.0" layoutY="191.0" mnemonicParsing="false" onAction="#nuevoCaso" text="Nuevo Caso" />
-                        <Label layoutX="856.0" layoutY="52.0" text="Fecha" />
-                        <Button layoutX="1122.0" layoutY="281.0" mnemonicParsing="false" onAction="#EditarCaso" prefHeight="31.0" prefWidth="76.0" text="Editar" />
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Usuario">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
+      <TableView fx:id="tablaCaso" layoutX="73.0" layoutY="179.0" onMouseClicked="#AbrirPagos" prefHeight="510.0" prefWidth="997.0">
+        <columns>
+          <TableColumn fx:id="ColumnId" prefWidth="81.0" text="No. Caso" />
+          <TableColumn fx:id="ColumnCliente" prefWidth="152.0" text="Cliente" />
+            <TableColumn fx:id="ColumnIngresos" prefWidth="136.0" text="Ingresos" />
+            <TableColumn fx:id="ColumnRazonSocial" prefWidth="149.0" text="Razon Social" />
+            <TableColumn fx:id="ColumnTipoPago" prefWidth="130.0" text="Tipo de pago" />
+            <TableColumn fx:id="ColumnStatus" prefWidth="202.0" text="Status" />
+            <TableColumn fx:id="ColumnFecha" prefWidth="145.0" text="Fecha" />
+        </columns>
+      </TableView>
+      <ComboBox fx:id="boxRazonSocialBusqueda" layoutX="550.0" layoutY="113.0" prefHeight="31.0" prefWidth="188.0" />
+      <ComboBox fx:id="boxStatusBusqueda" layoutX="344.0" layoutY="113.0" prefHeight="31.0" prefWidth="190.0" />
+      <ComboBox fx:id="boxClienteBusqueda" editable="true" layoutX="73.0" layoutY="113.0" prefHeight="31.0" prefWidth="249.0" />
+      <DatePicker fx:id="boxDate" layoutX="762.0" layoutY="91.0" />
+      <DatePicker fx:id="boxDate2" layoutX="762.0" layoutY="132.0" />
+      <Button layoutX="1098.0" layoutY="281.0" mnemonicParsing="false" onAction="#Eliminar" text="Eliminar" />
+      <Button layoutX="1096.0" layoutY="113.0" mnemonicParsing="false" onAction="#limpiarConsulta" text="Limpiar consulta" />
+      <Label layoutX="175.0" layoutY="87.0" text="Cliente" />
+      <Label layoutX="419.0" layoutY="87.0" text="Status" />
+      <Label layoutX="602.0" layoutY="82.0" text="Razon Social" />
+      <Button layoutX="999.0" layoutY="113.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
+      <Button layoutX="1096.0" layoutY="235.0" mnemonicParsing="false" onAction="#nuevoCaso" text="Nuevo Caso" />
+      <Label layoutX="852.0" layoutY="64.0" text="Fecha" />
+      <Button layoutX="1096.0" layoutY="329.0" mnemonicParsing="false" onAction="#EditarCaso" prefHeight="31.0" prefWidth="76.0" text="Editar" />
    </children>
 </AnchorPane>
