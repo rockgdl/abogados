@@ -12,6 +12,20 @@ y guardar en los logs
 ////al darle doble click a una fila de un cliente debe cargar la informacion para editar 
 ////una vez con el update hecho en la base de datos debe mostrar la ventana de confirmacion del cliente
 
+ al eliminar clientes, validar restriccion referencial de contraints
+
+tabla clientes agregar razon social del cliente 
+tabla de casos agregar descripcion del caso como columna 
+
+ingresos es la sumatoria de los pagos realizados 
+
+casos lleva un total de importe que es lo que se le va a cobrar por todo el caso se le va descontando por cada pago 
+
+al caso se le debe agregar, cantidad a pagar y fecha limite de pago 
+a la tabla de pagos , ponerle estatus del pago y fecha hacerla ocmbolist para que el usuario la ponga
+
+
+
 
 *********** casos********
 la tabla de busqueda esta bien principalmente, poner a un lado el de añadir caso un boton y que para el llenado de casos sea en una ventana emergente

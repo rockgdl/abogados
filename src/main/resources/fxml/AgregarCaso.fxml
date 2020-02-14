@@ -19,7 +19,7 @@
             <Label layoutX="153.0" layoutY="41.0" text="Cliente" />
             <Label layoutX="494.0" layoutY="41.0" text="Razon social" />
             <Label layoutX="697.0" layoutY="41.0" text="Tipo de pago" />
-            <Label layoutX="209.0" layoutY="131.0" text="Concepto" />
+            <Label layoutX="209.0" layoutY="131.0" text="Descripcion del caso" />
             <TableView fx:id="tablaPago" editable="true" layoutX="470.0" layoutY="152.0" onKeyPressed="#CapturaEnTabla" prefHeight="317.0" prefWidth="560.0">
                <columns>
                   <TableColumn fx:id="columnFolio" prefWidth="75.0" text="Folio" />
@@ -28,7 +28,7 @@
                   <TableColumn fx:id="columnCantidad" prefWidth="128.0" text="Cantidad" />
                </columns>
             </TableView>
-            <Label layoutX="733.0" layoutY="131.0" text="Pagos" />
+            <Label layoutX="733.0" layoutY="131.0" text="Pagos por Realizar" />
             <Button fx:id="btnGuardar" layoutX="520.0" layoutY="495.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
             <Button layoutX="1043.0" layoutY="265.0" mnemonicParsing="false" onAction="#eliminarRow" prefHeight="31.0" prefWidth="31.0" text="-" />
             <Button fx:id="btnAgregarRow" layoutX="1043.0" layoutY="196.0" mnemonicParsing="false" onAction="#agregarRow" text="+" />
