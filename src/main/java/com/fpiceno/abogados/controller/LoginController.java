@@ -22,10 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -33,8 +30,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import org.apache.log4j.Logger;
+
 import org.hibernate.exception.JDBCConnectionException;
 
 public class LoginController implements Initializable {
@@ -46,7 +42,8 @@ public class LoginController implements Initializable {
     @FXML private AnchorPane rootPane;
     @FXML private ImageView imageView;
     
-    private final Logger log= Logger.getLogger(LoginController.class.getSimpleName());
+    private static final org.apache.log4j.Logger LOG= org.apache.log4j.Logger.getLogger(LoginController.class.getSimpleName());
+
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -76,7 +73,7 @@ public class LoginController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      log.info("entrando a inicializar el contenido del login");
+      LOG.info("entrando a inicializar el contenido del login");
       FileInputStream input;
 //        try {
             //input = new FileInputStream("/imagenes/logo1.jpg");
@@ -95,7 +92,7 @@ public class LoginController implements Initializable {
     {
         if(e.getCode().toString().equals("ENTER"))
             {
-                log.info("tecla presionada de enter");
+                LOG.info("tecla presionada de enter");
             try {
                 Entrar();
                 //do something
@@ -125,12 +122,12 @@ public class LoginController implements Initializable {
                 
             Optional<String> result = dialog.showAndWait();
             if (result.isPresent()){
-                log.info("tu correo es : " + result.get());
+                LOG.info("tu correo es : " + result.get());
                     Usuario usuario= null;
                    UsuarioDao dao = new UsuarioDaoMysql();
                try {
                    usuario=dao.readUserByEmail(result.get());
-                   log.info("mandare correo a este usuario"+usuario);
+                   LOG.info("mandare correo a este usuario"+usuario);
                    services.sendEmail(usuario);
                    //envio de correo metodo 
                } catch (ConnectException ex) {
@@ -159,7 +156,7 @@ public class LoginController implements Initializable {
         //usuario.setRol(Roles.ADMINISTRADOR);
         }catch(ConnectException e)
         {
-             log.error("error al conectar ");
+             LOG.error("error al conectar ");
              Alert  alert = new Alert(Alert.AlertType.ERROR);
            alert.setHeaderText("Error Autentificando al Usuario "+txtNickName.getText() );
            alert.setTitle("Notificación");
@@ -169,7 +166,7 @@ public class LoginController implements Initializable {
         }
     catch (JDBCConnectionException e1)
     {
-         log.error("error jdbc");
+         LOG.error("error jdbc");
            Alert  alert = new Alert(Alert.AlertType.ERROR);
            alert.setHeaderText("Error Autentificando al Usuario "+txtNickName.getText() );
            alert.setTitle("Notificación");
@@ -178,7 +175,7 @@ public class LoginController implements Initializable {
     }
         catch (InvocationTargetException e2)
         {
-             log.error("error invocation");
+             LOG.error("error invocation");
               Alert  alert = new Alert(Alert.AlertType.ERROR);
            alert.setHeaderText("Error Autentificando al Usuario "+txtNickName.getText() );
            alert.setTitle("Notificación");
@@ -187,7 +184,7 @@ public class LoginController implements Initializable {
         }
         catch (ExceptionInInitializerError e4)
         {
-                   log.error("error al inicializar la base de datos favor de revisar el servicio de mysql");
+                   LOG.error("error al inicializar la base de datos favor de revisar el servicio de mysql");
               Alert  alert = new Alert(Alert.AlertType.ERROR);
            alert.setHeaderText("Error Autentificando al Usuario "+txtNickName.getText() );
            alert.setTitle("Notificación");
@@ -202,22 +199,23 @@ public class LoginController implements Initializable {
         
         switch(usuario.getRol()){
             case ADMINISTRADOR: 
-                 log.info("cargando vista Administrador");
+                 LOG.info("cargando vista Administrador");
                  pane= FXMLLoader.load(getClass().getResource("/fxml/Administrador.fxml"));
                  rootPane.getChildren().setAll(pane);
                 break;
                 
             case INGRESOS:
-                    log.info("cargando vista de ingresos");
+                    LOG.info("cargando vista de ingresos");
                   pane = FXMLLoader.load(getClass().getResource("/fxml/Administrador.fxml"));
                  rootPane.getChildren().setAll(pane);
                 break;
             case EGRESOS:
-                    log.info("cargando vista Egregos");
+                    LOG.info("cargando vista Egregos");
                   pane = FXMLLoader.load(getClass().getResource("/fxml/Administrador.fxml"));
-                 rootPane.getChildren().setAll(pane);break;
+                 rootPane.getChildren().setAll(pane);
+                 break;
             case CONSULTA: 
-                    log.info("cargando vista Reportes");
+                    LOG.info("cargando vista Reportes");
                   pane = FXMLLoader.load(getClass().getResource("/fxml/Administrador.fxml"));
                  rootPane.getChildren().setAll(pane);
                  break;

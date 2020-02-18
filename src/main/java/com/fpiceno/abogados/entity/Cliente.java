@@ -34,6 +34,9 @@ public class Cliente {
     @Column (name = "correo", columnDefinition = "varchar(30)")
     private String correo;
     
+    @Column (name = "razonSocial", columnDefinition = "varchar(30)")
+    private String razonSocial;
+    
 
     /**
      * @return the id
@@ -117,6 +120,14 @@ public class Cliente {
      */
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
     }
     
     @Override

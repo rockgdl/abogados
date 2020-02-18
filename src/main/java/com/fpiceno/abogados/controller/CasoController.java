@@ -41,6 +41,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.exception.JDBCConnectionException;
 
@@ -51,13 +52,14 @@ import org.hibernate.exception.JDBCConnectionException;
  */
 public class CasoController implements Initializable {
     
-    
+    private static final org.apache.log4j.Logger LOG= org.apache.log4j.Logger.getLogger(CasoController.class.getSimpleName());
+
     @FXML ComboBox boxRazonSocialBusqueda, boxStatusBusqueda, boxClienteBusqueda;
     @FXML DatePicker boxDate, boxDate2;
     
     
     @FXML TableView<Caso> tablaCaso;
-    @FXML TableColumn <Caso, String> ColumnIngresos, ColumnRazonSocial, ColumnStatus, ColumnCliente, ColumnTipoPago, ColumnFecha;
+    @FXML TableColumn <Caso, String> ColumnIngresos, ColumnRazonSocial, ColumnStatus, ColumnCliente, ColumnTipoPago, ColumnFecha,columnStatusPago,columnBancoPago;
     @FXML TableColumn <Caso, Integer> ColumnId;
     ObservableList <Caso> oblistCaso= FXCollections.observableArrayList();
     
@@ -201,7 +203,8 @@ public class CasoController implements Initializable {
             }
         }else{
            
-            System.out.println("No entro");
+            LOG.info("No entro");
+           
         }
     }
     
@@ -595,6 +598,7 @@ public class CasoController implements Initializable {
             agregarCasoController.setCasoController(this);
             agregarCasoController.inicializarPagos();
             Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));  
             stage.show();
 

@@ -66,6 +66,12 @@ public class Caso {
     
     @Transient
     private String fechaInicioFormato;
+    
+    
+    @Column(name="costoCaso")
+    private Double costoCaso;
+    @Column(name="fechaCierreCaso")
+    private Date fechaCierreCaso;
 
     /**
      * @return the id
@@ -249,5 +255,23 @@ public class Caso {
     public String getFechaInicioFormato() {
         return new SimpleDateFormat("dd/MM/yyyy").format(fechaInicio);
     }
+
+    public Double getCostoCaso() {
+        return costoCaso;
+    }
+
+    public void setCostoCaso(Double costoCaso) {
+        this.costoCaso = costoCaso;
+    }
+
+    public Date getFechaCierreCaso() {
+        return fechaCierreCaso;
+    }
+
+    public void setFechaCierreCaso(Date fechaCierreCaso) {
+        this.fechaCierreCaso = fechaCierreCaso;
+    }
+    
+    
    
 }

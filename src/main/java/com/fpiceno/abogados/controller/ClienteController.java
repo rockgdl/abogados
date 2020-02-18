@@ -47,9 +47,9 @@ public class ClienteController implements Initializable {
 
     @FXML Label lblNombre, lblCorreo, lblRFC, lblTelefono, lblDomicilio;
     @FXML Button btnGuardar, btnAgregar, btnEliminar;
-    @FXML TextField txtNombre, txtTelefono, txtDomicilio, txtRFC, txtCorreo, txtBusqueda;
+    @FXML TextField txtNombre, txtTelefono, txtDomicilio, txtRFC, txtCorreo, txtBusqueda,txtRazonSocial;
     @FXML TableView<Cliente> tablaClientes;
-    @FXML TableColumn<Cliente, String> columnNombre, columnTelefono, columnDomicilio, columnRFC, columnCorreo;
+    @FXML TableColumn<Cliente, String> columnNombre, columnTelefono, columnDomicilio, columnRFC, columnCorreo,columnRazonSocial;
     ObservableList <Cliente> oblist= FXCollections.observableArrayList();
     
     int idCliente = 0;
@@ -78,6 +78,7 @@ public class ClienteController implements Initializable {
                 cliente.setNombre(txtNombre.getText());
                 cliente.setRfc(txtRFC.getText());
                 cliente.setTelefono(txtTelefono.getText());
+                cliente.setRazonSocial(txtRazonSocial.getText());
                 
                 ClienteDao dao = new ClienteDaoMysql();
                 dao.insert(cliente);
@@ -255,6 +256,7 @@ public class ClienteController implements Initializable {
                 cliente.setNombre(txtNombre.getText());
                 cliente.setRfc(txtRFC.getText());
                 cliente.setTelefono(txtTelefono.getText());
+                cliente.setRazonSocial(txtRazonSocial.getText());
                 
                  Alert alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("CONFIRMACION");
@@ -398,6 +400,7 @@ public class ClienteController implements Initializable {
             columnDomicilio.setCellValueFactory(new PropertyValueFactory("domicilio"));
             columnTelefono.setCellValueFactory(new PropertyValueFactory("telefono"));
             columnCorreo.setCellValueFactory(new PropertyValueFactory("correo"));
+            columnRazonSocial.setCellValueFactory(new PropertyValueFactory("razonSocial"));
             
             tablaClientes.setItems(oblist);
         } catch (ConnectException ex) {
@@ -489,6 +492,7 @@ public class ClienteController implements Initializable {
         txtNombre.clear();
         txtRFC.clear();
         txtTelefono.clear();
+        txtRazonSocial.clear();;
     }
 
     /**

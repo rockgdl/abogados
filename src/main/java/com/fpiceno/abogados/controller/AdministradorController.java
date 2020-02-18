@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,10 +30,32 @@ public class AdministradorController implements Initializable {
      * Initializes the controller class.
      */
     private Logger log=Logger.getLogger(this.getClass().getSimpleName());
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    
+       @FXML private void nuevoCaso(ActionEvent event){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AgregarCaso.fxml"));
+        Parent root;
+        try {
+            root = (Parent) fxmlLoader.load();
+            AgregarCasoController agregarCasoController = (AgregarCasoController) fxmlLoader.getController();
+            CasoController caso=new CasoController();
+            agregarCasoController.setCasoController(caso);
+            agregarCasoController.inicializarPagos();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));  
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     @FXML
     public void agregarClientes ()

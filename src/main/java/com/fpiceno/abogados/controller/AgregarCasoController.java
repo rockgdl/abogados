@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ConnectException;
 import java.net.URL;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +41,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -56,11 +58,17 @@ import org.hibernate.exception.JDBCConnectionException;
  * @author gnr_a
  */
 public class AgregarCasoController implements Initializable{
+    
+        private static final org.apache.log4j.Logger LOG= org.apache.log4j.Logger.getLogger(CasoController.class.getSimpleName());
+
 
     @FXML ComboBox boxCliente;
     @FXML ComboBox boxTipoPago, boxRazonSocial;
     @FXML TextArea txtConcepto;
     @FXML TextField txtCantidadPago;
+    @FXML TextField txtCostoCaso;
+    @FXML DatePicker dateCierre;
+
     
     
       //@FXML Label lblCantidadPagos;
@@ -120,7 +128,7 @@ public class AgregarCasoController implements Initializable{
     @FXML private void agregarCaso(ActionEvent event){
         Date date = new Date();
         Caso caso = new Caso();
-        
+        LOG.debug("agregando un caso y busco el valor de la fecha "+dateCierre.getValue());
         //Obtener el id del cliente
         String[] cadenaCliente = boxCliente.getEditor().getText().split("\\-");
         int idCliente = Integer.parseInt(cadenaCliente[0]);
@@ -138,11 +146,17 @@ public class AgregarCasoController implements Initializable{
             caso.setFechaInicio(date);
             caso.setCantidadPagos(tablaPago.getItems().size());
             caso.setListaPagos(tablaPago.getItems());
+            caso.setCostoCaso(Double.parseDouble(txtCostoCaso.getText()));
+            caso.setFechaCierreCaso(Date.from(dateCierre.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 
             CasoDao dao = new CasoDaoMysql();
 
             dao.insert(caso);
-            getCasoController().obtenerCasos();
+            
+           Stage stage = (Stage) btnAgregar.getScene().getWindow();
+            // do what you have to do
+           stage.close();
+           // getCasoController().obtenerCasos();
             
         } catch (ConnectException ex) {
 
