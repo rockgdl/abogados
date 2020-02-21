@@ -29,7 +29,7 @@ public class AdministradorController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    private Logger log=Logger.getLogger(this.getClass().getSimpleName());
+        private static final org.apache.log4j.Logger log= org.apache.log4j.Logger.getLogger(CasoController.class.getSimpleName());
     
     
     @Override
@@ -49,6 +49,7 @@ public class AdministradorController implements Initializable {
             agregarCasoController.inicializarPagos();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Agregando ingresos");
             stage.setScene(new Scene(root));  
             stage.show();
 
@@ -66,7 +67,8 @@ public class AdministradorController implements Initializable {
         try {
             root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
-                 stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Catalogo de Clientes");
             stage.setScene(new Scene(root1));  
             stage.show();
         } catch (IOException ex) {
@@ -85,6 +87,7 @@ public class AdministradorController implements Initializable {
             root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
                  stage.initModality(Modality.APPLICATION_MODAL);
+                 stage.setTitle("Catalogo de usuarios");
             stage.setScene(new Scene(root1));  
             stage.show();
         } catch (IOException ex) {
@@ -96,7 +99,7 @@ public class AdministradorController implements Initializable {
     @FXML
     public void addCasos()
     {
-        log.info("agregando casoss");
+        log.info("Consulta general de casos");
         
                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Caso.fxml"));
         Parent root1;
@@ -104,6 +107,7 @@ public class AdministradorController implements Initializable {
             root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
                  stage.initModality(Modality.APPLICATION_MODAL);
+                 stage.setTitle("Reporte General de casos");
             stage.setScene(new Scene(root1));  
             stage.show();
         } catch (IOException ex) {
@@ -111,6 +115,26 @@ public class AdministradorController implements Initializable {
         }
     }
     
+    
+    @FXML
+    public void abrirAbout()
+    {
+         log.info("cargando la ventana de Acerca de ");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/About.fxml"));
+        Parent root1;
+        try {
+            root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Acerca De ....");
+            stage.setScene(new Scene(root1));  
+            stage.show();
+        } catch (IOException ex) {
+            
+            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+ 
     @FXML
     public void consultarCasos(){
           log.info("Consultar Casos ");
@@ -120,6 +144,7 @@ public class AdministradorController implements Initializable {
             root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Vista de Ingresos");
             stage.setScene(new Scene(root1));  
             stage.show();
         } catch (IOException ex) {

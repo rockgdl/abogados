@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.fpiceno.abogados.controller.AboutController">
+    <stylesheets>
+        <URL value="@/styles/about.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="268.0" layoutY="40.0" prefHeight="21.0" prefWidth="148.0" text="Acerca de" />
+      <TextArea layoutX="58.0" layoutY="93.0" prefHeight="215.0" prefWidth="466.0" text="Propiedad Intelectual: hecho por Fabian Piceno Roque cualquier aclaracion comentario o o duda favor de Comunicarse al siguiente correo fpiceno87@gmail.com o al telefono 3318636866" wrapText="true" />
+   </children>
+</AnchorPane>

@@ -44,6 +44,9 @@ import org.hibernate.exception.JDBCConnectionException;
  * @author gnr_a
  */
 public class ClienteController implements Initializable {
+    
+            private static final org.apache.log4j.Logger LOG= org.apache.log4j.Logger.getLogger(ClienteController.class.getSimpleName());
+
 
     @FXML Label lblNombre, lblCorreo, lblRFC, lblTelefono, lblDomicilio;
     @FXML Button btnGuardar, btnAgregar, btnEliminar;
@@ -69,6 +72,8 @@ public class ClienteController implements Initializable {
     
     @FXML private void addCliente(ActionEvent event){
         if(verificar()){
+            
+            LOG.info("estoy verificando un cliente");
             try {
                 Cliente cliente = new Cliente();
                 
@@ -79,6 +84,7 @@ public class ClienteController implements Initializable {
                 cliente.setRfc(txtRFC.getText());
                 cliente.setTelefono(txtTelefono.getText());
                 cliente.setRazonSocial(txtRazonSocial.getText());
+                cliente.setActivo(true);
                 
                 ClienteDao dao = new ClienteDaoMysql();
                 dao.insert(cliente);
@@ -91,8 +97,16 @@ public class ClienteController implements Initializable {
                 }
             } catch (SQLIntegrityConstraintViolationException ex) {
                 Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
+                LOG.error("error de Integridad Referencial "+ex.getMessage()+ " error sql"+ex.getSQLState() +" causa "+ex.getCause());
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("Error en restriccion Referencial favor de contactar a Sistemas");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
             } catch (ConnectException ex) {
                 
+              LOG.error("error de Conexion "+ex.getMessage()+" causa "+ex.getCause());
+
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
                 
                 alerta.setHeaderText("No se pudo conectar a mysql");
@@ -102,29 +116,46 @@ public class ClienteController implements Initializable {
             } catch (JDBCConnectionException ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
                 
-                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                LOG.error("error de JDBC Connection "+ex.getMessage()+ " error sql"+ex.getSQLState() +" causa "+ex.getCause());
                 
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
                 alerta.setHeaderText("Se encontro un error al quere insertar la información");
                 alerta.setContentText(ex.getMessage());
                 alerta.show();
                 
             } catch (CommunicationsException ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
-                
+                LOG.error("error de comunicacion "+ex.getMessage()+ " error sql"+ex.getSQLState() +" causa "+ex.getCause());
+
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
-                
                 alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
                 alerta.setContentText(ex.getMessage());
                 alerta.show();
                 
             } catch (InvocationTargetException ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                 LOG.error("excepcion de InvocationTargetException "+ex.getMessage()+" causa "+ex.getCause());
+
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
             } catch (ExceptionInInitializerError ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                 LOG.error("error de comunicacion "+ex.getMessage()+" causa "+ex.getCause());
+
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
             }
             
         }else{
-            System.out.println("ERROR");
+               Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setHeaderText("No fue Verificacion");
+                alerta.setContentText("No fue una Verificacion");
+                alerta.show();
+            LOG.info("ERROR");
         }
     }
     
@@ -146,6 +177,8 @@ public class ClienteController implements Initializable {
                 tablaClientes.setItems(oblist);
             } catch (ConnectException ex) {
                 
+            LOG.error("error de Conexion "+ex.getMessage()+" causa "+ex.getCause());
+
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
                 
                 alerta.setHeaderText("No se pudo conectar a mysql");
@@ -154,7 +187,7 @@ public class ClienteController implements Initializable {
                 
             } catch (JDBCConnectionException ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
-                
+                LOG.error("Error de comunicacion de JDBC");
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
                 
                 alerta.setHeaderText("Se encontro un error al quere insertar la información");
@@ -163,7 +196,7 @@ public class ClienteController implements Initializable {
                 
             } catch (CommunicationsException ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
-                
+                  LOG.error(" Error de CommunicationsException");
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
                 
                 alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
@@ -172,8 +205,20 @@ public class ClienteController implements Initializable {
                 
             } catch (InvocationTargetException ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                      LOG.error(" Error de CommunicationsException");
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
             } catch (ExceptionInInitializerError ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                LOG.error(" Error de CommunicationsException");
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
             }
         }
     }
@@ -194,7 +239,7 @@ public class ClienteController implements Initializable {
                 dao.delete(cliente);
                 obtenerClientes();
             } catch (ConnectException ex) {
-                
+                LOG.error(" Error de CommunicationsException");
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
                 
                 alerta.setHeaderText("No se pudo conectar a mysql");
@@ -203,7 +248,7 @@ public class ClienteController implements Initializable {
                 
             } catch (JDBCConnectionException ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
-                
+                LOG.error(" Error de JDBCConnectionException");
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
                 
                 alerta.setHeaderText("Se encontro un error al quere insertar la información");
@@ -212,20 +257,31 @@ public class ClienteController implements Initializable {
                 
             } catch (CommunicationsException ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
-                
+                LOG.error(" Error de JDBCConnectionException");
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
-                
                 alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
                 alerta.setContentText(ex.getMessage());
                 alerta.show();
                 
             } catch (InvocationTargetException ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                LOG.error(" Error de InvocationTargetException");
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
             } catch (ExceptionInInitializerError ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                LOG.error(" Error de InvocationTargetException");
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
             }
             
         } else {
+               LOG.info(" cancelo la operacion");
+      
             
         }
     }
@@ -274,7 +330,8 @@ public class ClienteController implements Initializable {
                 }
                 
             } catch (ConnectException ex) {
-                
+                LOG.error(" Error de CommunicationsException");
+                LOG.error("error de comunicacion "+ex.getMessage() +" causa "+ex.getCause());
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
                 
                 alerta.setHeaderText("No se pudo conectar a mysql");
@@ -283,26 +340,34 @@ public class ClienteController implements Initializable {
                 
             } catch (JDBCConnectionException ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
-                
+                LOG.error("error de JDBCConnectionException "+ex.getMessage()+ " error sql"+ex.getSQLState() +" causa "+ex.getCause());
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
-                
                 alerta.setHeaderText("Se encontro un error al quere insertar la información");
                 alerta.setContentText(ex.getMessage());
                 alerta.show();
                 
             } catch (CommunicationsException ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
-                
+                LOG.error("error de JDBCConnectionException "+ex.getMessage()+ " error sql"+ex.getSQLState() +" causa "+ex.getCause());
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
-                
                 alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
                 alerta.setContentText(ex.getMessage());
                 alerta.show();
                 
             } catch (InvocationTargetException ex) {
+                LOG.error("error de InvocationTargetException "+ex.getMessage() +" causa "+ex.getCause());
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ExceptionInInitializerError ex) {
                 Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                 LOG.error("error de ExceptionInInitializerError "+ex.getMessage() +" causa "+ex.getCause());
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setHeaderText("No se pudo comunicar con la base de datos mysql");
+                alerta.setContentText(ex.getMessage());
+                alerta.show();
             }
         }
     }

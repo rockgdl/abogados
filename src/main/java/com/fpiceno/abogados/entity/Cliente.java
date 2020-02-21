@@ -37,6 +37,9 @@ public class Cliente {
     @Column (name = "razonSocial", columnDefinition = "varchar(30)")
     private String razonSocial;
     
+    @Column (name = "isActivo")
+    private Boolean isActivo;
+    
 
     /**
      * @return the id
@@ -129,6 +132,16 @@ public class Cliente {
     public void setRazonSocial(String razonSocial) {
         this.razonSocial = razonSocial;
     }
+
+    public Boolean IsActivo() {
+        return isActivo;
+    }
+
+    public void setActivo(Boolean isActivo) {
+        this.isActivo = isActivo;
+    }
+    
+    
     
     @Override
     public String toString(){
