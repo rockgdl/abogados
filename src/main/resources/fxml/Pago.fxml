@@ -18,7 +18,7 @@
       </TableView>
       <Button fx:id="btnAgregarRow" layoutX="630.0" layoutY="195.0" mnemonicParsing="false" onAction="#agregarRow" text="+" />
       <Button layoutX="630.0" layoutY="286.0" mnemonicParsing="false" onAction="#eliminarRow" prefHeight="31.0" prefWidth="31.0" text="-" />
-      <Label fx:id="lblCantidadPagos" layoutX="307.0" layoutY="43.0" text="Label" />
+      <Label fx:id="lblCantidadPagos" layoutX="307.0" layoutY="43.0" text="Pagos" />
       <Button layoutX="613.0" layoutY="371.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
    </children>
 </AnchorPane>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -16,7 +17,7 @@
       <Label layoutX="73.0" layoutY="162.0" text="NickName" />
       <Label layoutX="70.0" layoutY="211.0" text="Contraseña" />
       <Label layoutX="62.0" layoutY="261.0" text="Confirmar Clave" />
-      <Button layoutX="71.0" layoutY="357.0" mnemonicParsing="false" onAction="#addUser" text="Agregar" />
+      <Button layoutX="232.0" layoutY="364.0" mnemonicParsing="false" onAction="#addUser" text="Agregar" />
       <TableView fx:id="tablaUsuario" layoutX="108.0" layoutY="435.0" prefHeight="286.0" prefWidth="690.0">
         <columns>
           <TableColumn fx:id="columnNickname" prefWidth="228.0" text="NickName" />
@@ -24,7 +25,7 @@
           <TableColumn fx:id="columnCorreo" prefWidth="204.0" text="Correo" />
         </columns>
       </TableView>
-      <Button layoutX="108.0" layoutY="754.0" mnemonicParsing="false" onAction="#deleteUser" text="Eliminar" />
+      <Button layoutX="822.0" layoutY="547.0" mnemonicParsing="false" onAction="#deleteUser" text="Eliminar" />
       <ComboBox fx:id="boxRol" layoutX="500.0" layoutY="142.0" prefHeight="31.0" prefWidth="249.0" />
       <RadioButton fx:id="btnActivoSi" layoutX="554.0" layoutY="251.0" mnemonicParsing="false" text="Si" />
       <RadioButton fx:id="btnActivoNo" layoutX="624.0" layoutY="251.0" mnemonicParsing="false" text="No" />
@@ -32,5 +33,10 @@
       <Label layoutX="602.0" layoutY="108.0" text="Rol" />
       <TextField fx:id="txtCorreo" layoutX="181.0" layoutY="307.0" />
       <Label layoutX="85.0" layoutY="312.0" text="Correo" />
+      <Label layoutX="269.0" layoutY="48.0" prefHeight="50.0" prefWidth="368.0" text="Catalogo de usuarios">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

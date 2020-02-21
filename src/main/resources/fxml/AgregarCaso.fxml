@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -8,19 +9,19 @@
 
 <AnchorPane id="AnchorPane" prefHeight="511.0" prefWidth="862.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fpiceno.abogados.controller.AgregarCasoController">
    <children>
-      <Pane layoutY="-11.0" prefHeight="656.0" prefWidth="1307.0">
+      <Pane layoutY="-5.0" prefHeight="656.0" prefWidth="1307.0">
          <children>
-            <ComboBox fx:id="boxCliente" layoutX="21.0" layoutY="64.0" prefHeight="31.0" prefWidth="298.0" />
-            <Button fx:id="nuevoCliente" layoutX="340.0" layoutY="61.0" mnemonicParsing="false" onAction="#nuevoCliente" text="Nuevo" />
-            <Button fx:id="btnAgregar" layoutX="381.0" layoutY="495.0" mnemonicParsing="false" onAction="#agregarCaso" text="Agregar" />
-            <TextArea fx:id="txtConcepto" layoutX="21.0" layoutY="152.0" prefHeight="317.0" prefWidth="411.0" />
-            <ComboBox fx:id="boxTipoPago" layoutX="646.0" layoutY="62.0" prefHeight="31.0" prefWidth="190.0" />
-            <ComboBox fx:id="boxRazonSocial" layoutX="436.0" layoutY="62.0" prefHeight="31.0" prefWidth="197.0" />
-            <Label layoutX="153.0" layoutY="41.0" text="Cliente" />
-            <Label layoutX="494.0" layoutY="41.0" text="Razon social" />
-            <Label layoutX="697.0" layoutY="41.0" text="Tipo de pago" />
-            <Label layoutX="209.0" layoutY="131.0" text="Descripcion del caso" />
-            <TableView fx:id="tablaPago" editable="true" layoutX="470.0" layoutY="152.0" onKeyPressed="#CapturaEnTabla" prefHeight="317.0" prefWidth="727.0">
+            <ComboBox fx:id="boxCliente" layoutX="36.0" layoutY="152.0" prefHeight="31.0" prefWidth="298.0" />
+            <Button fx:id="nuevoCliente" layoutX="185.0" layoutY="116.0" mnemonicParsing="false" onAction="#nuevoCliente" text="Nuevo Cliente" />
+            <Button fx:id="btnAgregar" layoutX="205.0" layoutY="568.0" mnemonicParsing="false" onAction="#agregarCaso" text="Agregar" />
+            <TextArea fx:id="txtConcepto" layoutX="36.0" layoutY="232.0" prefHeight="317.0" prefWidth="411.0" />
+            <ComboBox fx:id="boxTipoPago" layoutX="617.0" layoutY="152.0" prefHeight="31.0" prefWidth="190.0" />
+            <ComboBox fx:id="boxRazonSocial" layoutX="375.0" layoutY="152.0" prefHeight="31.0" prefWidth="197.0" />
+            <Label layoutX="68.0" layoutY="121.0" text="Cliente" />
+            <Label layoutX="432.0" layoutY="121.0" text="Razon social" />
+            <Label layoutX="668.0" layoutY="121.0" text="Tipo de pago" />
+            <Label layoutX="174.0" layoutY="193.0" text="Descripcion del caso" />
+            <TableView fx:id="tablaPago" editable="true" layoutX="473.0" layoutY="232.0" onKeyPressed="#CapturaEnTabla" prefHeight="317.0" prefWidth="727.0">
                <columns>
                   <TableColumn fx:id="columnFolio" prefWidth="75.0" text="Folio" />
                   <TableColumn fx:id="columnConcepto" prefWidth="172.0" text="Concepto" />
@@ -30,14 +31,19 @@
                   <TableColumn fx:id="columnBancoPago" prefWidth="75.0" text="Banco" />
                </columns>
             </TableView>
-            <Label layoutX="733.0" layoutY="131.0" text="Pagos por Realizar" />
-            <Button fx:id="btnGuardar" layoutX="520.0" layoutY="495.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
-            <Button layoutX="1237.0" layoutY="266.0" mnemonicParsing="false" onAction="#eliminarRow" prefHeight="31.0" prefWidth="31.0" text="-" />
-            <Button fx:id="btnAgregarRow" layoutX="1232.0" layoutY="193.0" mnemonicParsing="false" onAction="#agregarRow" text="+" />
-            <Label layoutX="896.0" layoutY="41.0" text="Costo del caso" />
-            <TextField fx:id="txtCostoCaso" layoutX="871.0" layoutY="62.0" prefHeight="31.0" prefWidth="135.0" />
-            <DatePicker fx:id="dateCierre" layoutX="1030.0" layoutY="62.0" />
-            <Label layoutX="1043.0" layoutY="41.0" text="Fecha Estimada de cierre" />
+            <Label layoutX="810.0" layoutY="193.0" text="Pagos por Realizar" />
+            <Button fx:id="btnGuardar" layoutX="781.0" layoutY="568.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
+            <Button layoutX="1217.0" layoutY="442.0" mnemonicParsing="false" onAction="#eliminarRow" prefHeight="31.0" prefWidth="31.0" text="-" />
+            <Button fx:id="btnAgregarRow" layoutX="1217.0" layoutY="360.0" mnemonicParsing="false" onAction="#agregarRow" text="+" />
+            <Label layoutX="873.0" layoutY="121.0" text="Costo del caso" />
+            <TextField fx:id="txtCostoCaso" layoutX="854.0" layoutY="152.0" prefHeight="31.0" prefWidth="135.0" />
+            <DatePicker fx:id="dateCierre" layoutX="1016.0" layoutY="152.0" />
+            <Label layoutX="1030.0" layoutY="121.0" text="Fecha Estimada de cierre" />
+            <Label layoutX="500.0" layoutY="23.0" text="Nuevo Caso ">
+               <font>
+                  <Font size="55.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>
