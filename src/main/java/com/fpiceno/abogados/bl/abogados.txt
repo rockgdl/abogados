@@ -16,7 +16,9 @@ tabla de casos agregar descripcion del caso como columna
 
 ingresos es la sumatoria de los pagos realizados 
 
-casos lleva un total de importe que es lo que se le va a cobrar por todo el caso se le va descontando por cada pago 
+casos lleva un total de importe que es lo que se le va a cobrar por todo el caso se le va descontando por cada pago
+
+al cerrar guardar los pagos correspondientes y una vez cuando se le da guardar , cerrar modal  
 
 al caso se le debe agregar, cantidad a pagar y fecha limite de pago 
 a la tabla de pagos , ponerle estatus del pago y fecha hacerla ocmbolist para que el usuario la ponga
