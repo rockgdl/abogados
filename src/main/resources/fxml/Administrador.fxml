@@ -19,6 +19,7 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#agregarClientes" text="Administrar Clientes" />
                   <MenuItem mnemonicParsing="false" onAction="#nuevoCaso" text="Agregar Casos" />
+                  <MenuItem mnemonicParsing="false" onAction="#agregarUsuarios" text="Administrar Usuarios" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Reportes">
