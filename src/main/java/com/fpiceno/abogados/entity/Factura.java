@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Table(name = "Factura")
 public class Factura {
     @Transient
-    private static final float iva = (float) 1.16;
+    private static final float IVA = (float) 1.16;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +48,7 @@ public class Factura {
     private double total;
     
     @Transient
-    private double ivaIncluido = total*iva;
+    private double ivaIncluido = total*IVA;
     
     @Column (name = "fechaPago")
     private Date fechaPago;

@@ -24,6 +24,7 @@
           <Menu mnemonicParsing="false" text="Reportes">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#addCasos" text="Consultar Casos" />
+                  <MenuItem mnemonicParsing="false" onAction="#showSaldos" text="Saldos" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Acerca de">

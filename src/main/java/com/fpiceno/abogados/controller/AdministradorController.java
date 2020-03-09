@@ -152,4 +152,23 @@ public class AdministradorController implements Initializable {
         }
     }
     
+    @FXML
+    public void showSaldos(){
+               log.info("Consultar Casos ");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Saldos.fxml"));
+        Parent root1;
+        try {
+            root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Consulta Saldos");
+            stage.setScene(new Scene(root1));  
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+    
+}
+    
 }
