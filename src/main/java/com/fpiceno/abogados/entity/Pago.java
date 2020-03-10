@@ -5,6 +5,8 @@
  */
 package com.fpiceno.abogados.entity;
 
+import Tools.Banco;
+import Tools.StatusPago;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -31,6 +33,12 @@ public class Pago {
     
     @Column (name = "cantidad")
     private double cantidad;
+    
+    @Enumerated(EnumType.STRING)
+    private Banco banco;
+    
+    @Enumerated(EnumType.STRING)
+    private StatusPago status;
     
 //    @ManyToOne
 //    @JoinColumn(name = "caso_id")
@@ -123,6 +131,34 @@ public class Pago {
     @Override
     public String toString() {
         return "Pago{" + "id=" + id + ", idFacutura=" + idFacutura + ", concepto=" + concepto + ", fechaPago=" + fechaPago + ", cantidad=" + cantidad + '}';
+    }
+
+    /**
+     * @return the banco
+     */
+    public Banco getBanco() {
+        return banco;
+    }
+
+    /**
+     * @param banco the banco to set
+     */
+    public void setBanco(Banco banco) {
+        this.banco = banco;
+    }
+
+    /**
+     * @return the status
+     */
+    public StatusPago getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(StatusPago status) {
+        this.status = status;
     }
     
     

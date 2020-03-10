@@ -67,6 +67,9 @@ public class Caso {
     @Transient
     private String fechaInicioFormato;
     
+    @Transient
+    private Double ingresos =0.0;
+    
     
     @Column(name="costoCaso")
     private Double costoCaso;
@@ -270,6 +273,27 @@ public class Caso {
 
     public void setFechaCierreCaso(Date fechaCierreCaso) {
         this.fechaCierreCaso = fechaCierreCaso;
+    }
+
+    /**
+     * @return the ingresos
+     */
+    public Double getIngresos() {
+         ingresos =0.0;
+         for(Pago pago: getListaPagos()){
+            if(pago.getStatus().getKey() == "Pagado"){
+                ingresos += pago.getCantidad();
+            }
+        }
+         
+        return ingresos;
+    }
+
+    /**
+     * @param ingresos the ingresos to set
+     */
+    public void setIngresos(Double ingresos) {
+        this.ingresos = ingresos;
     }
     
     

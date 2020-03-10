@@ -9,8 +9,10 @@ import Tools.RazonSocial;
 import Tools.tipoPago;
 import com.fpiceno.abogados.dao.CasoDao;
 import com.fpiceno.abogados.dao.ClienteDao;
+import com.fpiceno.abogados.dao.PagoDao;
 import com.fpiceno.abogados.dao.mysql.CasoDaoMysql;
 import com.fpiceno.abogados.dao.mysql.ClienteDaoMysql;
+import com.fpiceno.abogados.dao.mysql.PagoDaoMysql;
 import com.fpiceno.abogados.entity.AutoCompleteBox;
 import com.fpiceno.abogados.entity.Caso;
 import com.fpiceno.abogados.entity.Cliente;
@@ -24,6 +26,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,8 +62,9 @@ public class CasoController implements Initializable {
     
     
     @FXML TableView<Caso> tablaCaso;
-    @FXML TableColumn <Caso, String> ColumnIngresos, ColumnRazonSocial, ColumnStatus, ColumnCliente, ColumnTipoPago, ColumnFecha,columnStatusPago,columnBancoPago;
+    @FXML TableColumn <Caso, String> ColumnRazonSocial, ColumnStatus, ColumnCliente, ColumnTipoPago, ColumnFecha,columnStatusPago,columnBancoPago;
     @FXML TableColumn <Caso, Integer> ColumnId;
+    @FXML TableColumn <Caso, Double> ColumnIngresos;
     ObservableList <Caso> oblistCaso= FXCollections.observableArrayList();
     
     /**
@@ -128,6 +132,8 @@ public class CasoController implements Initializable {
             ColumnTipoPago.setCellValueFactory(new PropertyValueFactory("tipo"));
             ColumnFecha.setCellValueFactory(new PropertyValueFactory("fechaInicioFormato"));
             
+           
+            ColumnIngresos.setCellValueFactory(new PropertyValueFactory("ingresos"));
             
             tablaCaso.setItems(oblistCaso);
         } catch (ConnectException ex) {
@@ -621,7 +627,8 @@ public class CasoController implements Initializable {
                 agregarCasoController.inicializarPagos();
                 agregarCasoController.abrirDatos();
                 Stage stage = new Stage();
-                stage.setScene(new Scene(root));  
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setScene(new Scene(root));
                 stage.show();
             }else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);

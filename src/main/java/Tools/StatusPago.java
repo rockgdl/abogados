@@ -9,13 +9,14 @@ package Tools;
  *
  * @author gnr_a
  */
-public enum Banco {
-    SANTANDER("Santander", 1), BANCOMER ("Bancomer",2), BANAMEX("Banamex",3), HSBC("HSBC",3), SCOTIABANK("Scotiabank",4); 
+public enum StatusPago {
     
-        private final String key;
+    PAGADO("Pagado",1), ABONADO("Abonado", 2), CANCELADO("Cancelado",3);
+    
+    private final String key;
     private final Integer value;
 
-    Banco(String key,Integer value) {
+    StatusPago(String key,Integer value) {
         this.key = key;
         this.value = value;
     }
@@ -31,4 +32,5 @@ public enum Banco {
     public String toString(){
         return this.key;
     }
+    
 }

@@ -5,7 +5,9 @@
  */
 package com.fpiceno.abogados.controller;
 
+import Tools.Banco;
 import Tools.RazonSocial;
+import Tools.StatusPago;
 import Tools.tipoPago;
 import com.fpiceno.abogados.dao.CasoDao;
 import com.fpiceno.abogados.dao.ClienteDao;
@@ -46,6 +48,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
@@ -75,6 +78,8 @@ public class AgregarCasoController implements Initializable{
     @FXML Button btnAgregarRow, btnAgregar, btnGuardar;
     @FXML TableView <Pago> tablaPago;
     @FXML TableColumn <Pago, String> columnConcepto;
+    @FXML TableColumn <Pago, Banco> columnBancoPago;
+    @FXML TableColumn <Pago, StatusPago> columnStatusPago;
     @FXML TableColumn <Pago, Integer> columnFolio;
     @FXML TableColumn <Pago, Double> columnCantidad;
     @FXML TableColumn <Pago, Date> columnFecha;
@@ -223,6 +228,7 @@ public class AgregarCasoController implements Initializable{
         
             Pago pago = new Pago();
             pago.setFechaPago(new Date());
+            pago.setStatus(StatusPago.ABONADO);
             
             tablaPago.getItems().add(pago);
     }
@@ -271,6 +277,9 @@ public class AgregarCasoController implements Initializable{
                 System.out.println(pago);
             }
             dao.update(getCaso());
+            
+            getCasoController().obtenerCasos();
+            
         } catch (ConnectException ex) {
             Logger.getLogger(PagoController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JDBCConnectionException ex) {
@@ -334,6 +343,20 @@ public class AgregarCasoController implements Initializable{
             pago.setConcepto(data.getNewValue());
         });
 
+        columnBancoPago.setCellValueFactory(new PropertyValueFactory("banco"));
+        columnBancoPago.setCellFactory(ComboBoxTableCell.forTableColumn(Banco.values()));
+        columnBancoPago.setOnEditCommit(data ->{ 
+            Pago pago = data.getRowValue();
+            pago.setBanco(data.getNewValue());
+        });
+        
+        columnStatusPago.setCellValueFactory(new PropertyValueFactory("status"));
+        columnStatusPago.setCellFactory(ComboBoxTableCell.forTableColumn(StatusPago.values()));
+        columnStatusPago.setOnEditCommit(data ->{ 
+            Pago pago = data.getRowValue();
+            pago.setStatus(data.getNewValue());
+        });
+        
         columnFecha.setCellValueFactory(new PropertyValueFactory("fechaPago"));
 
         columnFolio.setCellValueFactory(new PropertyValueFactory("id"));
