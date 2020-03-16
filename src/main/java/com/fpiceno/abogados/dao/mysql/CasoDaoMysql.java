@@ -8,6 +8,7 @@ package com.fpiceno.abogados.dao.mysql;
 import com.fpiceno.abogados.config.HibernateUtil;
 import com.fpiceno.abogados.dao.CasoDao;
 import com.fpiceno.abogados.entity.Caso;
+import com.fpiceno.abogados.entity.Status;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ConnectException;
@@ -60,6 +61,7 @@ public class CasoDaoMysql implements CasoDao{
     @Override
     public List<Caso> read() {
         Criteria cr = getSession().createCriteria(Caso.class);
+        cr.add(Restrictions.ne("status", Status.FINALIZADO));
         return cr.list();
     }
 

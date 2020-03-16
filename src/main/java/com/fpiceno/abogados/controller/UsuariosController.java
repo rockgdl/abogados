@@ -43,7 +43,7 @@ public class UsuariosController implements Initializable {
     @FXML private TextField txtSearch, txtNickname, txtCorreo;
     @FXML private PasswordField txtPassword, txtConfirmar ;
     @FXML private RadioButton btnActivoSi, btnActivoNo;
-    @FXML private ComboBox boxRol;
+    @FXML public ComboBox boxRol;
     
     @FXML private TableView<Usuario> tablaUsuario;
     @FXML private TableColumn <Usuario, String> columnCorreo, columnNickname, columnPassword;
@@ -64,6 +64,8 @@ public class UsuariosController implements Initializable {
         ToggleGroup grupo = new ToggleGroup();
         btnActivoNo.setToggleGroup(grupo);
         btnActivoSi.setToggleGroup(grupo);
+        
+        btnActivoSi.setSelected(true);
         
         
         boxRol.setItems(FXCollections.observableArrayList(Roles.values()));

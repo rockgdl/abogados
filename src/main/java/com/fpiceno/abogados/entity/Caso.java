@@ -281,7 +281,7 @@ public class Caso {
     public Double getIngresos() {
          ingresos =0.0;
          for(Pago pago: getListaPagos()){
-            if(pago.getStatus().getKey() == "Pagado"){
+            if( pago.getStatus() != null && pago.getStatus().getKey() == "Pagado" ){
                 ingresos += pago.getCantidad();
             }
         }

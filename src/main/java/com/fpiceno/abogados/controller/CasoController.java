@@ -64,7 +64,7 @@ public class CasoController implements Initializable {
     @FXML TableView<Caso> tablaCaso;
     @FXML TableColumn <Caso, String> ColumnRazonSocial, ColumnStatus, ColumnCliente, ColumnTipoPago, ColumnFecha,columnStatusPago,columnBancoPago;
     @FXML TableColumn <Caso, Integer> ColumnId;
-    @FXML TableColumn <Caso, Double> ColumnIngresos;
+    @FXML TableColumn <Caso, Double> ColumnIngresos, ColumnCostoCaso;
     ObservableList <Caso> oblistCaso= FXCollections.observableArrayList();
     
     /**
@@ -131,6 +131,7 @@ public class CasoController implements Initializable {
             ColumnCliente.setCellValueFactory(new PropertyValueFactory("nombreCliente"));
             ColumnTipoPago.setCellValueFactory(new PropertyValueFactory("tipo"));
             ColumnFecha.setCellValueFactory(new PropertyValueFactory("fechaInicioFormato"));
+            ColumnCostoCaso.setCellValueFactory(new PropertyValueFactory("costoCaso"));
             
            
             ColumnIngresos.setCellValueFactory(new PropertyValueFactory("ingresos"));
@@ -170,39 +171,32 @@ public class CasoController implements Initializable {
     }
     
     @FXML private void AbrirPagos(MouseEvent event){
-                
-//        tablaCaso.setRowFactory( tv -> { 
-//            TableRow<Caso> row = new TableRow<>();
-//            row.setOnMouseClicked(ev ->{
-//                if (event.getClickCount() == 2 && (!row.isEmpty())){
-//                    Caso caso = row.getItem();
-//                    System.out.println(caso.getId());
-//                }else{
-//                    System.out.println("No se que hace xD");
-//                }
-//            });
-//            return row;
-//        });
-        
         Caso caso = tablaCaso.getSelectionModel().getSelectedItem();
         
         if (event.getClickCount() == 2 && caso != null){
-            
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = null;
-            Stage stage = new Stage();
+        
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AgregarCaso.fxml"));
+            Parent root;   
             
             try {
                 
-                root = (Parent) fxmlLoader.load(getClass().getResource("/fxml/Pago.fxml").openStream());
-                
+            if(caso != null){
+                root = (Parent) fxmlLoader.load();
+                AgregarCasoController agregarCasoController = (AgregarCasoController) fxmlLoader.getController();
+                agregarCasoController.setCaso(caso);
+                agregarCasoController.setCasoController(this);
+                agregarCasoController.inicializarPagos();
+                agregarCasoController.abrirDatos();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setScene(new Scene(root));
-                
-                PagoController controlador = (PagoController) fxmlLoader.getController();
-                controlador.setCaso(caso);
-                controlador.obtenerPagos();
-                
                 stage.show();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Debe seleccionar un caso para poder editar");
+                alert.show();
+            }
+
                 
             } catch (IOException ex) {
                 Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);

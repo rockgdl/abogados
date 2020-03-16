@@ -28,12 +28,12 @@
                   <TableColumn fx:id="columnFecha" prefWidth="184.0" text="Fecha" />
                   <TableColumn fx:id="columnCantidad" prefWidth="128.0" text="Cantidad" />
                   <TableColumn fx:id="columnStatusPago" prefWidth="75.0" text="Status" />
-                  <TableColumn fx:id="columnBancoPago" prefWidth="75.0" text="Banco" />
+                  <TableColumn fx:id="columnBancoPago" prefWidth="92.0" text="Banco" />
                </columns>
             </TableView>
             <Label layoutX="810.0" layoutY="193.0" text="Pagos por Realizar" />
             <Button fx:id="btnGuardar" layoutX="781.0" layoutY="568.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
-            <Button layoutX="1217.0" layoutY="442.0" mnemonicParsing="false" onAction="#eliminarRow" prefHeight="31.0" prefWidth="31.0" text="-" />
+            <Button fx:id="btnEliminarRow" layoutX="1217.0" layoutY="442.0" mnemonicParsing="false" onAction="#eliminarRow" prefHeight="31.0" prefWidth="31.0" text="-" />
             <Button fx:id="btnAgregarRow" layoutX="1217.0" layoutY="360.0" mnemonicParsing="false" onAction="#agregarRow" text="+" />
             <Label layoutX="873.0" layoutY="121.0" text="Costo del caso" />
             <TextField fx:id="txtCostoCaso" layoutX="854.0" layoutY="152.0" prefHeight="31.0" prefWidth="135.0" />

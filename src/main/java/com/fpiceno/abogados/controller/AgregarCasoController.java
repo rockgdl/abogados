@@ -21,6 +21,7 @@ import com.fpiceno.abogados.entity.Cliente;
 import com.fpiceno.abogados.entity.Pago;
 import com.fpiceno.abogados.entity.Status;
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+import com.sun.glass.events.MouseEvent;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ConnectException;
@@ -29,6 +30,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,6 +45,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -75,7 +80,7 @@ public class AgregarCasoController implements Initializable{
     
     
       //@FXML Label lblCantidadPagos;
-    @FXML Button btnAgregarRow, btnAgregar, btnGuardar;
+    @FXML Button btnAgregarRow,btnEliminarRow, btnAgregar, btnGuardar;
     @FXML TableView <Pago> tablaPago;
     @FXML TableColumn <Pago, String> columnConcepto;
     @FXML TableColumn <Pago, Banco> columnBancoPago;
@@ -97,6 +102,10 @@ public class AgregarCasoController implements Initializable{
             boxRazonSocial.setItems(FXCollections.observableArrayList(RazonSocial.values()));
             boxCliente.setItems(FXCollections.observableArrayList(daoc.read()));
             new AutoCompleteBox(boxCliente);
+            
+            tablaPago.setVisible(false);
+            btnAgregarRow.setVisible(false);
+            btnEliminarRow.setVisible(false);
         } catch (ConnectException ex) {
                 
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -141,6 +150,7 @@ public class AgregarCasoController implements Initializable{
         //Pasar parametros
         ClienteDao daoC = new ClienteDaoMysql();
         
+        
         try {
             caso.setCliente(daoC.readCliente(idCliente));
             caso.setFechaInicio(date);
@@ -157,6 +167,8 @@ public class AgregarCasoController implements Initializable{
             CasoDao dao = new CasoDaoMysql();
 
             dao.insert(caso);
+            
+            getCasoController().obtenerCasos();
             
            Stage stage = (Stage) btnAgregar.getScene().getWindow();
             // do what you have to do
@@ -229,6 +241,7 @@ public class AgregarCasoController implements Initializable{
             Pago pago = new Pago();
             pago.setFechaPago(new Date());
             pago.setStatus(StatusPago.ABONADO);
+            pago.setBanco(Banco.HSBC);
             
             tablaPago.getItems().add(pago);
     }
@@ -247,6 +260,7 @@ public class AgregarCasoController implements Initializable{
         try{
             Pago pago = tablaPago.getSelectionModel().getSelectedItem();
             System.out.println("Entro");
+          
         }catch(NumberFormatException ex){
             System.out.println("NO se tiene un numero");
         }
@@ -271,14 +285,33 @@ public class AgregarCasoController implements Initializable{
             caso.setFechaInicio(new Date());
             caso.setCantidadPagos(tablaPago.getItems().size());
             caso.setListaPagos(tablaPago.getItems());
+            caso.setCostoCaso(Double.parseDouble(txtCostoCaso.getText()));
           
             CasoDao dao = new CasoDaoMysql();
-            for(Pago pago: getCaso().getListaPagos()){
-                System.out.println(pago);
-            }
-            dao.update(getCaso());
             
-            getCasoController().obtenerCasos();
+            if(caso.getCostoCaso() < caso.getIngresos()){
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setContentText("El costo del caso no puede ser menor al ingreso de los pagos");
+                alerta.setHeaderText("Error en el costo del caso");
+                alerta.show();
+            }else{
+                if (caso.getCostoCaso().equals(caso.getIngresos())){
+                    System.out.println("Ya se cumplio");
+                    Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+                    alerta.setContentText("Ya se cumplieron los pagos");
+                    alerta.setHeaderText("¿Desea finalizar el caso?");
+                    
+                    Optional<ButtonType> result = alerta.showAndWait();
+                    if (result.get() == ButtonType.OK){
+                        caso.setStatus(Status.FINALIZADO);
+                    }else{
+                        
+                    }
+                    
+                }
+                dao.update(getCaso());
+                getCasoController().obtenerCasos();
+            }
             
         } catch (ConnectException ex) {
             Logger.getLogger(PagoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -311,6 +344,12 @@ public class AgregarCasoController implements Initializable{
             boxRazonSocial.setValue(getCaso().getRazonSocial());
             boxTipoPago.setValue(getCaso().getTipo());
             txtConcepto.setText(getCaso().getConcepto());
+            txtCostoCaso.setText(getCaso().getCostoCaso().toString());
+            dateCierre.setValue(getCaso().getFechaCierreCaso().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            
+            tablaPago.setVisible(true);
+            btnAgregarRow.setVisible(true);
+            btnEliminarRow.setVisible(true);
             
         }catch(NumberFormatException ne){
             System.out.println("se ingreso una cadena");
@@ -330,12 +369,15 @@ public class AgregarCasoController implements Initializable{
             
         columnCantidad.setCellValueFactory(new PropertyValueFactory("cantidad"));
         columnCantidad.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-
-        columnCantidad.setOnEditCommit(data ->{ 
-            Pago pago = data.getRowValue();
-            pago.setCantidad(data.getNewValue());
+      
+        columnCantidad.setOnEditCommit(data ->{
+          
+                Pago pago = data.getRowValue();
+                pago.setCantidad(data.getNewValue());
         });
-
+        
+        
+        
         columnConcepto.setCellValueFactory(new PropertyValueFactory("concepto"));
         columnConcepto.setCellFactory(TextFieldTableCell.forTableColumn());
         columnConcepto.setOnEditCommit(data ->{ 
