@@ -37,5 +37,6 @@
     <mapping class="com.fpiceno.abogados.entity.Cliente" ></mapping>
     <mapping class="com.fpiceno.abogados.entity.Caso" ></mapping>
     <mapping class="com.fpiceno.abogados.entity.Pago" ></mapping>
+    <mapping class="com.fpiceno.abogados.dto.Saldos" ></mapping>
   </session-factory>
 </hibernate-configuration>
