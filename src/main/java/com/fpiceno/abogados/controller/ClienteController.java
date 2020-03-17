@@ -36,6 +36,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import org.hamcrest.CoreMatchers;
 import org.hibernate.exception.JDBCConnectionException;
 
 /**
@@ -48,7 +49,7 @@ public class ClienteController implements Initializable {
             private static final org.apache.log4j.Logger LOG= org.apache.log4j.Logger.getLogger(ClienteController.class.getSimpleName());
 
 
-    @FXML Label lblNombre, lblCorreo, lblRFC, lblTelefono, lblDomicilio;
+    @FXML Label lblNombre, lblCorreo, lblRFC, lblTelefono, lblDomicilio, lblRazonSocial;
     @FXML Button btnGuardar, btnAgregar, btnEliminar;
     @FXML TextField txtNombre, txtTelefono, txtDomicilio, txtRFC, txtCorreo, txtBusqueda,txtRazonSocial;
     @FXML TableView<Cliente> tablaClientes;
@@ -67,6 +68,32 @@ public class ClienteController implements Initializable {
         obtenerClientes();
         btnGuardar.setDisable(true);
         btnEliminar.setDisable(true);
+        
+        //Para quitar los mensajes de error
+        txtCorreo.setOnKeyReleased(ev -> {
+            lblCorreo.setVisible(false);
+            
+        });
+        
+        txtDomicilio.setOnKeyReleased(ev -> {
+            lblDomicilio.setVisible(false);
+        });
+        
+        txtNombre.setOnKeyReleased(ev -> {
+            lblNombre.setVisible(false);
+        });
+        
+        txtRFC.setOnKeyReleased(ev -> {
+            lblRFC.setVisible(false);
+        });
+        
+        txtTelefono.setOnKeyReleased(ev -> { 
+            lblTelefono.setVisible(false);
+        });
+        
+        txtRazonSocial.setOnKeyReleased(ev ->{
+            lblRazonSocial.setVisible(false);
+        });
         
     }
     
@@ -394,6 +421,7 @@ public class ClienteController implements Initializable {
                 txtRFC.setText(cliente.getRfc());
                 txtTelefono.setText(cliente.getTelefono());
                 idCliente = cliente.getId();
+                txtRazonSocial.setText(cliente.getRazonSocial());
 
                 //obtenerClientes();
                 btnGuardar.setDisable(false);
@@ -410,29 +438,26 @@ public class ClienteController implements Initializable {
         if(txtNombre.getText().equals("")){
             lblNombre.setVisible(true);
             permitido = false;
-        }else{
-            lblNombre.setVisible(false);    
         }
         
         if(txtCorreo.getText().equals("") || !validacionCorreo()){
             lblCorreo.setVisible(true);
             permitido = false;
-        }else{
-            lblCorreo.setVisible(false);    
         }
         
         if(txtDomicilio.getText().equals("")){
             lblDomicilio.setVisible(true);
             permitido = false;
-        }else{
-            lblDomicilio.setVisible(false);    
         }
         
         if(txtRFC.getText().equals("")){
             lblRFC.setVisible(true);
             permitido = false;
-        }else{
-            lblRFC.setVisible(false);    
+        }
+        
+        if(txtRazonSocial.getText().equals("")){
+            lblRazonSocial.setVisible(true);
+            permitido = false;
         }
         
         try{

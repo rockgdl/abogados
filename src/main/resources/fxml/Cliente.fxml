@@ -18,17 +18,21 @@
                         <Font size="64.0" />
                      </font>
                   </Label>
-                  <Label layoutX="21.0" layoutY="142.0" text="Nombre:" />
-                  <Label layoutX="21.0" layoutY="201.0" text="RFC:" />
-                  <Label layoutX="14.0" layoutY="243.0" text="Domicilio:" />
-                  <Label layoutX="16.0" layoutY="295.0" text="Teléfono:" />
-                  <Label layoutX="11.0" layoutY="356.0" text="Correo:" />
-                  <TextField fx:id="txtNombre" layoutX="90.0" layoutY="137.0" onKeyReleased="#LimitarCaracteres" />
-                  <TextField fx:id="txtRFC" layoutX="90.0" layoutY="186.0" onKeyReleased="#LimitarCaracteres" />
-                  <TextField fx:id="txtDomicilio" layoutX="90.0" layoutY="238.0" onKeyReleased="#LimitarCaracteres" />
-                  <TextField fx:id="txtTelefono" layoutX="90.0" layoutY="290.0" onKeyReleased="#LimitarCaracteres" />
-                  <TextField fx:id="txtCorreo" layoutX="90.0" layoutY="351.0" onKeyReleased="#LimitarCaracteres" />
+                  <Label layoutX="20.0" layoutY="153.0" text="Nombre:" />
+                  <Label layoutX="21.0" layoutY="212.0" text="RFC:" />
+                  <Label layoutX="14.0" layoutY="269.0" text="Domicilio:" />
+                  <Label layoutX="16.0" layoutY="330.0" text="Teléfono:" />
+                  <Label layoutX="11.0" layoutY="387.0" text="Correo:" />
+                  <TextField fx:id="txtNombre" layoutX="97.0" layoutY="148.0" onKeyReleased="#LimitarCaracteres" />
+                  <TextField fx:id="txtRFC" layoutX="97.0" layoutY="207.0" onKeyReleased="#LimitarCaracteres" />
+                  <TextField fx:id="txtDomicilio" layoutX="97.0" layoutY="264.0" onKeyReleased="#LimitarCaracteres" />
+                  <TextField fx:id="txtTelefono" layoutX="97.0" layoutY="325.0" onKeyReleased="#LimitarCaracteres" />
+                  <TextField fx:id="txtCorreo" layoutX="97.0" layoutY="382.0" onKeyReleased="#LimitarCaracteres" />
+                  <TextField fx:id="txtRazonSocial" layoutX="97.0" layoutY="440.0" />
+                  <TextField fx:id="txtBusqueda" layoutX="560.0" layoutY="93.0" onKeyReleased="#searchCliente" prefHeight="31.0" prefWidth="379.0" />
                   <Button fx:id="btnAgregar" layoutX="47.0" layoutY="525.0" mnemonicParsing="false" onAction="#addCliente" text="Agregar" />
+                  <Button fx:id="btnGuardar" layoutX="169.0" layoutY="525.0" mnemonicParsing="false" onAction="#saveCliente" text="Guardar" />
+                  <Button layoutX="114.0" layoutY="610.0" mnemonicParsing="false" onAction="#limpiarCampos" text="Limpiar" />
                   <TableView fx:id="tablaClientes" layoutX="320.0" layoutY="149.0" onMouseClicked="#retornarCliente" prefHeight="564.0" prefWidth="914.0">
                     <columns>
                       <TableColumn fx:id="columnNombre" prefWidth="179.0" text="Nombre" />
@@ -40,20 +44,17 @@
                     </columns>
                   </TableView>
                   <Button fx:id="btnEliminar" layoutX="1141.0" layoutY="93.0" mnemonicParsing="false" onAction="#deleteCliente" text="Eliminar" />
-                  <TextField fx:id="txtBusqueda" layoutX="560.0" layoutY="93.0" onKeyReleased="#searchCliente" prefHeight="31.0" prefWidth="379.0" />
                   <Label layoutX="415.0" layoutY="98.0" text="Buscar por nombre:" />
-                  <Button fx:id="btnGuardar" layoutX="169.0" layoutY="525.0" mnemonicParsing="false" onAction="#saveCliente" text="Guardar" />
-                  <Label fx:id="lblNombre" layoutX="276.0" layoutY="168.0" text="No permitido" textFill="RED" visible="false" />
-                  <Label fx:id="lblRFC" layoutX="276.0" layoutY="222.0" text="No permitido" textFill="RED" visible="false" />
-                  <Label fx:id="lblDomicilio" layoutX="276.0" layoutY="284.0" text="No permitido" textFill="RED" visible="false" />
-                  <Label fx:id="lblTelefono" layoutX="276.0" layoutY="345.0" text="No permitido" textFill="RED" visible="false" />
-                  <Label fx:id="lblCorreo" layoutX="276.0" layoutY="421.0" text="No permitido" textFill="RED" visible="false" />
-                  <Button layoutX="114.0" layoutY="610.0" mnemonicParsing="false" onAction="#limpiarCampos" text="Limpiar" />
-                  <Label layoutX="8.0" layoutY="421.0" text="Razon Social">
+                  <Label fx:id="lblNombre" layoutX="97.0" layoutY="179.0" text="No permitido" textFill="RED" visible="false" />
+                  <Label fx:id="lblRFC" layoutX="97.0" layoutY="233.0" text="No permitido" textFill="RED" visible="false" />
+                  <Label fx:id="lblDomicilio" layoutX="97.0" layoutY="295.0" text="No permitido" textFill="RED" visible="false" />
+                  <Label fx:id="lblTelefono" layoutX="97.0" layoutY="356.0" text="No permitido" textFill="RED" visible="false" />
+                  <Label fx:id="lblCorreo" layoutX="97.0" layoutY="413.0" text="No permitido" textFill="RED" visible="false" />
+                  <Label fx:id="lblRazonSocial" layoutX="97.0" layoutY="471.0" text="No permitido" textFill="RED" visible="false" />
+                  <Label layoutX="8.0" layoutY="446.0" text="Razon Social">
                      <font>
                         <Font size="14.0" />
                      </font></Label>
-                  <TextField fx:id="txtRazonSocial" layoutX="90.0" layoutY="416.0" />
                </children>
             </Pane>
          </center>
